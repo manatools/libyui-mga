@@ -451,7 +451,7 @@ int main( int argc, char **argv )
     head->addColumn( "Center", YAlignCenter );
     head->addColumn( "Left", YAlignBegin );
    // auto table		= YUI::widgetFactory()->createTable( atLeft(frame), head, YTableMode::YTableCheckBoxOnFirstColumn);
-    YUILoader::loadWE("mga", "createYWE");
+    YUILoader::loadWE("mga", "_Z8createWEv");
 
     YMGA_CBTable* table		= ((YMGAWidgetFactory*)YWE::widgetExtensionFactory())->createTable( atLeft(frame), head, YTableMode::YTableCheckBoxOnLastColumn);
   //  auto table		= YUI::widgetFactory()->createTable( atLeft(frame), head, YTableMode::YTableSingleLineSelection);

@@ -21,9 +21,9 @@
 
 #include <string>
 
-#include <YWidgetExtensionFactory.h>
-#include <YTypes.h>
-#include <YMGA_CBTable.h>
+#include <yui/YWidgetExtensionFactory.h>
+#include <yui/YTypes.h>
+#include <yui/YMGA_CBTable.h>
 
 
 class YWidget;

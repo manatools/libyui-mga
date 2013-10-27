@@ -25,12 +25,12 @@
 #ifndef YMGA_CBTable_h
 #define YMGA_CBTable_h
 
-#include <YTable.h>
+#include <yui/YTable.h>
 
-#include "YTypes.h"
-#include "YSelectionWidget.h"
-#include "YTableItem.h"
-#include "YTableHeader.h"
+#include <yui/YTypes.h>
+#include <yui/YSelectionWidget.h>
+#include <yui/YTableItem.h>
+#include <yui/YTableHeader.h>
 
 enum YTableMode {
     YTableSingleLineSelection,

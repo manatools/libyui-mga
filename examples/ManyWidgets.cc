@@ -203,7 +203,7 @@ void popup()
   auto dialog		= YUI::widgetFactory()->createPopupDialog( mode );
   auto vbox		= YUI::widgetFactory()->createVBox( dialog );
 
-  auto label		= YUI::widgetFactory()->createLabel( vbox, "Let it BEEP!" );
+  /*auto label		= */YUI::widgetFactory()->createLabel( vbox, "Let it BEEP!" );
   YUI::widgetFactory()->createVSpacing( vbox );
   auto beepButton	= YUI::widgetFactory()->createPushButton( vbox, "Beep" );
   beepButton->setFunctionKey( 5 );

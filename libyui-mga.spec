@@ -41,7 +41,7 @@ dynamically linked with libyui-mga.
 
 %files -n %libname
 %doc COPYING*
-%{_libdir}/yui/lib*.so.*
+%{_libdir}/libyui-mga.so.*
 
 
 #-----------------------------------------------------------------------
@@ -58,7 +58,7 @@ This package provides headers files for libyui-mga development.
 
 %files -n %develname
 %{_includedir}/yui
-%{_libdir}/yui/lib*.so
+%{_libdir}/libyui-mga.so
 %{_libdir}/pkgconfig/libyui-mga.pc
 %{_libdir}/cmake/libyui-mga
 %doc %{_docdir}/libyui-mga%{major}

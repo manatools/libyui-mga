@@ -43,6 +43,9 @@ public:
 
     virtual YMGA_CBTable * createTable ( YWidget * parent, YTableHeader * header_disown, YTableMode mode = YTableSingleLineSelection ) = 0;
 
+    // usefull for bindings where casts are not easy to use.
+    static YMGAWidgetFactory* getYMGAWidgetFactory(YWidgetExtensionFactory* instance);
+
 protected:
 
     friend class YWE;
@@ -50,7 +53,7 @@ protected:
     /**
      * Constructor.
      *
-     * Use YUI::widgetFactory() to get the singleton for this class.
+     * Use YWE::widgetExtensionFactory() to get the singleton for this class.
      **/
     YMGAWidgetFactory();
 

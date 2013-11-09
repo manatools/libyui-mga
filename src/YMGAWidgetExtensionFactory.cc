@@ -1,5 +1,6 @@
 /*
-  Copyright (C) 2000-2012 Novell, Inc
+  Copyright 2013 by Angelo Naselli <anaselli at linux dot it>
+ 
   This library is free software; you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License as
   published by the Free Software Foundation; either version 2.1 of the
@@ -13,14 +14,14 @@
   Floor, Boston, MA 02110-1301 USA
 */
 
-
 /*-/
 
-  File:		YMGAWidgetFactory.cc
+  File:         YMGAWidgetFactory.cc
 
-  Author:	Stefan Hundhammer <sh@suse.de>
+  Author:       Angelo Naselli <anaselli@linux.it>
 
 /-*/
+
 
 #include "YMGAWidgetExtensionFactory.h"
 #include "YAlignment.h"

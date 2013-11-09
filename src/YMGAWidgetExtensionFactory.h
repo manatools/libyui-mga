@@ -16,6 +16,14 @@
   Floor, Boston, MA 02110-1301 USA
 */
 
+/*-/
+
+  File:         YMGAWidgetFactory.h
+
+  Author:       Angelo Naselli <anaselli@linux.it>
+
+/-*/
+
 #ifndef YMGAWidgetExtensionFactory_h
 #define YMGAWidgetExtensionFactory_h
 
@@ -27,8 +35,6 @@
 
 
 class YWidget;
-
-
 
 
 /**

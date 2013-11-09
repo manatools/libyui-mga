@@ -1,5 +1,6 @@
 /*
-  Copyright (C) 2000-2012 Novell, Inc
+  Copyright 2013 by Angelo Naselli <anaselli at linux dot it>
+ 
   This library is free software; you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License as
   published by the Free Software Foundation; either version 2.1 of the
@@ -16,11 +17,12 @@
 
 /*-/
 
-  File:		YMGA_CBTable.h
+  File:         YMGA_CBTable.h
 
-  Author:	Angelo Naselli <anaselli@linux.it>
+  Author:       Angelo Naselli <anaselli@linux.it>
 
 /-*/
+
 
 #ifndef YMGA_CBTable_h
 #define YMGA_CBTable_h
@@ -42,6 +44,7 @@ enum YTableMode {
 class YMGA_CBTablePrivate;
 
 /**
+ * See document of YTable
  * Table: Selection list with multiple columns. The user can select exactly one
  * row (with all its columns) from that list. Each cell (each column within
  * each row) has a label text and an optional icon (*).

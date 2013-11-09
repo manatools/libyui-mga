@@ -1,5 +1,6 @@
 /*
   Copyright (c) 2000 - 2012 Novell, Inc.
+  Copyright (C) 2013 Angelo Naselli <anaselli at linux dot it>
 
   Permission is hereby granted, free of charge, to any person obtaining
   a copy of this software and associated documentation files (the
@@ -21,16 +22,18 @@
   THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 /*-/
-   File:       ManyWidgets.cc
-   Author:     Michael Andres <ma@suse.de>
+   File:                ManyWidgets.cc
+   Original Author:     Michael Andres <ma@suse.de>
+   
+   Example of an application using libyui and libyui-mga widgets.
 
-   Simple libyui example using a couple of different widgets.
 /-*/
 
 #include <sstream>
 
 #define YUILogComponent "ManyWidget"
 #include <yui/YUI.h>
+#include <yui/YUILoader.h>
 #include <yui/YWE.h>
 #include <yui/YUILog.h>
 #include <yui/YApplication.h>

@@ -40,7 +40,7 @@ YMGAWidgetFactory::~YMGAWidgetFactory()
     // NOP
 }
 
-YMGAWidgetFactory* YMGAWidgetFactory::getYMGAWidgetFactory ( YWidgetExtensionFactory* instance )
+YMGAWidgetFactory* YMGAWidgetFactory::getYMGAWidgetFactory ( YExternalWidgetsFactory* instance )
 {
     return dynamic_cast<YMGAWidgetFactory*>(instance);
 }

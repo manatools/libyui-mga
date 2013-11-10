@@ -1,7 +1,7 @@
 /*
   Copyright (C) 2013 Angelo Naselli <anaselli at linux dot it>
   
-  This file is a YWidgetExtensionFactory implementation 
+  This file is a YExternalWidgetsFactory implementation 
   
   This library is free software; you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License as
@@ -29,7 +29,7 @@
 
 #include <string>
 
-#include <yui/YWidgetExtensionFactory.h>
+#include <yui/YExternalWidgetsFactory.h>
 #include <yui/YTypes.h>
 #include "YMGA_CBTable.h"
 
@@ -43,23 +43,23 @@ class YWidget;
  * Refer to the respective widget's documentation (in the header file) for
  * documentation about the function parameters.
  **/
-class YMGAWidgetFactory : public YWidgetExtensionFactory
+class YMGAWidgetFactory : public YExternalWidgetsFactory
 {
 public:
 
     virtual YMGA_CBTable * createTable ( YWidget * parent, YTableHeader * header_disown, YTableMode mode = YTableSingleLineSelection ) = 0;
 
     // usefull for bindings where casts are not easy to use.
-    static YMGAWidgetFactory* getYMGAWidgetFactory(YWidgetExtensionFactory* instance);
+    static YMGAWidgetFactory* getYMGAWidgetFactory(YExternalWidgetsFactory* instance);
 
 protected:
 
-    friend class YWE;
+    friend class YExternalWidgets;
 
     /**
      * Constructor.
      *
-     * Use YWE::widgetExtensionFactory() to get the singleton for this class.
+     * Use YExternalWidgets::widgetExtensionFactory() to get the singleton for this class.
      **/
     YMGAWidgetFactory();
 

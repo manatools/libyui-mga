@@ -34,7 +34,7 @@
 #define YUILogComponent "ManyWidget"
 #include <yui/YUI.h>
 #include <yui/YUILoader.h>
-#include <yui/YWE.h>
+#include <yui/YExternalWidgets.h>
 #include <yui/YUILog.h>
 #include <yui/YApplication.h>
 #include <yui/YWidgetFactory.h>
@@ -454,9 +454,9 @@ int main( int argc, char **argv )
     head->addColumn( "Center", YAlignCenter );
     head->addColumn( "Left", YAlignBegin );
    // auto table		= YUI::widgetFactory()->createTable( atLeft(frame), head, YTableMode::YTableCheckBoxOnFirstColumn);
-    YUILoader::loadWE("mga", "_Z8createWEv");
+    YUILoader::loadExternalWidgets("mga", "_Z8createWEv");
 
-    YMGA_CBTable* table		= ((YMGAWidgetFactory*)YWE::widgetExtensionFactory())->createTable( atLeft(frame), head, YTableMode::YTableCheckBoxOnLastColumn);
+    YMGA_CBTable* table		= ((YMGAWidgetFactory*)YExternalWidgets::externalWidgetsFactory())->createTable( atLeft(frame), head, YTableMode::YTableCheckBoxOnLastColumn);
   //  auto table		= YUI::widgetFactory()->createTable( atLeft(frame), head, YTableMode::YTableSingleLineSelection);
 //    auto table		= YUI::widgetFactory()->createTable( atLeft(frame), head, YTableMode::YTableMultiSelection);
     table->setNotify( true );

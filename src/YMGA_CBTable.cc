@@ -76,16 +76,16 @@ YTableMode YMGA_CBTable::selectionMode()
 }
 
 
-// void YMGA_CBTable::addItem ( YItem* item )
-// {
-//   YUI_CHECK_PTR( item );
-//   bool selected = item->selected();
-//     
-//   YSelectionWidget::addItem ( item );
-//   
-//   // get rid of YSelectionWidget::addItem that selects first item
-//   item->setSelected(selected);
-// }
+void YMGA_CBTable::addItem ( YItem* item )
+{
+  YUI_CHECK_PTR( item );
+  bool selected = item->selected();
+    
+  YSelectionWidget::addItem ( item );
+  
+  // get rid of YSelectionWidget::addItem that selects first item
+  item->setSelected(selected);
+}
 
 void
 YMGA_CBTable::setTableHeader( YTableHeader * newHeader )

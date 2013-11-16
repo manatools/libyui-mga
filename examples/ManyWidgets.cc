@@ -456,7 +456,7 @@ int main( int argc, char **argv )
    // auto table		= YUI::widgetFactory()->createTable( atLeft(frame), head, YTableMode::YTableCheckBoxOnFirstColumn);
     YUILoader::loadExternalWidgets("mga", "_Z8createWEv");
 
-    YMGA_CBTable* table		= ((YMGAWidgetFactory*)YExternalWidgets::externalWidgetsFactory())->createTable( atLeft(frame), head, YTableMode::YTableCheckBoxOnLastColumn);
+    YMGA_CBTable* table		= ((YMGAWidgetFactory*)YExternalWidgets::externalWidgetFactory())->createTable( atLeft(frame), head, YTableMode::YTableCheckBoxOnLastColumn);
   //  auto table		= YUI::widgetFactory()->createTable( atLeft(frame), head, YTableMode::YTableSingleLineSelection);
 //    auto table		= YUI::widgetFactory()->createTable( atLeft(frame), head, YTableMode::YTableMultiSelection);
     table->setNotify( true );

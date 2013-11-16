@@ -219,7 +219,7 @@ public:
      *
      * Reimplementation of YSelectionWidget::addItem.
      **/
-//     virtual void addItem( YItem * item_disown );
+     virtual void addItem( YItem * item_disown );
 
     /**
      * Exchange the previous table header with a new one. This will delete the

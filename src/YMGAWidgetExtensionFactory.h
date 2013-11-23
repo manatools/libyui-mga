@@ -31,8 +31,11 @@
 
 #include <yui/YExternalWidgetFactory.h>
 #include <yui/YTypes.h>
+#include <yui/YEvent.h>
+
 #include "YMGA_CBTable.h"
 
+struct stat;
 
 class YWidget;
 
@@ -49,9 +52,21 @@ public:
 
     virtual YMGA_CBTable * createTable ( YWidget * parent, YTableHeader * header_disown, YTableMode mode = YTableSingleLineSelection ) = 0;
 
-    // usefull for bindings where casts are not easy to use.
+    /**
+     * casts useful for bindings
+     * 
+     **/
+    // cast to get YMGAWidgetFactory 
     static YMGAWidgetFactory* getYMGAWidgetFactory(YExternalWidgetFactory* instance);
-
+    
+    // event conversions
+    static YWidgetEvent*  getYWidgetEvent(YEvent *event);
+    static YKeyEvent*     getYKeyEvent(YEvent *event);
+    static YMenuEvent*    getYMenuEvent(YEvent *event);
+    static YCancelEvent*  getYCancelEvent(YEvent *event);
+    static YDebugEvent*   getYDebugEvent(YEvent *event);
+    static YTimeoutEvent* getYTimeoutEvent(YEvent *event);
+    
 protected:
 
     friend class YExternalWidgets;

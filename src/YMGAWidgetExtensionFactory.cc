@@ -40,7 +40,40 @@ YMGAWidgetFactory::~YMGAWidgetFactory()
     // NOP
 }
 
+///< casts
 YMGAWidgetFactory* YMGAWidgetFactory::getYMGAWidgetFactory ( YExternalWidgetFactory* instance )
 {
     return dynamic_cast<YMGAWidgetFactory*>(instance);
 }
+
+YWidgetEvent*  YMGAWidgetFactory::getYWidgetEvent(YEvent *event)
+{
+    return dynamic_cast<YWidgetEvent*>(event);
+}
+
+YKeyEvent*     YMGAWidgetFactory::getYKeyEvent(YEvent *event)
+{
+    return dynamic_cast<YKeyEvent*>(event);
+}
+
+YMenuEvent*    YMGAWidgetFactory::getYMenuEvent(YEvent *event)
+{
+    return dynamic_cast<YMenuEvent*>(event);
+}
+
+YCancelEvent*  YMGAWidgetFactory::getYCancelEvent(YEvent *event)
+{
+    return dynamic_cast<YCancelEvent*>(event);
+}
+
+YDebugEvent*   YMGAWidgetFactory::getYDebugEvent(YEvent *event)
+{
+    return dynamic_cast<YDebugEvent*>(event);
+}
+
+YTimeoutEvent* YMGAWidgetFactory::getYTimeoutEvent(YEvent *event)
+{
+    return dynamic_cast<YTimeoutEvent*>(event);
+}
+
+  

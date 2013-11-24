@@ -33,13 +33,16 @@
 #include <yui/YSelectionWidget.h>
 #include <yui/YTableItem.h>
 #include <yui/YTableHeader.h>
+#include <yui/YEvent.h>
 
 enum YTableMode {
-    YTableSingleLineSelection,
-    YTableMultiSelection,
-    YTableCheckBoxOnFirstColumn,
+    YTableSingleLineSelection,     //TO BE REMOVED
+    YTableMultiSelection,          //TO BE REMOVED
+    YTableCheckBoxOnFirstColumn=2, //back compatible
     YTableCheckBoxOnLastColumn
   };
+
+  
   
 class YMGA_CBTablePrivate;
 
@@ -78,7 +81,7 @@ protected:
      * only be set in the constructor.
      **/
     YMGA_CBTable( YWidget * parent, YTableHeader * header, YTableMode mode );
-
+    
 public:
 
     /**
@@ -229,6 +232,43 @@ public:
      * all items will implicitly be deleted.
      **/
     void setTableHeader( YTableHeader * newHeader );
+    
+    /**
+     * From YSelectionWidget returns the item at index 'index' (from 0)
+     * or 0 if there is no such item.
+     **/
+    virtual YItem* item(int index ) const;
+    
+    /**
+     * When derived classes emit YWidgetEvent with reason ValueChanged
+     * they have to set which item is changed. Who manages the event 
+     * have to use changedItem() to get it.
+     * 
+     * Derived classes can overwrite this function, but they should call this
+     * base class function in the new implementation.
+     */
+    virtual void setChangedItem(YItem* pItem);    
+    
+    /**
+     * Return the (first) selected item or 0 if none is selected.
+     **/
+    virtual YItem * changedItem();
+
+    // yui bindings problem workarounds:
+    /**
+     * YSelectionWidget does not implement the increment of iterator
+     * and bindings seem not to work with iterator++, next function
+     * just returns the iterator icrementation, NOTE that it does not check
+     * input parameter, just increment it.
+     */  
+    YItemIterator nextItem( YItemIterator currentIterator);
+
+    /**
+     * useful cast for bindings.
+     * it does not any assunption on iter, so it is up to the user to
+     * check if it is valid, it just returns *it.
+     */
+    YItem* YItemIteratorToYItem(YItemIterator iter); 
 
 private:
 

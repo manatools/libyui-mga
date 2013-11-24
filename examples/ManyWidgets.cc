@@ -207,6 +207,7 @@ void popup()
   auto vbox		= YUI::widgetFactory()->createVBox( dialog );
 
   /*auto label		= */YUI::widgetFactory()->createLabel( vbox, "Let it BEEP!" );
+  
   YUI::widgetFactory()->createVSpacing( vbox );
   auto beepButton	= YUI::widgetFactory()->createPushButton( vbox, "Beep" );
   beepButton->setFunctionKey( 5 );
@@ -248,6 +249,8 @@ int main( int argc, char **argv )
   YUI::app()->setDefaultFunctionKey( "Quit", 10 );
   YUI::app()->setDefaultFunctionKey( "Ok", 10 );
 
+  YUILoader::loadExternalWidgets("mga"); //default symbol "_Z21createExternalWidgetsv"
+  
   // layout dialog:
   YDialog    * dialog	= YUI::widgetFactory()->createMainDialog();
   YLayoutBox * vbox	= YUI::widgetFactory()->createVBox( dialog );
@@ -443,7 +446,7 @@ int main( int argc, char **argv )
     }
   }
 
-  frame			= YUI::widgetFactory()->createCheckBoxFrame( hbox, "Table", false );
+  frame			= YUI::widgetFactory()->createCheckBoxFrame( hbox, "Checkable Table", false );
   {
     frame->setWeight( YD_HORIZ, 1 );
     frame		= YUI::widgetFactory()->createHVCenter( frame );
@@ -453,12 +456,8 @@ int main( int argc, char **argv )
     head->addColumn( "Right", YAlignEnd );
     head->addColumn( "Center", YAlignCenter );
     head->addColumn( "Left", YAlignBegin );
-   // auto table		= YUI::widgetFactory()->createTable( atLeft(frame), head, YTableMode::YTableCheckBoxOnFirstColumn);
-    YUILoader::loadExternalWidgets("mga", "_Z8createWEv");
-
-    YMGA_CBTable* table		= ((YMGAWidgetFactory*)YExternalWidgets::externalWidgetFactory())->createTable( atLeft(frame), head, YTableMode::YTableCheckBoxOnLastColumn);
-  //  auto table		= YUI::widgetFactory()->createTable( atLeft(frame), head, YTableMode::YTableSingleLineSelection);
-//    auto table		= YUI::widgetFactory()->createTable( atLeft(frame), head, YTableMode::YTableMultiSelection);
+    
+    YMGA_CBTable* table		= ((YMGAWidgetFactory*)YExternalWidgets::externalWidgetFactory())->createCBTable( atRight(frame), head, YTableMode::YTableCheckBoxOnLastColumn);
     table->setNotify( true );
 
     YItemCollection items;

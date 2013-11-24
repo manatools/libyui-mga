@@ -50,7 +50,7 @@ class YMGAWidgetFactory : public YExternalWidgetFactory
 {
 public:
 
-    virtual YMGA_CBTable * createTable ( YWidget * parent, YTableHeader * header_disown, YTableMode mode = YTableSingleLineSelection ) = 0;
+    virtual YMGA_CBTable * createCBTable ( YWidget * parent, YTableHeader * header_disown, YTableMode mode = YTableSingleLineSelection ) = 0;
 
     /**
      * casts useful for bindings

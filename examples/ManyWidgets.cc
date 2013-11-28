@@ -248,9 +248,12 @@ int main( int argc, char **argv )
   YUI::app()->setDefaultFunctionKey( "Cancel",  9 );
   YUI::app()->setDefaultFunctionKey( "Quit", 10 );
   YUI::app()->setDefaultFunctionKey( "Ok", 10 );
-
-  YUILoader::loadExternalWidgets("mga"); //default symbol "_Z21createExternalWidgetsv"
   
+  const std::string MageiaPlugin = "mga";
+  // Plugin can be loaded by using YExternalWidgets::externalWidgets(name) or
+  // YUILoader::loadExternalWidgets(name); //default symbol "_Z21createExternalWidgetsv"
+  YExternalWidgets * pMGAExternalWidgets = YExternalWidgets::externalWidgets(MageiaPlugin);
+  YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory(MageiaPlugin));
   // layout dialog:
   YDialog    * dialog	= YUI::widgetFactory()->createMainDialog();
   YLayoutBox * vbox	= YUI::widgetFactory()->createVBox( dialog );
@@ -447,6 +450,8 @@ int main( int argc, char **argv )
   }
 
   frame			= YUI::widgetFactory()->createCheckBoxFrame( hbox, "Checkable Table", false );
+  YCheckBoxFrame* frm = dynamic_cast<YCheckBoxFrame*>(frame);
+  std::cout << (frm->autoEnable() ? "YES":"NO") << std::endl;
   {
     frame->setWeight( YD_HORIZ, 1 );
     frame		= YUI::widgetFactory()->createHVCenter( frame );
@@ -457,7 +462,7 @@ int main( int argc, char **argv )
     head->addColumn( "Center", YAlignCenter );
     head->addColumn( "Left", YAlignBegin );
     
-    YMGA_CBTable* table		= ((YMGAWidgetFactory*)YExternalWidgets::externalWidgetFactory())->createCBTable( atRight(frame), head, YTableMode::YTableCheckBoxOnLastColumn);
+    YMGA_CBTable* table		= pMGAFactory->createCBTable( atRight(frame), head, YTableMode::YTableCheckBoxOnLastColumn);
     table->setNotify( true );
 
     YItemCollection items;

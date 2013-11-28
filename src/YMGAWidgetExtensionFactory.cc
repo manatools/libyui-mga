@@ -29,6 +29,9 @@
 #include "YUI.h"
 #include "YApplication.h"
 
+#define YUILogComponent "ew"
+#include <yui/YUILog.h>
+
 
 YMGAWidgetFactory::YMGAWidgetFactory()
 {
@@ -38,6 +41,7 @@ YMGAWidgetFactory::YMGAWidgetFactory()
 YMGAWidgetFactory::~YMGAWidgetFactory()
 {
     // NOP
+  yuiMilestone() << "Factory removed" << std::endl;
 }
 
 ///< casts

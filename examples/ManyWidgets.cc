@@ -251,9 +251,9 @@ int main( int argc, char **argv )
   
   const std::string MageiaPlugin = "mga";
   // Plugin can be loaded by using YExternalWidgets::externalWidgets(name) or
-  // YUILoader::loadExternalWidgets(name); //default symbol "_Z21createExternalWidgetsv"
+  // YUILoader::loadExternalWidgets(name); //default symbol "_Z21createExternalWidgetsPKc"
   YExternalWidgets * pMGAExternalWidgets = YExternalWidgets::externalWidgets(MageiaPlugin);
-  YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory(MageiaPlugin));
+  YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
   // layout dialog:
   YDialog    * dialog	= YUI::widgetFactory()->createMainDialog();
   YLayoutBox * vbox	= YUI::widgetFactory()->createVBox( dialog );

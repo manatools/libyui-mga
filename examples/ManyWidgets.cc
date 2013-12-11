@@ -462,7 +462,7 @@ int main( int argc, char **argv )
     head->addColumn( "Center", YAlignCenter );
     head->addColumn( "Left", YAlignBegin );
     
-    YMGA_CBTable* table		= pMGAFactory->createCBTable( atRight(frame), head, YTableMode::YTableCheckBoxOnLastColumn);
+    YMGA_CBTable* table		= pMGAFactory->createCBTable( atRight(frame), head, YCBTableMode::YCBTableCheckBoxOnLastColumn);
     table->setNotify( true );
 
     YItemCollection items;

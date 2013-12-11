@@ -36,7 +36,7 @@ struct YMGA_CBTablePrivate
     : header ( header )
     , keepSorting ( false )
     , immediateMode ( false )
-    , mode ( YTableCheckBoxOnFirstColumn )
+    , mode ( YCBTableCheckBoxOnFirstColumn )
     , item ( 0 )
   {
   }
@@ -44,7 +44,7 @@ struct YMGA_CBTablePrivate
   YTableHeader* header;
   bool          keepSorting;
   bool          immediateMode;
-  YTableMode    mode;
+  YCBTableMode  mode;
   YItem*        item;
 };
 
@@ -52,17 +52,13 @@ struct YMGA_CBTablePrivate
 
 
 
-YMGA_CBTable::YMGA_CBTable ( YWidget* parent, YTableHeader * header, YTableMode mode )
+YMGA_CBTable::YMGA_CBTable ( YWidget* parent, YTableHeader * header, YCBTableMode mode )
   :YSelectionWidget ( parent,
                       "",     // label
-                      mode==YTableSingleLineSelection ) // enforceSingleSelection
+                      false ) // enforceSingleSelection
   , priv ( new YMGA_CBTablePrivate ( header ) )
 {
   YUI_CHECK_PTR ( header );
-  // TODO Remove YTableSingleLineSelection and YTableMultiSelectionvalues to let YTable managing them
-  if ( mode != YTableCheckBoxOnFirstColumn && mode != YTableCheckBoxOnLastColumn )
-    YUI_THROW ( YUIException() );
-
   YUI_CHECK_NEW ( priv );
 
   priv->mode = mode;
@@ -87,7 +83,7 @@ void YMGA_CBTable::setChangedItem ( YItem* pItem )
 }
 
 
-YTableMode YMGA_CBTable::selectionMode()
+YCBTableMode YMGA_CBTable::tableMode()
 {
   return priv->mode;
 }
@@ -186,6 +182,11 @@ YItemIterator YMGA_CBTable::nextItem( YItemIterator currentIterator)
 YItem* YMGA_CBTable::YItemIteratorToYItem ( YItemIterator it )
 {
   return *it;
+}
+
+YTableItem* YMGA_CBTable::toYTableItem ( YItem* item)
+{
+  return dynamic_cast<YTableItem*>(item);
 }
 
 const YPropertySet &YMGA_CBTable::propertySet()

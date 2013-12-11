@@ -35,11 +35,9 @@
 #include <yui/YTableHeader.h>
 #include <yui/YEvent.h>
 
-enum YTableMode {
-    YTableSingleLineSelection,     //TO BE REMOVED
-    YTableMultiSelection,          //TO BE REMOVED
-    YTableCheckBoxOnFirstColumn=2, //back compatible
-    YTableCheckBoxOnLastColumn
+enum YCBTableMode {
+    YCBTableCheckBoxOnFirstColumn=2, //back compatible
+    YCBTableCheckBoxOnLastColumn
   };
 
   
@@ -80,7 +78,7 @@ protected:
      * items at the same time (e.g., with shift-click or ctrl-click). This can
      * only be set in the constructor.
      **/
-    YMGA_CBTable( YWidget * parent, YTableHeader * header, YTableMode mode );
+    YMGA_CBTable( YWidget * parent, YTableHeader * header, YCBTableMode mode );
     
 public:
 
@@ -157,10 +155,10 @@ public:
     bool hasMultiSelection() const;
 
      /**
-     * returns the YTable selection mode
+     * returns the YCBTable checkbox position mode
      *
      **/ 
-    YTableMode selectionMode();
+    YCBTableMode tableMode();
 
     /**
      * Notification that a cell (its text and/or its icon) was changed from the
@@ -269,6 +267,12 @@ public:
      * check if it is valid, it just returns *it.
      */
     YItem* YItemIteratorToYItem(YItemIterator iter); 
+    
+    /**
+     * useful cast for bindings.
+     * it just performs a dynamic_cast
+     */
+    YTableItem* toYTableItem( YItem* item );
 
 private:
 

@@ -45,7 +45,7 @@ struct YMGA_CBTablePrivate
   bool          keepSorting;
   bool          immediateMode;
   YCBTableMode  mode;
-  YItem*        item;
+  YCBTableItem* item;
 };
 
 
@@ -72,12 +72,12 @@ YMGA_CBTable::~YMGA_CBTable()
 {
 }
 
-YItem* YMGA_CBTable::changedItem()
+YCBTableItem* YMGA_CBTable::changedItem()
 {
   return priv->item;
 }
 
-void YMGA_CBTable::setChangedItem ( YItem* pItem )
+void YMGA_CBTable::setChangedItem ( YCBTableItem* pItem )
 {
   priv->item = pItem;
 }
@@ -92,12 +92,12 @@ YCBTableMode YMGA_CBTable::tableMode()
 void YMGA_CBTable::addItem ( YItem* item )
 {
   YUI_CHECK_PTR ( item );
-  bool selected = item->selected();
+//   bool selected = item->selected();
 
   YSelectionWidget::addItem ( item );
 
   // get rid of YSelectionWidget::addItem that selects first item
-  item->setSelected ( selected );
+//   item->setSelected ( selected );
 }
 
 void YMGA_CBTable::setTableHeader ( YTableHeader * newHeader )
@@ -184,9 +184,9 @@ YItem* YMGA_CBTable::YItemIteratorToYItem ( YItemIterator it )
   return *it;
 }
 
-YTableItem* YMGA_CBTable::toYTableItem ( YItem* item)
+YCBTableItem* YMGA_CBTable::toCBYTableItem ( YItem* item )
 {
-  return dynamic_cast<YTableItem*>(item);
+  return dynamic_cast<YCBTableItem*>(item);
 }
 
 const YPropertySet &YMGA_CBTable::propertySet()

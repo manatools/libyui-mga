@@ -28,7 +28,6 @@
 #define YMGA_CBTable_h
 
 #include <yui/YTable.h>
-
 #include <yui/YTypes.h>
 #include <yui/YSelectionWidget.h>
 #include <yui/YTableItem.h>
@@ -40,7 +39,56 @@ enum YCBTableMode {
     YCBTableCheckBoxOnLastColumn
   };
 
-  
+
+class YCBTableItem : public YTableItem
+{
+public:
+  /**
+     * Default constructor. Use addCell() to give it any content.
+     **/
+    YCBTableItem() : YTableItem(), _checked(false) {}
+
+    /**
+     * Convenience constructor for table items without any icons.
+     *
+     * This will create up to 10 (0..9) cells. Empty cells for empty labels at
+     * the end of the labels are not created, but empty cells in between are.
+     *
+     *     new YCBTableItem( "one", "two", "", "", "five" );
+     *
+     * will create an item with 5 cells:
+     *
+     *     cell[0] ==> "one"
+     *     cell[1] ==> "two"
+     *     cell[2] ==> ""
+     *     cell[3] ==> ""
+     *     cell[4] ==> "five"
+     **/
+    YCBTableItem( const std::string & label_0,
+                const std::string & label_1 = std::string(),
+                const std::string & label_2 = std::string(),
+                const std::string & label_3 = std::string(),
+                const std::string & label_4 = std::string(),
+                const std::string & label_5 = std::string(),
+                const std::string & label_6 = std::string(),
+                const std::string & label_7 = std::string(),
+                const std::string & label_8 = std::string(),
+                const std::string & label_9 = std::string() ) : 
+                YTableItem(label_0, label_1, label_2, label_3,
+                           label_4, label_5, label_6, label_7,
+                           label_8, label_9){}
+
+    /**
+     * Destructor.
+     **/
+    virtual ~YCBTableItem() {}
+    
+    void check(bool val=true) {_checked=val;}
+    bool checked() {return _checked;}
+    
+private:
+  bool _checked;
+};
   
 class YMGA_CBTablePrivate;
 
@@ -74,9 +122,11 @@ protected:
      * object and will delete it when appropriate. The header cannot be changed
      * after creating the widget.
      *
-     * 'multiSelection' indicates whether or not the user can select multiple
-     * items at the same time (e.g., with shift-click or ctrl-click). This can
-     * only be set in the constructor.
+     * 'mode' indicates whether the checkbox is in the first or in the last
+     * column.
+     * 
+     * header must contains also header for checkbox column (empty string is
+     * allowed if not wanted)
      **/
     YMGA_CBTable( YWidget * parent, YTableHeader * header, YCBTableMode mode );
     
@@ -175,6 +225,17 @@ public:
     virtual void cellChanged( const YTableCell * cell ) = 0;
 
     /**
+     * check/uncheck Item from application.
+     * 
+     * Derived classes are required to implement this and update the display
+     * accordingly.
+     *
+     * Note that item->check(true) does not update the table
+     * 
+     **/
+    virtual void checkItem( YItem * item, bool checked = true ) = 0;
+    
+    /**
      * Set a property.
      * Reimplemented from YWidget.
      *
@@ -245,12 +306,12 @@ public:
      * Derived classes can overwrite this function, but they should call this
      * base class function in the new implementation.
      */
-    virtual void setChangedItem(YItem* pItem);    
+    virtual void setChangedItem( YCBTableItem* pItem );    
     
     /**
-     * Return the (first) selected item or 0 if none is selected.
+     * Return the item which value is changed (e.g. checkbox).
      **/
-    virtual YItem * changedItem();
+    virtual YCBTableItem * changedItem();
 
     // yui bindings problem workarounds:
     /**
@@ -272,7 +333,7 @@ public:
      * useful cast for bindings.
      * it just performs a dynamic_cast
      */
-    YTableItem* toYTableItem( YItem* item );
+    YCBTableItem* toCBYTableItem( YItem* item );
 
 private:
 

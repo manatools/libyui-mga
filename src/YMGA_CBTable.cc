@@ -55,7 +55,7 @@ struct YMGA_CBTablePrivate
 YMGA_CBTable::YMGA_CBTable ( YWidget* parent, YTableHeader * header, YCBTableMode mode )
   :YSelectionWidget ( parent,
                       "",     // label
-                      false ) // enforceSingleSelection
+                      true ) // enforceSingleSelection
   , priv ( new YMGA_CBTablePrivate ( header ) )
 {
   YUI_CHECK_PTR ( header );

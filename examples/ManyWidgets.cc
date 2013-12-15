@@ -240,7 +240,9 @@ void popup()
 ///////////////////////////////////////////////////////////////////
 int main( int argc, char **argv )
 {
-  //YUILog::enableDebugLogging( true );
+  YUILog::setLogFileName( "/tmp/libyui-mga-examples.log" );
+  YUILog::enableDebugLogging();
+
 
   // auto f-keys assigned to Buttoms with that label
   // see YButtonBox for button roles.
@@ -451,6 +453,7 @@ int main( int argc, char **argv )
 
   frame			= YUI::widgetFactory()->createCheckBoxFrame( hbox, "Checkable Table", false );
   YCheckBoxFrame* frm = dynamic_cast<YCheckBoxFrame*>(frame);
+  YMGA_CBTable* table;
   std::cout << (frm->autoEnable() ? "YES":"NO") << std::endl;
   {
     frame->setWeight( YD_HORIZ, 1 );
@@ -458,22 +461,23 @@ int main( int argc, char **argv )
     frame		= YUI::widgetFactory()->createVBox( frame );
 
     auto head		= new YTableHeader;
+    head->addColumn( "Check", YAlignBegin );
     head->addColumn( "Right", YAlignEnd );
     head->addColumn( "Center", YAlignCenter );
     head->addColumn( "Left", YAlignBegin );
     
-    YMGA_CBTable* table		= pMGAFactory->createCBTable( atRight(frame), head, YCBTableMode::YCBTableCheckBoxOnLastColumn);
+    table		= pMGAFactory->createCBTable( atRight(frame), head, YCBTableMode::YCBTableCheckBoxOnFirstColumn);
     table->setNotify( true );
 
     YItemCollection items;
-    items.push_back( new YTableItem( "a", "b", "c", "extra" ) );
-    items.push_back( new YTableItem( "aa", "bb", "cc" ) );
-    items.push_back( new YTableItem( "aaa", "bbb", "ccc" ) );
-    items.push_back( new YTableItem( "aaaa", "bbbb", "cccc" ) );
-    items.push_back( new YTableItem( "aaaaa", "bbbbb", "ccccc" ) );
-    items.push_back( new YTableItem( "aaaaaa", "bbbbbb", "cccccc" ) );
-    YTableItem *myItem = static_cast<YTableItem*>(items[1]);
-    myItem->setSelected(true);
+    items.push_back( new YCBTableItem( "a", "b", "c", "extra" ) );
+    items.push_back( new YCBTableItem( "aa", "bb", "cc" ) );
+    items.push_back( new YCBTableItem( "aaa", "bbb", "ccc" ) );
+    items.push_back( new YCBTableItem( "aaaa", "bbbb", "cccc" ) );
+    items.push_back( new YCBTableItem( "aaaaa", "bbbbb", "ccccc" ) );
+    items.push_back( new YCBTableItem( "aaaaaa", "bbbbbb", "cccccc" ) );
+    YCBTableItem *myItem = static_cast<YCBTableItem*>(items[2]);
+    myItem->check(true);
     table->addItems( items ); // This is more efficient than repeatedly calling cbox->addItem
   }
 
@@ -512,6 +516,16 @@ int main( int argc, char **argv )
       else if ( event->widget() == progressSync.first )
       {
 	progressSync.second->setValue( progressSync.first->value() );
+      }
+      else if ( event->widget() == table )
+      {
+         for(int i=0; i<table->itemsCount();i++) 
+         {
+           YCBTableItem *pItem = dynamic_cast<YCBTableItem *>(table->item(i));
+           yuiMilestone() << " item " << i << (pItem->selected() ? " selected   - " : " unselected - " )
+                     << (pItem->checked() ?  " checked " :  " unchecked" )<< std::endl;
+         }
+         yuiMilestone() << std::endl;
       }
     }
   }

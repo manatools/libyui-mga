@@ -43,7 +43,7 @@ enum YCBTableMode {
 class YCBTableItem : public YTableItem
 {
 public:
-  /**
+    /**
      * Default constructor. Use addCell() to give it any content.
      **/
     YCBTableItem() : YTableItem(), _checked(false) {}
@@ -76,7 +76,7 @@ public:
                 const std::string & label_9 = std::string() ) : 
                 YTableItem(label_0, label_1, label_2, label_3,
                            label_4, label_5, label_6, label_7,
-                           label_8, label_9){}
+                           label_8, label_9),  _checked(false) {}
 
     /**
      * Destructor.

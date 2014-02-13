@@ -1,1 +1,2 @@
+SET( LIB_LINKER yui-mga )
 PROCESS_EXAMPLES()

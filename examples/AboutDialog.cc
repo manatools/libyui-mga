@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2000 - 2012 Novell, Inc.
+  Copyright 2014 by Matteo Pasotti
 
   Permission is hereby granted, free of charge, to any person obtaining
   a copy of this software and associated documentation files (the
@@ -22,11 +22,11 @@
 */
 
 
-// Trivial libyui example.
+// YMGAAboutDialog example.
 //
 // Compile with:
 //
-//     g++ -I/usr/include/yui -lyui HelloWorld.cc -o HelloWorld
+//     g++ -I/usr/include/yui -lyui AboutDialog.cc -o AboutDialog
 
 #include <yui/YUI.h>
 #include <yui/YWidgetFactory.h>

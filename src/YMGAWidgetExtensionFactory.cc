@@ -29,6 +29,8 @@
 #include "YUI.h"
 #include "YApplication.h"
 
+#include "YMGAAboutDialog.h"
+
 #define YUILogComponent "ew"
 #include <yui/YUILog.h>
 
@@ -42,6 +44,12 @@ YMGAWidgetFactory::~YMGAWidgetFactory()
 {
     // NOP
   yuiMilestone() << "Factory removed" << std::endl;
+}
+
+YMGAAboutDialog* YMGAWidgetFactory::createAboutDialog(const std::string& appname, const std::string& appver, const std::string& applicense, const std::string& appdescription)
+{
+    YMGAAboutDialog *ad = new YMGAAboutDialog(appname, appver, applicense, appdescription);
+    return ad; 
 }
 
 ///< casts

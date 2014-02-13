@@ -38,7 +38,7 @@
 struct stat;
 
 class YWidget;
-
+class YMGAAboutDialog;
 
 /**
  * Abstract extension widget factory to create widget extensions.
@@ -49,7 +49,7 @@ class YWidget;
 class YMGAWidgetFactory : public YExternalWidgetFactory
 {
 public:
-
+    YMGAAboutDialog * createAboutDialog( const std::string& appname, const std::string& appversion, const std::string& applicense, const std::string& appdescription );
     virtual YMGA_CBTable * createCBTable ( YWidget * parent, YTableHeader * header_disown, YCBTableMode mode = YCBTableCheckBoxOnFirstColumn ) = 0;
 
     /**

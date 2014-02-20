@@ -28,6 +28,8 @@
 #include <yui/YImage.h>
 #include <yui/YRichText.h>
 
+#include <boost/algorithm/string/trim.hpp>
+
 #include "YMGAAboutDialog.h"
 
 using std::endl;
@@ -42,11 +44,12 @@ public:
   std::string appLicense;
   std::string appAuthor;
   std::string appDescription;
+  std::string appIcon;
 
   YDialog* mainDialog;
 };
 
-YMGAAboutDialog::YMGAAboutDialog(const std::string& name, const std::string& version, const std::string& license, const std::string& description) :
+YMGAAboutDialog::YMGAAboutDialog(const std::string& name, const std::string& version, const std::string& license, const std::string& description, const std::string& icon) :
     priv ( new YMGAAboutDialogPrivate()) 
 {
   YUI_CHECK_NEW ( priv );
@@ -55,6 +58,7 @@ YMGAAboutDialog::YMGAAboutDialog(const std::string& name, const std::string& ver
   priv->appVersion = version;
   priv->appLicense = license;
   priv->appDescription = description;
+  priv->appIcon = icon;
   priv->mainDialog = YUI::widgetFactory()->createPopupDialog();
 }
 
@@ -68,9 +72,12 @@ void YMGAAboutDialog::start()
   YUI::app()->setApplicationTitle(priv->appName);
   auto vbox = YUI::widgetFactory()->createVBox(priv->mainDialog);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
-  auto logo = YUI::widgetFactory()->createImage(tophbox,"/usr/share/icons/mageia.png");
-  logo->setAutoScale(false);
-  logo->setWeight(YD_HORIZ, 2);
+  if(priv->appIcon.compare("")!=0)
+  {
+    auto logo = YUI::widgetFactory()->createImage(tophbox,priv->appIcon);
+    logo->setAutoScale(false);
+    logo->setWeight(YD_HORIZ, 2);
+  }
   auto toprightvbox = YUI::widgetFactory()->createVBox(tophbox);
   toprightvbox->setWeight(YD_HORIZ, 5);
   auto lblAppName = YUI::widgetFactory()->createLabel(toprightvbox, "");

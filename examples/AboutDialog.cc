@@ -44,7 +44,7 @@ int main( int argc, char **argv )
     const std::string desc = "This is a <b>demo</b> to show you how <em>beautiful</em> is the <u>builtin</u> AboutDialog<br />";
     YExternalWidgets * pMGAExternalWidgets = YExternalWidgets::externalWidgets(MageiaPlugin);
     YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
-    YMGAAboutDialog    * dialog = pMGAFactory->createAboutDialog("HostManager","1.0.0","GPLv2", desc);
+    YMGAAboutDialog    * dialog = pMGAFactory->createAboutDialog("HostManager","1.0.0","GPLv2", desc,"/usr/share/icons/mageia.png");
     //YLayoutBox * vbox   = YUI::widgetFactory()->createVBox( dialog->getYDialog() );
     //YUI::widgetFactory()->createLabel     ( vbox, "Hello, World!" );
     //YUI::widgetFactory()->createPushButton( vbox, "&OK" );

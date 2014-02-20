@@ -46,9 +46,13 @@ YMGAWidgetFactory::~YMGAWidgetFactory()
   yuiMilestone() << "Factory removed" << std::endl;
 }
 
-YMGAAboutDialog* YMGAWidgetFactory::createAboutDialog(const std::string& appname, const std::string& appver, const std::string& applicense, const std::string& appdescription)
+YMGAAboutDialog* YMGAWidgetFactory::createAboutDialog(const std::string& appname, 
+						      const std::string& appver, 
+						      const std::string& applicense, 
+						      const std::string& appdescription, 
+						      const std::string& appicon)
 {
-    YMGAAboutDialog *ad = new YMGAAboutDialog(appname, appver, applicense, appdescription);
+    YMGAAboutDialog *ad = new YMGAAboutDialog(appname, appver, applicense, appdescription, appicon);
     return ad; 
 }
 

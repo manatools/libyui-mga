@@ -24,7 +24,7 @@ class YDialog;
 class YMGAAboutDialog
 {
 public:
-	YMGAAboutDialog(const std::string& name, const std::string& version, const std::string& license, const std::string& description);
+	YMGAAboutDialog(const std::string& name, const std::string& version, const std::string& license, const std::string& description, const std::string& icon);
 	virtual ~YMGAAboutDialog();
 	
 	void start();

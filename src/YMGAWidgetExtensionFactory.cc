@@ -49,10 +49,14 @@ YMGAWidgetFactory::~YMGAWidgetFactory()
 YMGAAboutDialog* YMGAWidgetFactory::createAboutDialog(const std::string& appname, 
 						      const std::string& appver, 
 						      const std::string& applicense, 
+						      const std::string& appauthors, 
 						      const std::string& appdescription, 
-						      const std::string& appicon)
+						      const std::string& appicon,
+						      const std::string& appcredits,
+						      const std::string& appinfo
+ 						    )
 {
-    YMGAAboutDialog *ad = new YMGAAboutDialog(appname, appver, applicense, appdescription, appicon);
+    YMGAAboutDialog *ad = new YMGAAboutDialog(appname, appver, applicense, appauthors, appdescription, appicon, appcredits, appinfo);
     return ad; 
 }
 

@@ -17,17 +17,26 @@
 #ifndef YMGAAboutDialog_h
 #define YMGAAboutDialog_h
 
-
 class YMGAAboutDialogPrivate;
 class YDialog;
+class YReplacePoint;
 
 class YMGAAboutDialog
 {
 public:
-	YMGAAboutDialog(const std::string& name, const std::string& version, const std::string& license, const std::string& description, const std::string& icon);
+	YMGAAboutDialog(const std::string& name, 
+			const std::string& version, 
+			const std::string& license,
+			const std::string& authors, 
+			const std::string& description, 
+			const std::string& icon,
+			const std::string& credits = std::string(),
+			const std::string& information = std::string()
+ 		      );
 	virtual ~YMGAAboutDialog();
 	
-	void start();
+	void start(int type = 0);
+	
 	
 	void setAppName(const std::string& name);
 	void setAppVersion(const std::string& version);
@@ -45,6 +54,15 @@ public:
 
 private:
         YMGAAboutDialogPrivate *priv;
+	
+	void genAuthorsTab(YReplacePoint* rpoint);
+	void genContributorsTab(YReplacePoint* rpoint);
+	
+	void Tabbed();
+	void Classic();
+	
+	void showInformation();
+	void showCredits();
 };
 
 

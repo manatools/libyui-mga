@@ -52,8 +52,11 @@ public:
     YMGAAboutDialog * createAboutDialog( const std::string& appname, 
 					 const std::string& appversion, 
 					 const std::string& applicense, 
+					 const std::string& appauthors, 
 					 const std::string& appdescription,
-					 const std::string& appicon
+					 const std::string& appicon,
+					 const std::string& appcredits = std::string(),
+					 const std::string& appinfo = std::string()
 				       );
     virtual YMGA_CBTable * createCBTable ( YWidget * parent, YTableHeader * header_disown, YCBTableMode mode = YCBTableCheckBoxOnFirstColumn ) = 0;
 

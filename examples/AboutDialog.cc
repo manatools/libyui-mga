@@ -42,14 +42,20 @@ int main( int argc, char **argv )
 {
     const std::string MageiaPlugin = "mga";
     const std::string desc = "This is a <b>demo</b> to show you how <em>beautiful</em> is the <u>builtin</u> AboutDialog<br />";
+    const std::string authors = "<ul><li>&copy; 2013-2014 by Matteo Pasotti</li></ul>";
+    const std::string credits = "(C) 2013-2014 by Matteo Pasotti";
     YExternalWidgets * pMGAExternalWidgets = YExternalWidgets::externalWidgets(MageiaPlugin);
     YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
-    YMGAAboutDialog    * dialog = pMGAFactory->createAboutDialog("HostManager","1.0.0","GPLv2", desc,"/usr/share/icons/mageia.png");
-    //YLayoutBox * vbox   = YUI::widgetFactory()->createVBox( dialog->getYDialog() );
-    //YUI::widgetFactory()->createLabel     ( vbox, "Hello, World!" );
-    //YUI::widgetFactory()->createPushButton( vbox, "&OK" );
+    YMGAAboutDialog    * dialog = pMGAFactory->createAboutDialog(
+      "HostManager",
+      "1.0.0",
+      "GPLv2", 
+      authors,
+      desc,
+      "/usr/lib/libDrakX/icons/IC-Dhost-48.png",
+      credits,
+      "a"
+    );
 
-    dialog->start();
-    // dialog->getYDialog()->waitForEvent();
-    // dialog->getYDialog()->destroy();
+    dialog->start(1);
 }

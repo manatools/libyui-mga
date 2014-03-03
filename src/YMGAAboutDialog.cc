@@ -214,13 +214,13 @@ void YMGAAboutDialog::Tabbed()
 
 void YMGAAboutDialog::Classic()
 {
-  YPushButton* creditsButton;
-  YPushButton* infoButton;
+  YPushButton* creditsButton = nullptr;
+  YPushButton* infoButton = nullptr;
   priv->mainDialog = YUI::widgetFactory()->createPopupDialog();
   YUI::app()->setApplicationTitle("About " + priv->appName);
   auto vbox = YUI::widgetFactory()->createVBox(priv->mainDialog);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
-  if(priv->appIcon.compare("")!=0)
+  if(!priv->appIcon.empty())
   {
     auto logo = YUI::widgetFactory()->createImage(tophbox,priv->appIcon);
     logo->setAutoScale(false);
@@ -236,12 +236,12 @@ void YMGAAboutDialog::Classic()
   rt->setValue(priv->appDescription);
   
   auto bottomhbox = YUI::widgetFactory()->createHBox(vbox);
-  if(priv->appInformation.compare("")!=0)
+  if(!priv->appInformation.empty())
   {
     infoButton = YUI::widgetFactory()->createPushButton(bottomhbox, "Info");
   }
   
-  if(priv->appCredits.compare("")!=0)
+  if(!priv->appCredits.empty())
   {
     creditsButton = YUI::widgetFactory()->createPushButton(bottomhbox, "Credits");
   }
@@ -255,11 +255,11 @@ void YMGAAboutDialog::Classic()
       if ( event->eventType() == YEvent::CancelEvent
         || event->widget() == cancelButton )
         break; // leave event loop
-      else if( event->widget() == infoButton )
+      else if( ( infoButton != nullptr ) && event->widget() == infoButton )
       {
 	this->showInformation();
       }
-      else if( event->widget() == creditsButton )
+      else if( ( creditsButton != nullptr ) && event->widget() == creditsButton )
       {
 	this->showCredits();
       }

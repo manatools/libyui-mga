@@ -17,6 +17,8 @@
 #ifndef YMGAAboutDialog_h
 #define YMGAAboutDialog_h
 
+#include <string>
+
 class YMGAAboutDialogPrivate;
 class YDialog;
 class YReplacePoint;
@@ -24,6 +26,11 @@ class YReplacePoint;
 class YMGAAboutDialog
 {
 public:
+  enum DLG_MODE {
+          CLASSIC,
+          TABBED
+        };
+        
 	YMGAAboutDialog(const std::string& name, 
 			const std::string& version, 
 			const std::string& license,
@@ -35,7 +42,7 @@ public:
  		      );
 	virtual ~YMGAAboutDialog();
 	
-	void start(int type = 0);
+	void start(DLG_MODE type = CLASSIC);
 	
 	
 	void setAppName(const std::string& name);
@@ -49,8 +56,7 @@ public:
 	const std::string& getAppLicense() const;
 	const std::string& getAppAuthor() const;
 	const std::string& getAppDescription() const;
-	
-	YDialog* getYDialog();
+        
 
 private:
         YMGAAboutDialogPrivate *priv;

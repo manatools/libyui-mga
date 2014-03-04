@@ -220,7 +220,7 @@ void YMGAAboutDialog::Classic()
   YUI::app()->setApplicationTitle("About " + priv->appName);
   auto vbox = YUI::widgetFactory()->createVBox(priv->mainDialog);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
-  if(!priv->appIcon.empty())
+  if(priv->appIcon.length())
   {
     auto logo = YUI::widgetFactory()->createImage(tophbox,priv->appIcon);
     logo->setAutoScale(false);
@@ -236,7 +236,7 @@ void YMGAAboutDialog::Classic()
   rt->setValue(priv->appDescription);
   
   auto bottomhbox = YUI::widgetFactory()->createHBox(vbox);
-  if(!priv->appInformation.empty())
+  if(priv->appInformation.length())
   {
     infoButton = YUI::widgetFactory()->createPushButton(bottomhbox, "Info");
   }
@@ -268,21 +268,16 @@ void YMGAAboutDialog::Classic()
   priv->mainDialog->destroy();
 }
 
-void YMGAAboutDialog::start(int type)
+void YMGAAboutDialog::start(YMGAAboutDialog::DLG_MODE type)
 {
-  if(type == 0)
+  if(type == TABBED)
   {
-    this->Classic();
+    this->Tabbed();
   }
   else
   {
-   this->Tabbed(); 
+   this->Classic(); 
   }
-}
-
-YDialog* YMGAAboutDialog::getYDialog()
-{
-  return priv->mainDialog;
 }
 
 void YMGAAboutDialog::setAppName(const std::string& name)

@@ -34,6 +34,7 @@
 #include <yui/YLayoutBox.h>
 #include <yui/YEvent.h>
 #include <yui/YExternalWidgets.h>
+#include <yui/YCommandLine.h>
 #include "YMGAAboutDialog.h"
 #include "YMGAWidgetExtensionFactory.h"
 
@@ -41,21 +42,41 @@
 int main( int argc, char **argv )
 {
     const std::string MageiaPlugin = "mga";
+    const std::string appName = "About dialog"; 
+    const std::string version = "1.0.0";
     const std::string desc = "This is a <b>demo</b> to show you how <em>beautiful</em> is the <u>builtin</u> AboutDialog<br />";
     const std::string authors = "<ul><li>&copy; 2013-2014 by Matteo Pasotti</li></ul>";
     const std::string credits = "(C) 2013-2014 Angelo Naselli\n(C) 2013-2014 by Matteo Pasotti";
+
+    YCommandLine cmdline;
+    if (cmdline.find("--help") > 0 || cmdline.find("-h") > 0 )
+    {
+        std::cout << appName << " " << version << std::endl;
+        std::cout << std::endl;
+        std::cout << "AboutDialog [OPTIONS]" << std::endl;
+        std::cout << "OPTIONS" << std::endl;
+        std::cout << "--help | -h       run this help" << std::endl;
+        std::cout << "--tabbed          run tabbed about dialog" << std::endl;
+        return 0;
+    }
+
     YExternalWidgets * pMGAExternalWidgets = YExternalWidgets::externalWidgets(MageiaPlugin);
     YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
     YMGAAboutDialog    * dialog = pMGAFactory->createAboutDialog(
-      "HostManager",
-      "1.0.0",
-      "GPLv2", 
-      authors,
-      desc,
-      "/usr/lib/libDrakX/icons/IC-Dhost-48.png",
-      credits,
-      "a"
-    );
+                                      appName,
+                                      version,
+                                      "GPLv2",
+                                      authors,
+                                      desc,
+                                      "/usr/lib/libDrakX/icons/IC-Dhost-48.png",
+                                      credits,
+                                      "a"
+                                  );
 
-    dialog->start(1);
+    if ( cmdline.find("--tabbed") > 0 )
+        dialog->start(YMGAAboutDialog::TABBED);
+    else
+        dialog->start(YMGAAboutDialog::CLASSIC);
+
+    return 0;
 }

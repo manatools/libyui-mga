@@ -109,8 +109,11 @@ void YMGAAboutDialog::showCredits()
 {
   auto creditDialog = YUI::widgetFactory()->createPopupDialog();
   auto vbox = YUI::widgetFactory()->createVBox(creditDialog);
-  YUI::widgetFactory()->createLabel(vbox,"Credits");
-  auto rtcontent = YUI::widgetFactory()->createRichText(vbox);
+  auto tophbox = YUI::widgetFactory()->createHBox(vbox);
+  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,16.0);
+  YUI::widgetFactory()->createLabel(tophbox,"Credits");
+  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,16.0);
+  auto rtcontent = YUI::widgetFactory()->createLabel(vbox,"");
   rtcontent->setText(priv->appCredits);
   auto closeButton = YUI::widgetFactory()->createPushButton(vbox,"Close");
   while(true)
@@ -187,21 +190,21 @@ void YMGAAboutDialog::Tabbed()
       YEvent* event = priv->mainDialog->waitForEvent();
       if(event)
       {
-	// window manager "close window" button
-	if ( event->eventType() == YEvent::CancelEvent
-	  || event->widget() == cancelButton )
-	  break; // leave event loop
-	if ( event->eventType() == YEvent::MenuEvent )
-	{
-	  if( event->item()->label().replace(event->item()->label().find("&"),1,"").compare("Authors")==0 )
-	  {
-	    this->genAuthorsTab(rpoint);
-	  }
-	  else if( event->item()->label().replace(event->item()->label().find("&"),1,"").compare("Description")==0 )
-	  {
-	    this->genContributorsTab(rpoint);
-	  }
-	}
+        // window manager "close window" button
+        if ( event->eventType() == YEvent::CancelEvent
+          || event->widget() == cancelButton )
+          break; // leave event loop
+        if ( event->eventType() == YEvent::MenuEvent )
+        {
+          if( event->item()->label().replace(event->item()->label().find("&"),1,"").compare("Authors")==0 )
+          {
+            this->genAuthorsTab(rpoint);
+          }
+          else if( event->item()->label().replace(event->item()->label().find("&"),1,"").compare("Description")==0 )
+          {
+            this->genContributorsTab(rpoint);
+          }
+        }
       }
     }
     priv->mainDialog->destroy();
@@ -220,18 +223,22 @@ void YMGAAboutDialog::Classic()
   YUI::app()->setApplicationTitle("About " + priv->appName);
   auto vbox = YUI::widgetFactory()->createVBox(priv->mainDialog);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
+  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,10.0);
+  auto headvbox = YUI::widgetFactory()->createVBox(tophbox);
+  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,10.0);
+  auto lblAppName = YUI::widgetFactory()->createLabel(headvbox, "");
+  lblAppName->setValue("About " + priv->appName);
+  auto lblAppVersion = YUI::widgetFactory()->createLabel(headvbox, "");
+  lblAppVersion->setValue(priv->appVersion);
+  auto midhbox = YUI::widgetFactory()->createHBox(vbox);
   if(priv->appIcon.length())
   {
-    auto logo = YUI::widgetFactory()->createImage(tophbox,priv->appIcon);
+    auto logo = YUI::widgetFactory()->createImage(midhbox,priv->appIcon);
     logo->setAutoScale(false);
     logo->setWeight(YD_HORIZ, 2);
   }
-  auto toprightvbox = YUI::widgetFactory()->createVBox(tophbox);
+  auto toprightvbox = YUI::widgetFactory()->createVBox(midhbox);
   toprightvbox->setWeight(YD_HORIZ, 5);
-  auto lblAppName = YUI::widgetFactory()->createLabel(toprightvbox, "");
-  lblAppName->setValue("About " + priv->appName);
-  auto lblAppVersion = YUI::widgetFactory()->createLabel(toprightvbox, "");
-  lblAppVersion->setValue(priv->appVersion);
   auto rt = YUI::widgetFactory()->createRichText(toprightvbox,"");
   rt->setValue(priv->appDescription);
   
@@ -257,11 +264,11 @@ void YMGAAboutDialog::Classic()
         break; // leave event loop
       else if( ( infoButton != nullptr ) && event->widget() == infoButton )
       {
-	this->showInformation();
+        this->showInformation();
       }
       else if( ( creditsButton != nullptr ) && event->widget() == creditsButton )
       {
-	this->showCredits();
+        this->showCredits();
       }
     }
   }
@@ -276,7 +283,7 @@ void YMGAAboutDialog::start(YMGAAboutDialog::DLG_MODE type)
   }
   else
   {
-   this->Classic(); 
+    this->Classic(); 
   }
 }
 

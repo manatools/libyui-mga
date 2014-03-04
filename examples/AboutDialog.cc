@@ -69,8 +69,7 @@ int main( int argc, char **argv )
                                       authors,
                                       desc,
                                       "/usr/lib/libDrakX/icons/IC-Dhost-48.png",
-                                      credits,
-                                      "a"
+                                      credits
                                   );
 
     if ( cmdline.find("--tabbed") > 0 )

@@ -31,44 +31,43 @@ public:
           TABBED
         };
         
-	YMGAAboutDialog(const std::string& name, 
-			const std::string& version, 
-			const std::string& license,
-			const std::string& authors, 
-			const std::string& description, 
-			const std::string& icon,
-			const std::string& credits = std::string(),
-			const std::string& information = std::string()
- 		      );
-	virtual ~YMGAAboutDialog();
-	
-	void start(DLG_MODE type = CLASSIC);
-	
-	
-	void setAppName(const std::string& name);
-	void setAppVersion(const std::string& version);
-	void setAppLicense(const std::string& license);
-	void setAppAuthor(const std::string& author);
-	void setAppDescription(const std::string& description);
-	
-	const std::string& getAppName() const;
-	const std::string& getAppVersion() const;
-	const std::string& getAppLicense() const;
-	const std::string& getAppAuthor() const;
-	const std::string& getAppDescription() const;
+  YMGAAboutDialog(const std::string& name, 
+                  const std::string& version, 
+                  const std::string& license,
+                  const std::string& authors, 
+                  const std::string& description, 
+                  const std::string& icon,
+                  const std::string& credits = std::string(),
+                  const std::string& information = std::string()
+                 );
+  virtual ~YMGAAboutDialog();
+
+  void start(DLG_MODE type = CLASSIC);
+
+  void setAppName(const std::string& name);
+  void setAppVersion(const std::string& version);
+  void setAppLicense(const std::string& license);
+  void setAppAuthor(const std::string& author);
+  void setAppDescription(const std::string& description);
+  
+  const std::string& getAppName() const;
+  const std::string& getAppVersion() const;
+  const std::string& getAppLicense() const;
+  const std::string& getAppAuthor() const;
+  const std::string& getAppDescription() const;
         
 
 private:
-        YMGAAboutDialogPrivate *priv;
-	
-	void genAuthorsTab(YReplacePoint* rpoint);
-	void genContributorsTab(YReplacePoint* rpoint);
-	
-	void Tabbed();
-	void Classic();
-	
-	void showInformation();
-	void showCredits();
+  YMGAAboutDialogPrivate *priv;
+  
+  void genAuthorsTab(YReplacePoint* rpoint);
+  void genContributorsTab(YReplacePoint* rpoint);
+  
+  void Tabbed();
+  void Classic();
+  
+  void showInformation();
+  void showCredits();
 };
 
 

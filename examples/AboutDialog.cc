@@ -45,8 +45,8 @@ int main( int argc, char **argv )
     const std::string appName = "About dialog"; 
     const std::string version = "1.0.0";
     const std::string desc = "This is a <b>demo</b> to show you how <em>beautiful</em> is the <u>builtin</u> AboutDialog<br />";
-    const std::string authors = "<ul><li>&copy; 2013-2014 by Matteo Pasotti</li></ul>";
-    const std::string credits = "(C) 2013-2014 Angelo Naselli\n(C) 2013-2014 by Matteo Pasotti";
+    const std::string authors = "<h3>Developers</h3><ul><li>Angelo Naselli</li><li>Matteo Pasotti</li></ul><h3>Translators</h3>";
+    const std::string credits = "(C) 2013-2014 Angelo Naselli\n(C) 2013-2014 Matteo Pasotti";
 
     YCommandLine cmdline;
     if (cmdline.find("--help") > 0 || cmdline.find("-h") > 0 )

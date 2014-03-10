@@ -156,15 +156,20 @@ void YMGAAboutDialog::Tabbed()
   
   /*
    * Layout 
-   * _____________
-   * |             |
-   * |___CREDITS___|
-   * |_a_|_b_|_c___|
-   * |             |
-   * |             |
-   * |_____________|
+   * ________________
+   * |  APPLICATION  |
+   * |___CREDITS_____|
+   * |_a_|_b_|_c_____|
+   * |               |
+   * |               |
+   * |_______________|
    */
   
+  YUI::widgetFactory()->createSpacing(vbox,YD_VERT,false,1.0);
+  auto upperhbox = YUI::widgetFactory()->createHBox(vbox);
+  YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,2.0);
+  YUI::widgetFactory()->createLabel(upperhbox,priv->appName + " " + priv->appVersion);
+  YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,2.0);
   YUI::widgetFactory()->createSpacing(vbox,YD_VERT,false,1.0);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
   YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,2.0);
@@ -220,7 +225,7 @@ void YMGAAboutDialog::Classic()
   YPushButton* creditsButton = nullptr;
   YPushButton* infoButton = nullptr;
   priv->mainDialog = YUI::widgetFactory()->createPopupDialog();
-  YUI::app()->setApplicationTitle("About " + priv->appName);
+  YUI::app()->setApplicationTitle(priv->appName);
   auto vbox = YUI::widgetFactory()->createVBox(priv->mainDialog);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
   YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,10.0);

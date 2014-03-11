@@ -156,25 +156,31 @@ void YMGAAboutDialog::Tabbed()
   
   /*
    * Layout 
-   * ________________
-   * |  APPLICATION  |
-   * |___CREDITS_____|
-   * |_a_|_b_|_c_____|
-   * |               |
-   * |               |
-   * |_______________|
+   * ______________________
+   * | ICON  APPNAME VER  |
+   * |___CREDITS__________|
+   * |_a_|_b_|_c__________|
+   * |                    |
+   * |                    |
+   * |____________________|
    */
   
   YUI::widgetFactory()->createSpacing(vbox,YD_VERT,false,1.0);
   auto upperhbox = YUI::widgetFactory()->createHBox(vbox);
-  YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,2.0);
+  if(priv->appIcon.length())
+  {
+    YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,2.0);
+    YUI::widgetFactory()->createImage(upperhbox,priv->appIcon);
+    YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,3.0);
+  }
+  YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,3.0);
   YUI::widgetFactory()->createLabel(upperhbox,priv->appName + " " + priv->appVersion);
-  YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,2.0);
+  YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,3.0);
   YUI::widgetFactory()->createSpacing(vbox,YD_VERT,false,1.0);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
-  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,2.0);
+  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,3.0);
   YUI::widgetFactory()->createLabel(tophbox,priv->appCredits);
-  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,2.0);
+  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,3.0);
   YUI::widgetFactory()->createSpacing(vbox,YD_VERT,false,1.0);
   
   if(YUI::optionalWidgetFactory()->hasDumbTab())

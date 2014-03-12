@@ -48,6 +48,7 @@ int main( int argc, char **argv )
     const std::string authors = "<h3>Developers</h3><ul><li>Angelo Naselli</li><li>Matteo Pasotti</li></ul><h3>Translators</h3>";
     const std::string credits = "(C) 2013-2014 Angelo Naselli\n(C) 2013-2014 Matteo Pasotti";
     const std::string icon = "/usr/lib/libDrakX/icons/IC-Dhost-48.png";
+    const std::string info = "Displaying <strong>useful</strong> information";
 
     YCommandLine cmdline;
     if (cmdline.find("--help") > 0 || cmdline.find("-h") > 0 )
@@ -70,7 +71,8 @@ int main( int argc, char **argv )
                                       authors,
                                       desc,
                                       icon,
-                                      credits
+                                      credits,
+                                      info
                                   );
 
     if ( cmdline.find("--tabbed") > 0 )

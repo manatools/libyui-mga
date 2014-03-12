@@ -87,8 +87,14 @@ void YMGAAboutDialog::showInformation()
 {
   auto infoDialog = YUI::widgetFactory()->createPopupDialog();
   auto vbox = YUI::widgetFactory()->createVBox(infoDialog);
-  YUI::widgetFactory()->createLabel(vbox,"Information");
-  auto rtcontent = YUI::widgetFactory()->createRichText(vbox);
+  auto tophbox = YUI::widgetFactory()->createHBox(vbox);
+  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,10.0);
+  YUI::widgetFactory()->createLabel(tophbox,"Information");
+  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,10.0);
+  auto bottomhbox = YUI::widgetFactory()->createHBox(vbox);
+  YUI::widgetFactory()->createSpacing(bottomhbox,YD_HORIZ,false,1.0);
+  auto rtcontent = YUI::widgetFactory()->createRichText(bottomhbox);
+  YUI::widgetFactory()->createSpacing(bottomhbox,YD_HORIZ,false,1.0);
   rtcontent->setText(priv->appInformation);
   auto closeButton = YUI::widgetFactory()->createPushButton(vbox,"Close");
   while(true)
@@ -167,21 +173,34 @@ void YMGAAboutDialog::Tabbed()
   
   YUI::widgetFactory()->createSpacing(vbox,YD_VERT,false,1.0);
   auto upperhbox = YUI::widgetFactory()->createHBox(vbox);
+  
+  // the icon, if defined, if available
   if(priv->appIcon.length())
   {
-    YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,2.0);
+    YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,3.0);
     YUI::widgetFactory()->createImage(upperhbox,priv->appIcon);
     YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,3.0);
   }
+  
+  // app name and version
   YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,3.0);
   YUI::widgetFactory()->createLabel(upperhbox,priv->appName + " " + priv->appVersion);
-  YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,3.0);
+  YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,5.0);
   YUI::widgetFactory()->createSpacing(vbox,YD_VERT,false,1.0);
+  
+  // credits
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
   YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,3.0);
   YUI::widgetFactory()->createLabel(tophbox,priv->appCredits);
   YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,3.0);
-  YUI::widgetFactory()->createSpacing(vbox,YD_VERT,false,1.0);
+  YUI::widgetFactory()->createSpacing(vbox,YD_VERT,false,0.5);
+  
+  // license
+  auto licensehbox = YUI::widgetFactory()->createHBox(vbox);
+  YUI::widgetFactory()->createSpacing(licensehbox,YD_HORIZ,false,3.0);
+  YUI::widgetFactory()->createLabel(licensehbox,priv->appLicense);
+  YUI::widgetFactory()->createSpacing(licensehbox,YD_HORIZ,false,3.0);
+  YUI::widgetFactory()->createSpacing(vbox,YD_VERT,false,0.5);
   
   if(YUI::optionalWidgetFactory()->hasDumbTab())
   {
@@ -234,35 +253,51 @@ void YMGAAboutDialog::Classic()
   YUI::app()->setApplicationTitle(priv->appName);
   auto vbox = YUI::widgetFactory()->createVBox(priv->mainDialog);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
-  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,10.0);
-  auto headvbox = YUI::widgetFactory()->createVBox(tophbox);
-  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,10.0);
-  auto lblAppName = YUI::widgetFactory()->createLabel(headvbox, "");
-  lblAppName->setValue("About " + priv->appName);
-  auto lblAppVersion = YUI::widgetFactory()->createLabel(headvbox, "");
-  lblAppVersion->setValue(priv->appVersion);
-  auto midhbox = YUI::widgetFactory()->createHBox(vbox);
+  
+  // icon, if defined, if available
   if(priv->appIcon.length())
   {
-    auto logo = YUI::widgetFactory()->createImage(midhbox,priv->appIcon);
-    logo->setAutoScale(false);
-    logo->setWeight(YD_HORIZ, 2);
+    YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,2.0);
+    YUI::widgetFactory()->createImage(tophbox,priv->appIcon);
+    //auto logo = YUI::widgetFactory()->createImage(tophbox,priv->appIcon);
+    //logo->setAutoScale(false);
+    //logo->setWeight(YD_HORIZ, 2);
   }
+  
+  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,8.0);
+  auto headvbox = YUI::widgetFactory()->createVBox(tophbox);
+  YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,12.0);
+  
+  // app name and version
+  auto lblAppName = YUI::widgetFactory()->createLabel(headvbox, "");
+  lblAppName->setValue(priv->appName);
+  auto lblAppVersion = YUI::widgetFactory()->createLabel(headvbox, "");
+  lblAppVersion->setValue(priv->appVersion);
+  auto lblLicense = YUI::widgetFactory()->createLabel(headvbox, "");
+  lblLicense->setValue(priv->appLicense);
+  
+  auto midhbox = YUI::widgetFactory()->createHBox(vbox);  
+  // app description
   auto toprightvbox = YUI::widgetFactory()->createVBox(midhbox);
   toprightvbox->setWeight(YD_HORIZ, 5);
+  YUI::widgetFactory()->createSpacing(toprightvbox,YD_HORIZ,false,5.0);
   auto rt = YUI::widgetFactory()->createRichText(toprightvbox,"");
+  YUI::widgetFactory()->createSpacing(toprightvbox,YD_HORIZ,false,5.0);
   rt->setValue(priv->appDescription);
   
+  // info button, if information are defined
   auto bottomhbox = YUI::widgetFactory()->createHBox(vbox);
   if(priv->appInformation.length())
   {
     infoButton = YUI::widgetFactory()->createPushButton(bottomhbox, "Info");
   }
   
+  // credits button, if credits are defined
   if(!priv->appCredits.empty())
   {
     creditsButton = YUI::widgetFactory()->createPushButton(bottomhbox, "Credits");
   }
+  
   auto cancelButton = YUI::widgetFactory()->createPushButton(bottomhbox, "Close");
   while(true)
   {

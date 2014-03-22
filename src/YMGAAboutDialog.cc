@@ -14,6 +14,14 @@
   Floor, Boston, MA 02110-1301 USA
 */
 
+/*-/
+
+  File:         YMGAAboutDialog.cc
+
+  Author:       Matteo Pasotti <matteo.pasotti@gmail.com>
+
+/-*/
+
 #define YUILogComponent "mga-ui"
 #include "YUILog.h"
 
@@ -54,14 +62,25 @@ public:
   YDialog* mainDialog;
 };
 
+/**
+ * The constructor.
+ * @param name the application name
+ * @param version the application version
+ * @param license the application license, the short length one (e.g. GPLv2, GPLv3, LGPLv2+, etc)
+ * @param authors the string providing the list of authors; it could be html-formatted
+ * @param description the string providing a brief description of the application
+ * @param icon the string providing the file path for the application icon
+ * @param credits optional, the application credits, they can be html-formatted
+ * @param information optional, other extra informations, they can be html-formatted
+ */
 YMGAAboutDialog::YMGAAboutDialog(const std::string& name, 
 				 const std::string& version, 
 				 const std::string& license, 
 				 const std::string& authors,
 				 const std::string& description, 
 				 const std::string& icon,
-				 const std::string& credits,
-				 const std::string& information
+                 const std::string& credits,
+                 const std::string& information
 				) :
     priv ( new YMGAAboutDialogPrivate()) 
 {
@@ -83,6 +102,11 @@ YMGAAboutDialog::~YMGAAboutDialog()
   delete priv;
 }
 
+/**
+  * invoked by pressing the information button inside the Classic dialog, it shows a popup dialog providing the information passed to the constructor
+  * @see YMGAAboutDialog()
+  * @see Classic()
+  */
 void YMGAAboutDialog::showInformation()
 {
   auto infoDialog = YUI::widgetFactory()->createPopupDialog();
@@ -111,6 +135,11 @@ void YMGAAboutDialog::showInformation()
   infoDialog->destroy();
 }
 
+/**
+ * invoked by pressing the credits button inside the Classic dialog, it shows a popup dialog providing the credit list passed to the constructor
+ * @see YMGAAboutDialog()
+ * @see Classic()
+ */
 void YMGAAboutDialog::showCredits()
 {
   auto creditDialog = YUI::widgetFactory()->createPopupDialog();
@@ -136,6 +165,13 @@ void YMGAAboutDialog::showCredits()
   creditDialog->destroy();
 }
 
+/**
+ * it generates the layout and the widgets providing the authors info
+ * @param rpoint the replace point inside the Tabbed dialog
+ * @see YMGAAboutDialog()
+ * @see Tabbed()
+ */
+
 void YMGAAboutDialog::genAuthorsTab(YReplacePoint* rpoint)
 {
   rpoint->deleteChildren();
@@ -145,6 +181,12 @@ void YMGAAboutDialog::genAuthorsTab(YReplacePoint* rpoint)
   priv->mainDialog->recalcLayout();
 }
 
+/**
+ * it generates the layout and the widgets providing the contributors info
+ * @param rpoint the replace point inside the Tabbed dialog
+ * @see YMGAAboutDialog()
+ * @see Tabbed()
+ */
 void YMGAAboutDialog::genContributorsTab(YReplacePoint* rpoint)
 {
   rpoint->deleteChildren();
@@ -154,6 +196,26 @@ void YMGAAboutDialog::genContributorsTab(YReplacePoint* rpoint)
   priv->mainDialog->recalcLayout();
 }
 
+/**
+ * it generates the layout and the widgets providing extra information
+ * @param rpoint the replace point inside the Tabbed dialog
+ * @see YMGAAboutDialog()
+ * @see Tabbed()
+ */
+void YMGAAboutDialog::genInformationTab(YReplacePoint* rpoint)
+{
+  rpoint->deleteChildren();
+  auto hbox = YUI::widgetFactory()->createHBox(rpoint);
+  YUI::widgetFactory()->createRichText(hbox,priv->appInformation);
+  rpoint->showChild();
+  priv->mainDialog->recalcLayout();
+}
+
+/**
+ * it builds the tabbed version for the about dialog box. 
+ * @see YMGAAboutDialog()
+ * @see Classic()
+ */
 void YMGAAboutDialog::Tabbed()
 {
   priv->mainDialog = YUI::widgetFactory()->createPopupDialog();
@@ -205,13 +267,27 @@ void YMGAAboutDialog::Tabbed()
   if(YUI::optionalWidgetFactory()->hasDumbTab())
   {
     auto dumbTab = YUI::optionalWidgetFactory()->createDumbTab(vbox);
-    dumbTab->addItem(new YItem("Authors"));
-    dumbTab->addItem(new YItem("Description"));
+    
+    if(priv->appAuthors.length())
+    {
+      dumbTab->addItem(new YItem("Authors"));
+    }
+    if(priv->appDescription.length())
+    {
+      dumbTab->addItem(new YItem("Description"));
+    }
+    if(priv->appInformation.length())
+    {
+      dumbTab->addItem(new YItem("Information"));
+    }
     
     auto bottomvbox = YUI::widgetFactory()->createVBox(vbox);
     auto rpoint = YUI::widgetFactory()->createReplacePoint(bottomvbox);
     
-    this->genAuthorsTab(rpoint);
+    if(priv->appAuthors.length())
+    {
+      this->genAuthorsTab(rpoint);
+    }
     
     auto cancelButton = YUI::widgetFactory()->createPushButton(vbox,"Close");
     
@@ -234,6 +310,10 @@ void YMGAAboutDialog::Tabbed()
           {
             this->genContributorsTab(rpoint);
           }
+          else if( event->item()->label().replace(event->item()->label().find("&"),1,"").compare("Information")==0 )
+          {
+            this->genInformationTab(rpoint);
+          }
         }
       }
     }
@@ -245,6 +325,11 @@ void YMGAAboutDialog::Tabbed()
   }
 }
 
+/**
+ * it builds the classic version for the about dialog box. 
+ * @see YMGAAboutDialog()
+ * @see Tabbed()
+ */
 void YMGAAboutDialog::Classic()
 {
   YPushButton* creditsButton = nullptr;
@@ -259,9 +344,6 @@ void YMGAAboutDialog::Classic()
   {
     YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,2.0);
     YUI::widgetFactory()->createImage(tophbox,priv->appIcon);
-    //auto logo = YUI::widgetFactory()->createImage(tophbox,priv->appIcon);
-    //logo->setAutoScale(false);
-    //logo->setWeight(YD_HORIZ, 2);
   }
   
   YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,8.0);
@@ -321,6 +403,13 @@ void YMGAAboutDialog::Classic()
   priv->mainDialog->destroy();
 }
 
+/**
+ * it actually starts the about dialog
+ * @param type optional, DLG_MODE: defaulting to CLASSIC if not defined
+ * @see Classic()
+ * @see Tabbed()
+ * @see YMGAAboutDialog::DLG_MODE
+ */
 void YMGAAboutDialog::start(YMGAAboutDialog::DLG_MODE type)
 {
   if(type == TABBED)
@@ -332,48 +421,3 @@ void YMGAAboutDialog::start(YMGAAboutDialog::DLG_MODE type)
     this->Classic(); 
   }
 }
-
-void YMGAAboutDialog::setAppName(const std::string& name)
-{
-  priv->appName = name;
-}
-void YMGAAboutDialog::setAppVersion(const std::string& version)
-{
-  priv->appVersion = version;
-}
-void YMGAAboutDialog::setAppLicense(const std::string& license)
-{
-  priv->appLicense = license;
-}
-void YMGAAboutDialog::setAppAuthor(const std::string& author)
-{
-  priv->appAuthors = author;
-}
-
-const std::string& YMGAAboutDialog::getAppName() const
-{
-  return priv->appName;
-}
-const std::string& YMGAAboutDialog::getAppVersion() const
-{
-  return priv->appVersion;
-}
-const std::string& YMGAAboutDialog::getAppLicense() const
-{
-  return priv->appLicense;
-}
-const std::string& YMGAAboutDialog::getAppAuthor() const
-{
-  return priv->appAuthors;
-}
-
-const std::string& YMGAAboutDialog::getAppDescription() const
-{
-  return priv->appDescription;
-}
-
-void YMGAAboutDialog::setAppDescription ( const std::string& description )
-{
-  priv->appDescription = description;
-}
-

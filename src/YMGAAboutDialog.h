@@ -43,18 +43,6 @@ public:
   virtual ~YMGAAboutDialog();
 
   void start(DLG_MODE type = CLASSIC);
-
-  void setAppName(const std::string& name);
-  void setAppVersion(const std::string& version);
-  void setAppLicense(const std::string& license);
-  void setAppAuthor(const std::string& author);
-  void setAppDescription(const std::string& description);
-  
-  const std::string& getAppName() const;
-  const std::string& getAppVersion() const;
-  const std::string& getAppLicense() const;
-  const std::string& getAppAuthor() const;
-  const std::string& getAppDescription() const;
         
 
 private:
@@ -62,6 +50,7 @@ private:
   
   void genAuthorsTab(YReplacePoint* rpoint);
   void genContributorsTab(YReplacePoint* rpoint);
+  void genInformationTab(YReplacePoint* rpoint);
   
   void Tabbed();
   void Classic();

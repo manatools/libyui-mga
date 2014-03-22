@@ -45,6 +45,18 @@ YMGAWidgetFactory::~YMGAWidgetFactory()
     // NOP
   yuiMilestone() << "Factory removed" << std::endl;
 }
+/**
+ * creates an About Dialog providing the information passed as arguments
+ * @param appname the application name
+ * @param appver the application version
+ * @param applicense the application license, short-length (e.g. GPLv2, GPLv3, LGPL, LGPLv2+, etc)
+ * @param appauthors the application authors
+ * @param appdescription a brief description of the application
+ * @param appicon the file path to the application icon
+ * @param appcredits optional, the credits
+ * @param appinfo optional, other extra information
+ * @return YMGAAboutDialog instance
+ */
 
 YMGAAboutDialog* YMGAWidgetFactory::createAboutDialog(const std::string& appname, 
 						      const std::string& appver, 

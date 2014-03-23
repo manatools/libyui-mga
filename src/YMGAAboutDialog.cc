@@ -339,7 +339,7 @@ void YMGAAboutDialog::Classic()
   YPushButton* creditsButton = nullptr;
   YPushButton* infoButton = nullptr;
   std::string oldTitle = YUI::app()->applicationTitle();
-  YUI::app()->setApplicationTitle(priv->appName);
+  YUI::app()->setApplicationTitle("About " + priv->appName);
   if(priv->appIcon.length())
     YUI::app()->setApplicationIcon(priv->appIcon);
   priv->mainDialog = YUI::widgetFactory()->createPopupDialog();

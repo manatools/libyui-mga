@@ -218,8 +218,11 @@ void YMGAAboutDialog::genInformationTab(YReplacePoint* rpoint)
  */
 void YMGAAboutDialog::Tabbed()
 {
-  priv->mainDialog = YUI::widgetFactory()->createPopupDialog();
+  std::string oldTitle = YUI::app()->applicationTitle();
   YUI::app()->setApplicationTitle("About " + priv->appName);
+  if(priv->appIcon.length())
+    YUI::app()->setApplicationIcon(priv->appIcon);
+  priv->mainDialog = YUI::widgetFactory()->createPopupDialog();
   auto vbox = YUI::widgetFactory()->createVBox(priv->mainDialog);
   
   /*
@@ -323,6 +326,7 @@ void YMGAAboutDialog::Tabbed()
   {
     // handle it
   }
+  YUI::app()->setApplicationTitle(oldTitle);
 }
 
 /**
@@ -334,8 +338,11 @@ void YMGAAboutDialog::Classic()
 {
   YPushButton* creditsButton = nullptr;
   YPushButton* infoButton = nullptr;
-  priv->mainDialog = YUI::widgetFactory()->createPopupDialog();
+  std::string oldTitle = YUI::app()->applicationTitle();
   YUI::app()->setApplicationTitle(priv->appName);
+  if(priv->appIcon.length())
+    YUI::app()->setApplicationIcon(priv->appIcon);
+  priv->mainDialog = YUI::widgetFactory()->createPopupDialog();
   auto vbox = YUI::widgetFactory()->createVBox(priv->mainDialog);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
   
@@ -401,6 +408,7 @@ void YMGAAboutDialog::Classic()
     }
   }
   priv->mainDialog->destroy();
+  YUI::app()->setApplicationTitle(oldTitle);
 }
 
 /**

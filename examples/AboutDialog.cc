@@ -76,9 +76,9 @@ int main( int argc, char **argv )
                                   );
 
     if ( cmdline.find("--tabbed") > 0 )
-        dialog->start(YMGAAboutDialog::TABBED);
+        dialog->show(YMGAAboutDialog::TABBED);
     else
-        dialog->start(YMGAAboutDialog::CLASSIC);
+        dialog->show(YMGAAboutDialog::CLASSIC);
 
     return 0;
 }

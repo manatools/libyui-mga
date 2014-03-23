@@ -404,13 +404,13 @@ void YMGAAboutDialog::Classic()
 }
 
 /**
- * it actually starts the about dialog
+ * it actually shows the about dialog
  * @param type optional, DLG_MODE: defaulting to CLASSIC if not defined
  * @see Classic()
  * @see Tabbed()
  * @see YMGAAboutDialog::DLG_MODE
  */
-void YMGAAboutDialog::start(YMGAAboutDialog::DLG_MODE type)
+void YMGAAboutDialog::show(YMGAAboutDialog::DLG_MODE type)
 {
   if(type == TABBED)
   {

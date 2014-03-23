@@ -42,7 +42,7 @@ public:
                  );
   virtual ~YMGAAboutDialog();
 
-  void start(DLG_MODE type = CLASSIC);
+  void show(DLG_MODE type = CLASSIC);
         
 
 private:

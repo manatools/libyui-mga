@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Mar 24 23:19:55 CET 2014 - anaselli@linux.it
+
+-added a generic message box (with one or two buttons)
+- 1.0.3
+
+-------------------------------------------------------------------
 Sun Mar 23 21:43:08 CET 2014 - matteo.pasotti@gmail.com
 
 - added About Dialog

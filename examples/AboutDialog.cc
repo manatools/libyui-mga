@@ -26,8 +26,9 @@
 //
 // Compile with:
 //
-//     g++ -I/usr/include/yui -lyui AboutDialog.cc -o AboutDialog
+//     g++ -I/usr/include/yui -lyui -libyui-mga AboutDialog.cc -o AboutDialog
 
+#include <memory>
 #include <yui/YUI.h>
 #include <yui/YWidgetFactory.h>
 #include <yui/YDialog.h>
@@ -64,16 +65,17 @@ int main( int argc, char **argv )
 
     YExternalWidgets * pMGAExternalWidgets = YExternalWidgets::externalWidgets(MageiaPlugin);
     YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
-    YMGAAboutDialog    * dialog = pMGAFactory->createAboutDialog(
-                                      appName,
-                                      version,
-                                      "GPLv2",
-                                      authors,
-                                      desc,
-                                      icon,
-                                      credits,
-                                      info
-                                  );
+    std::auto_ptr<YMGAAboutDialog> dialog(pMGAFactory->createAboutDialog(
+                                                                          appName,
+                                                                          version,
+                                                                          "GPLv2",
+                                                                          authors,
+                                                                          desc,
+                                                                          icon,
+                                                                          credits,
+                                                                          info
+                                                                         )
+                                         );
 
     if ( cmdline.find("--tabbed") > 0 )
         dialog->show(YMGAAboutDialog::TABBED);

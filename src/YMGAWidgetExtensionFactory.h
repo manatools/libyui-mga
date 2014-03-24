@@ -1,14 +1,14 @@
 /*
   Copyright (C) 2013 Angelo Naselli <anaselli at linux dot it>
-  
-  This file is a YExternalWidgetFactory implementation 
-  
+
+  This file is a YExternalWidgetFactory implementation
+
   This library is free software; you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License as
   published by the Free Software Foundation; either version 2.1 of the
   License, or (at your option) version 3.0 of the License. This library
   is distributed in the hope that it will be useful, but WITHOUT ANY
-  WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or
   FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
   License for more details. You should have received a copy of the GNU
   Lesser General Public License along with this library; if not, write
@@ -33,7 +33,8 @@
 #include <yui/YTypes.h>
 #include <yui/YEvent.h>
 
-#include "YMGA_CBTable.h"
+#include "YMGA_CBTable.h" // YCBTableMode
+#include "YMGAMsgBox.h"   // DLG_BUTTON, DLG_MODE
 
 struct stat;
 
@@ -49,47 +50,108 @@ class YMGAAboutDialog;
 class YMGAWidgetFactory : public YExternalWidgetFactory
 {
 public:
-    YMGAAboutDialog * createAboutDialog( const std::string& appname, 
-                                         const std::string& appversion, 
-                                         const std::string& applicense, 
-                                         const std::string& appauthors, 
-                                         const std::string& appdescription,
-                                         const std::string& appicon,
-                                         const std::string& appcredits = std::string(),
-                                         const std::string& appinfo = std::string()
-                                       );
-    virtual YMGA_CBTable * createCBTable ( YWidget * parent, YTableHeader * header_disown, YCBTableMode mode = YCBTableCheckBoxOnFirstColumn ) = 0;
+  /**
+   * creates an About Dialog providing the information passed as arguments.
+   * Remember to remove this instance after.
+   * @param appname the application name
+   * @param appver the application version
+   * @param applicense the application license, short-length (e.g. GPLv2, GPLv3, LGPL, LGPLv2+, etc)
+   * @param appauthors the application authors
+   * @param appdescription a brief description of the application
+   * @param appicon the file path to the application icon
+   * @param appcredits optional, the credits
+   * @param appinfo optional, other extra information
+   * @return YMGAAboutDialog instance
+   */
+  YMGAAboutDialog* createAboutDialog ( const std::string& appname,
+                                               const std::string& appversion,
+                                               const std::string& applicense,
+                                               const std::string& appauthors,
+                                               const std::string& appdescription,
+                                               const std::string& appicon,
+                                               const std::string& appcredits = std::string(),
+                                               const std::string& appinfo = std::string()
+                                             );
 
-    /**
-     * casts useful for bindings
-     * 
-     **/
-    // cast to get YMGAWidgetFactory 
-    static YMGAWidgetFactory* getYMGAWidgetFactory(YExternalWidgetFactory* instance);
-    
-    // event conversions
-    static YWidgetEvent*  getYWidgetEvent(YEvent *event);
-    static YKeyEvent*     getYKeyEvent(YEvent *event);
-    static YMenuEvent*    getYMenuEvent(YEvent *event);
-    static YCancelEvent*  getYCancelEvent(YEvent *event);
-    static YDebugEvent*   getYDebugEvent(YEvent *event);
-    static YTimeoutEvent* getYTimeoutEvent(YEvent *event);
-    
+  /**
+   * creates a check boxed table 
+   * @param parent parent widget
+   * @param header_disown YTable header
+   * @param mode check box position (YCBTableCheckBoxOnFirstColumn, YCBTableCheckBoxOnLastColumn)
+   * @return YMGA_CBTable widget instance
+   **/
+  virtual YMGA_CBTable* createCBTable ( YWidget * parent, YTableHeader * header_disown, YCBTableMode mode = YCBTableCheckBoxOnFirstColumn ) = 0;
+
+  /**
+   * creates a dialog box dialog, use the instance to set dialog information and call show() to use it. 
+   * Remember to remove this instance after.
+   * @param button_number one button (such as "ok" for instance) B_ONE or two buttons (such as "ok" and "cancel") B_TWO
+   * @param dialog_mode   dialog type (D_NORMAL, D_INFO, D_WARNING)
+   * @return YMGAMessageBox dialog instance
+   **/
+  YMGAMessageBox* createDialogBox ( YMGAMessageBox::DLG_BUTTON button_number=YMGAMessageBox::B_ONE,
+                                             YMGAMessageBox::DLG_MODE   dialog_mode=YMGAMessageBox::D_NORMAL );
+  
+  /**
+   * creates an messagebox dialog, use the instance to set dialog information and call show() to use it. 
+   * Remember to remove this instance after.
+   * @param title dialog title 
+   * @param text  dialog content text
+   * @param btn_label button label (such as Ok, for instance)
+   * @return YMGAMessageBox dialog instance
+   **/
+  YMGAMessageBox* createMessageBox ( const std::string& title, const std::string& text, const std::string& btn_label );
+  
+   /**
+   * creates an Info messagebox dialog, use the instance to set dialog information and call show() to use it. 
+   * Remember to remove this instance after.
+   * @param title dialog title 
+   * @param text  dialog content text
+   * @param btn_label button label (such as Ok, for instance)
+   * @return YMGAMessageBox dialog instance
+   **/
+  YMGAMessageBox* createInfoBox ( const std::string& title, const std::string& text, const std::string& btn_label );
+  
+  /**
+   * creates an Warning messagebox dialog, use the instance to set dialog information and call show() to use it. 
+   * Remember to remove this instance after.
+   * @param title dialog title 
+   * @param text  dialog content text
+   * @param btn_label button label (such as Ok, for instance)
+   * @return YMGAMessageBox dialog instance
+   **/
+  YMGAMessageBox* createWarningBox ( const std::string& title, const std::string& text, const std::string& btn_label );
+  
+  /**
+   * casts useful for bindings
+   *
+   **/
+  // cast to get YMGAWidgetFactory
+  static YMGAWidgetFactory* getYMGAWidgetFactory ( YExternalWidgetFactory* instance );
+
+  // event conversions
+  static YWidgetEvent*  getYWidgetEvent ( YEvent *event );
+  static YKeyEvent*     getYKeyEvent ( YEvent *event );
+  static YMenuEvent*    getYMenuEvent ( YEvent *event );
+  static YCancelEvent*  getYCancelEvent ( YEvent *event );
+  static YDebugEvent*   getYDebugEvent ( YEvent *event );
+  static YTimeoutEvent* getYTimeoutEvent ( YEvent *event );
+
 protected:
 
-    friend class YExternalWidgets;
+  friend class YExternalWidgets;
 
-    /**
-     * Constructor.
-     *
-     * Use YExternalWidgets::widgetExtensionFactory() to get the singleton for this class.
-     **/
-    YMGAWidgetFactory();
+  /**
+   * Constructor.
+   *
+   * Use YExternalWidgets::widgetExtensionFactory() to get the singleton for this class.
+   **/
+  YMGAWidgetFactory();
 
-    /**
-     * Destructor.
-     **/
-    virtual ~YMGAWidgetFactory();
+  /**
+   * Destructor.
+   **/
+  virtual ~YMGAWidgetFactory();
 
 }; // class YMGAWidgetFactory
 

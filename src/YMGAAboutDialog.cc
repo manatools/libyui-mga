@@ -63,7 +63,7 @@ public:
 };
 
 /**
- * The constructor.
+ * The constructor. Note that this object is not a widget, so you must deleted it, if allocated on the heap.
  * @param name the application name
  * @param version the application version
  * @param license the application license, the short length one (e.g. GPLv2, GPLv3, LGPLv2+, etc)

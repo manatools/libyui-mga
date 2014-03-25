@@ -161,7 +161,7 @@ YMGAMessageBox::DLG_BUTTON YMGAMessageBox::show()
   auto toprightvbox = YUI::widgetFactory()->createVBox(midhbox);
   toprightvbox->setWeight(YD_HORIZ, 5);
   YUI::widgetFactory()->createSpacing(toprightvbox,YD_HORIZ,false,5.0);
-  YUI::widgetFactory()->createRichText(toprightvbox, priv->text, priv->useRichText);
+  YUI::widgetFactory()->createRichText(toprightvbox, priv->text, !priv->useRichText);
   YUI::widgetFactory()->createSpacing(toprightvbox,YD_HORIZ,false,5.0);
   
   // info button, if information are defined

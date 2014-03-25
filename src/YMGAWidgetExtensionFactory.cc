@@ -23,6 +23,7 @@
 /-*/
 
 
+#include "YMGAWidgetExtensionFactory.h"
 
 #include "YAlignment.h"
 #include "YPushButton.h"
@@ -33,7 +34,6 @@
 #include "YMGA_CBTable.h"
 #include "YMGAMsgBox.h"
 
-#include "YMGAWidgetExtensionFactory.h"
 
 #define YUILogComponent "ew"
 #include <yui/YUILog.h>

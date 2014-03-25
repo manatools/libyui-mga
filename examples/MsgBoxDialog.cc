@@ -43,11 +43,14 @@
 int main( int argc, char **argv )
 {
     const std::string MageiaPlugin = "mga";
-   
+    
+    YUI::widgetFactory(); // be sure base yui symble are known
+    
     YExternalWidgets * pMGAExternalWidgets = YExternalWidgets::externalWidgets(MageiaPlugin);
     YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
     std::auto_ptr<YMGAMessageBox> dialog(pMGAFactory->createInfoBox("Info test dialog", 
-                                                                    "This is an info text into an info test dialog", 
+                                                                    "This is an info text into an info test dialog<br>"
+                                                                    "This is the second line into an info test dialog",
                                                                     "Ok"));
 
     dialog->show();

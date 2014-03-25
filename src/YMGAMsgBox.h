@@ -25,6 +25,7 @@
 #define YMGAMessageBox_h
 
 #include <string>
+#include <yui/YTypes.h>
 
 class YMGAMessageBoxPrivate;
 class YDialog;
@@ -41,8 +42,11 @@ public:
   };
   
   enum DLG_MODE {
+    /// Normal dialog
     D_NORMAL,
+    /// Info dialog 
     D_INFO,
+    /// Warning dialog
     D_WARNING
   };
         
@@ -76,8 +80,16 @@ public:
   /**
    * sets the message box text information 
    * @param text dialog content text
+   * @param useRichText set text using rich text if true
    */
-  void setText(const std::string& text);
+  void setText(const std::string& text, bool useRichText=false);
+  
+  /**
+   * sets the dilaog box minimum size according to YWidgetFactory::createMinSize()
+   * @param minWidth dialog min width
+   * @param minHeight dialog min height
+   */
+  void setMinSize(YLayoutSize_t minWidth, YLayoutSize_t minHeight );
   
   /**
    * sets the message box button name (empty string is assigned by default)
@@ -94,6 +106,7 @@ public:
   
   /**
    * it shows the message box dialog using data set by user. 
+   * @return which button has been pressed to leave the dialog (B_ONE or B_TWO)
    */
   DLG_BUTTON show();
         

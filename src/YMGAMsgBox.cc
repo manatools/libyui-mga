@@ -35,6 +35,7 @@
 #include <yui/YPushButton.h>
 #include <yui/YEvent.h>
 #include <yui/YRichText.h>
+#include <YButtonBox.h>
 
 #include <boost/algorithm/string/trim.hpp>
 #include <vector>
@@ -46,7 +47,9 @@ using std::endl;
 class YMGAMessageBoxPrivate {
 public:
   YMGAMessageBoxPrivate() : title(), text(),
-                            icon(), buttons(YMGAMessageBox::B_ONE),
+                            icon(), useRichText(false),
+                            minWidth(40), minHeight(15),
+                            buttons(YMGAMessageBox::B_ONE),
                             mode(YMGAMessageBox::D_NORMAL), 
                             default_button(YMGAMessageBox::B_ONE) {}
                             
@@ -55,6 +58,9 @@ public:
   std::string title;
   std::string text;
   std::string icon;
+  bool useRichText;
+  YLayoutSize_t minWidth;
+  YLayoutSize_t minHeight;
   YMGAMessageBox::DLG_BUTTON  buttons;
   YMGAMessageBox::DLG_MODE    mode;
   YMGAMessageBox::DLG_BUTTON  default_button;
@@ -91,9 +97,22 @@ void YMGAMessageBox::setTitle(const std::string& title)
   priv->title = title;
 }
 
-void YMGAMessageBox::setText(const std::string& text)
+void YMGAMessageBox::setText(const std::string& text, bool useRichText)
 {
   priv->text = text;
+  priv->useRichText = useRichText;
+}
+
+void YMGAMessageBox::setMinSize(YLayoutSize_t minWidth, YLayoutSize_t minHeight)
+{
+  // limit dialog to a reasonable size
+  if ( minWidth > 80 || minHeight > 25 )
+  {
+      minWidth  = 80;
+      minHeight = 25;
+  }
+  priv->minHeight = minHeight;
+  priv->minWidth  = minWidth;
 }
 
 void YMGAMessageBox::setButtonLabel(const std::string& label, DLG_BUTTON button)
@@ -134,16 +153,16 @@ YMGAMessageBox::DLG_BUTTON YMGAMessageBox::show()
   }
       
   YDialog *pDialog = YUI::widgetFactory()->createPopupDialog(colorMode);
-  auto vbox = YUI::widgetFactory()->createVBox(pDialog);
-  
+  YAlignment* minSize = YUI::widgetFactory()->createMinSize( pDialog, priv->minWidth, priv->minHeight );
+  auto vbox           = YUI::widgetFactory()->createVBox( minSize );
+ 
   auto midhbox = YUI::widgetFactory()->createHBox(vbox);  
   // app description
   auto toprightvbox = YUI::widgetFactory()->createVBox(midhbox);
   toprightvbox->setWeight(YD_HORIZ, 5);
   YUI::widgetFactory()->createSpacing(toprightvbox,YD_HORIZ,false,5.0);
-  auto rt = YUI::widgetFactory()->createRichText(toprightvbox,"");
+  YUI::widgetFactory()->createRichText(toprightvbox, priv->text, priv->useRichText);
   YUI::widgetFactory()->createSpacing(toprightvbox,YD_HORIZ,false,5.0);
-  rt->setValue(priv->text);
   
   // info button, if information are defined
   auto bottomhbox = YUI::widgetFactory()->createHBox(vbox);
@@ -153,9 +172,9 @@ YMGAMessageBox::DLG_BUTTON YMGAMessageBox::show()
   }
   else { // B_TWO
     auto alignRight = YUI::widgetFactory()->createRight(bottomhbox);
-    pB1 = YUI::widgetFactory()->createPushButton(alignRight, priv->label[B_ONE]);
-    alignRight = YUI::widgetFactory()->createRight(bottomhbox);
-    pB2 = YUI::widgetFactory()->createPushButton(alignRight, priv->label[B_TWO]);
+    auto buttonBox = YUI::widgetFactory()->createHBox( alignRight );
+    pB1 = YUI::widgetFactory()->createPushButton(buttonBox, priv->label[B_ONE]);
+    pB2 = YUI::widgetFactory()->createPushButton(buttonBox, priv->label[B_TWO]);
   }
   if (priv->default_button == B_TWO)
     pDialog->setDefaultButton(pB2);

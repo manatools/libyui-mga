@@ -123,18 +123,46 @@ public:
   YMGAMessageBox* createWarningBox ( const std::string& title, const std::string& text, const std::string& btn_label );
   
   /**
-   * casts useful for bindings
+   * casts useful for bindings from YExternalWidgetFactory* to YMGAWidgetFactory*
    *
    **/
-  // cast to get YMGAWidgetFactory
   static YMGAWidgetFactory* getYMGAWidgetFactory ( YExternalWidgetFactory* instance );
 
   // event conversions
+  /**
+   * casts useful for bindings from YEvent* to YWidgetEvent*
+   *
+   **/
   static YWidgetEvent*  getYWidgetEvent ( YEvent *event );
+  
+  /**
+   * casts useful for bindings from YEvent* to YKeyEvent*
+   *
+   **/
   static YKeyEvent*     getYKeyEvent ( YEvent *event );
+  
+  /**
+   * casts useful for bindings from YEvent* to YMenuEvent*
+   *
+   **/
   static YMenuEvent*    getYMenuEvent ( YEvent *event );
+ 
+  /**
+   * casts useful for bindings from YEvent* to YCancelEvent*
+   *
+   **/
   static YCancelEvent*  getYCancelEvent ( YEvent *event );
+ 
+  /**
+   * casts useful for bindings from YEvent* to YDebugEvent*
+   *
+   **/
   static YDebugEvent*   getYDebugEvent ( YEvent *event );
+  
+  /**
+   * casts useful for bindings from YEvent* to YTimeoutEvent*
+   *
+   **/
   static YTimeoutEvent* getYTimeoutEvent ( YEvent *event );
 
 protected:

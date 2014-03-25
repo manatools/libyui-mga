@@ -36,13 +36,14 @@ public:
                   const std::string& license,
                   const std::string& authors, 
                   const std::string& description, 
-                  const std::string& icon,
+                  const std::string& logo,
+                  const std::string& icon = std::string(),
                   const std::string& credits = std::string(),
                   const std::string& information = std::string()
                  );
   virtual ~YMGAAboutDialog();
 
-  void show(DLG_MODE type = CLASSIC);
+  void show(DLG_MODE type = TABBED);
         
 
 private:

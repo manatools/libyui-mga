@@ -29,7 +29,7 @@
 #include "YUI.h"
 #include "YApplication.h"
 
-#include "YMGAAboutDialog.h"
+//#include "YMGAAboutDialog.h"
 
 #define YUILogComponent "ew"
 #include <yui/YUILog.h>
@@ -52,6 +52,7 @@ YMGAWidgetFactory::~YMGAWidgetFactory()
  * @param applicense the application license, short-length (e.g. GPLv2, GPLv3, LGPL, LGPLv2+, etc)
  * @param appauthors the application authors
  * @param appdescription a brief description of the application
+ * @param applogo the file path to the application logo
  * @param appicon the file path to the application icon
  * @param appcredits optional, the credits
  * @param appinfo optional, other extra information
@@ -62,13 +63,14 @@ YMGAAboutDialog* YMGAWidgetFactory::createAboutDialog(const std::string& appname
 						      const std::string& appver, 
 						      const std::string& applicense, 
 						      const std::string& appauthors, 
-						      const std::string& appdescription, 
+						      const std::string& appdescription,
+                              const std::string& applogo,
 						      const std::string& appicon,
 						      const std::string& appcredits,
 						      const std::string& appinfo
  						    )
 {
-    YMGAAboutDialog *ad = new YMGAAboutDialog(appname, appver, applicense, appauthors, appdescription, appicon, appcredits, appinfo);
+    YMGAAboutDialog *ad = new YMGAAboutDialog(appname, appver, applicense, appauthors, appdescription, applogo, appicon, appcredits, appinfo);
     return ad; 
 }
 

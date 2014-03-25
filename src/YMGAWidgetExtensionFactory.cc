@@ -24,12 +24,15 @@
 
 
 #include "YMGAWidgetExtensionFactory.h"
+
 #include "YAlignment.h"
 #include "YPushButton.h"
 #include "YUI.h"
 #include "YApplication.h"
 
-//#include "YMGAAboutDialog.h"
+#include "YMGAAboutDialog.h"
+#include "YMGA_CBTable.h"
+#include "YMGAMsgBox.h"
 
 #define YUILogComponent "ew"
 #include <yui/YUILog.h>
@@ -45,19 +48,6 @@ YMGAWidgetFactory::~YMGAWidgetFactory()
     // NOP
   yuiMilestone() << "Factory removed" << std::endl;
 }
-/**
- * creates an About Dialog providing the information passed as arguments
- * @param appname the application name
- * @param appver the application version
- * @param applicense the application license, short-length (e.g. GPLv2, GPLv3, LGPL, LGPLv2+, etc)
- * @param appauthors the application authors
- * @param appdescription a brief description of the application
- * @param applogo the file path to the application logo
- * @param appicon the file path to the application icon
- * @param appcredits optional, the credits
- * @param appinfo optional, other extra information
- * @return YMGAAboutDialog instance
- */
 
 YMGAAboutDialog* YMGAWidgetFactory::createAboutDialog(const std::string& appname, 
 						      const std::string& appver, 
@@ -72,6 +62,41 @@ YMGAAboutDialog* YMGAWidgetFactory::createAboutDialog(const std::string& appname
 {
     YMGAAboutDialog *ad = new YMGAAboutDialog(appname, appver, applicense, appauthors, appdescription, applogo, appicon, appcredits, appinfo);
     return ad; 
+}
+
+
+YMGAMessageBox* YMGAWidgetFactory::createDialogBox ( YMGAMessageBox::DLG_BUTTON button_number,
+                                                      YMGAMessageBox::DLG_MODE   dialog_mode )
+{
+  YMGAMessageBox *msgBox = new YMGAMessageBox(button_number, dialog_mode);
+  return msgBox;
+}
+
+YMGAMessageBox* YMGAWidgetFactory::createMessageBox ( const std::string& title, const std::string& text, const std::string& btn_label )
+{
+  YMGAMessageBox *msgBox = new YMGAMessageBox(YMGAMessageBox::B_ONE, YMGAMessageBox::D_NORMAL);
+  msgBox->setTitle(title);
+  msgBox->setText(text);
+  msgBox->setButtonLabel(btn_label, YMGAMessageBox::B_ONE);
+  return msgBox;
+}
+
+YMGAMessageBox* YMGAWidgetFactory::createInfoBox ( const std::string& title, const std::string& text, const std::string& btn_label )
+{
+  YMGAMessageBox *msgBox = new YMGAMessageBox(YMGAMessageBox::B_ONE, YMGAMessageBox::D_INFO);
+  msgBox->setTitle(title);
+  msgBox->setText(text);
+  msgBox->setButtonLabel(btn_label, YMGAMessageBox::B_ONE);
+  return msgBox;
+}
+
+YMGAMessageBox* YMGAWidgetFactory::createWarningBox ( const std::string& title, const std::string& text, const std::string& btn_label )
+{
+  YMGAMessageBox *msgBox = new YMGAMessageBox(YMGAMessageBox::B_ONE, YMGAMessageBox::D_WARNING);
+  msgBox->setTitle(title);
+  msgBox->setText(text);
+  msgBox->setButtonLabel(btn_label, YMGAMessageBox::B_ONE);
+  return msgBox;
 }
 
 ///< casts

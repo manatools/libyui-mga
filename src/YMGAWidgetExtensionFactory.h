@@ -34,11 +34,12 @@
 #include <yui/YEvent.h>
 
 #include "YMGA_CBTable.h"
+#include "YMGAAboutDialog.h"
 
 struct stat;
 
 class YWidget;
-class YMGAAboutDialog;
+//class YMGAAboutDialog;
 
 /**
  * Abstract extension widget factory to create widget extensions.
@@ -54,7 +55,8 @@ public:
                                          const std::string& applicense, 
                                          const std::string& appauthors, 
                                          const std::string& appdescription,
-                                         const std::string& appicon,
+                                         const std::string& applogo,
+                                         const std::string& appicon = std::string(),
                                          const std::string& appcredits = std::string(),
                                          const std::string& appinfo = std::string()
                                        );

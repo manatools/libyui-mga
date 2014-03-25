@@ -55,6 +55,7 @@ public:
   std::string appLicense;
   std::string appAuthors;
   std::string appDescription;
+  std::string appLogo;
   std::string appIcon;
   std::string appCredits;
   std::string appInformation;
@@ -69,7 +70,8 @@ public:
  * @param license the application license, the short length one (e.g. GPLv2, GPLv3, LGPLv2+, etc)
  * @param authors the string providing the list of authors; it could be html-formatted
  * @param description the string providing a brief description of the application
- * @param icon the string providing the file path for the application icon
+ * @param logo the string providing the file path for the application logo (high-res image)
+ * @param icon the string providing the file path for the application icon (low-res image)
  * @param credits optional, the application credits, they can be html-formatted
  * @param information optional, other extra informations, they can be html-formatted
  */
@@ -78,6 +80,7 @@ YMGAAboutDialog::YMGAAboutDialog(const std::string& name,
 				 const std::string& license, 
 				 const std::string& authors,
 				 const std::string& description, 
+                 const std::string& logo,
 				 const std::string& icon,
                  const std::string& credits,
                  const std::string& information
@@ -91,6 +94,7 @@ YMGAAboutDialog::YMGAAboutDialog(const std::string& name,
   priv->appLicense = license;
   priv->appAuthors = authors;
   priv->appDescription = description;
+  priv->appLogo = logo;
   priv->appIcon = icon;
   priv->appCredits = credits;
   priv->appInformation = information;
@@ -239,11 +243,11 @@ void YMGAAboutDialog::Tabbed()
   YUI::widgetFactory()->createSpacing(vbox,YD_VERT,false,1.0);
   auto upperhbox = YUI::widgetFactory()->createHBox(vbox);
   
-  // the icon, if defined, if available
-  if(priv->appIcon.length())
+  // the logo, if defined, if available
+  if(priv->appLogo.length())
   {
     YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,3.0);
-    YUI::widgetFactory()->createImage(upperhbox,priv->appIcon);
+    YUI::widgetFactory()->createImage(upperhbox,priv->appLogo);
     YUI::widgetFactory()->createSpacing(upperhbox,YD_HORIZ,false,3.0);
   }
   
@@ -346,11 +350,11 @@ void YMGAAboutDialog::Classic()
   auto vbox = YUI::widgetFactory()->createVBox(priv->mainDialog);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
   
-  // icon, if defined, if available
-  if(priv->appIcon.length())
+  // logo, if defined, if available
+  if(priv->appLogo.length())
   {
     YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,2.0);
-    YUI::widgetFactory()->createImage(tophbox,priv->appIcon);
+    YUI::widgetFactory()->createImage(tophbox,priv->appLogo);
   }
   
   YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,8.0);

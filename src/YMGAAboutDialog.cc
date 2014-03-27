@@ -41,6 +41,11 @@
 
 #include <boost/algorithm/string/trim.hpp>
 
+// localization stuff
+#include <libintl.h>
+#include<locale.h>
+#define _(String) gettext (String)
+
 #include "YMGAAboutDialog.h"
 
 using std::endl;
@@ -99,6 +104,11 @@ YMGAAboutDialog::YMGAAboutDialog(const std::string& name,
   priv->appCredits = credits;
   priv->appInformation = information;
   boost::algorithm::trim(priv->appIcon);
+  
+  setlocale(LC_ALL,"");
+  bindtextdomain("libyui-mga","/usr/share/locale");
+  textdomain("libyui-mga-aboutdialog");
+  //printf(_("Hello World\n"));
 }
 
 YMGAAboutDialog::~YMGAAboutDialog()
@@ -117,14 +127,14 @@ void YMGAAboutDialog::showInformation()
   auto vbox = YUI::widgetFactory()->createVBox(infoDialog);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
   YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,10.0);
-  YUI::widgetFactory()->createLabel(tophbox,"Information");
+  YUI::widgetFactory()->createLabel(tophbox,_("Information"));
   YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,10.0);
   auto bottomhbox = YUI::widgetFactory()->createHBox(vbox);
   YUI::widgetFactory()->createSpacing(bottomhbox,YD_HORIZ,false,1.0);
   auto rtcontent = YUI::widgetFactory()->createRichText(bottomhbox);
   YUI::widgetFactory()->createSpacing(bottomhbox,YD_HORIZ,false,1.0);
   rtcontent->setText(priv->appInformation);
-  auto closeButton = YUI::widgetFactory()->createPushButton(vbox,"Close");
+  auto closeButton = YUI::widgetFactory()->createPushButton(vbox,_("Close"));
   while(true)
   {
     YEvent* event = infoDialog->waitForEvent();
@@ -150,11 +160,11 @@ void YMGAAboutDialog::showCredits()
   auto vbox = YUI::widgetFactory()->createVBox(creditDialog);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
   YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,16.0);
-  YUI::widgetFactory()->createLabel(tophbox,"Credits");
+  YUI::widgetFactory()->createLabel(tophbox,_("Credits"));
   YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,16.0);
   auto rtcontent = YUI::widgetFactory()->createLabel(vbox,"");
   rtcontent->setText(priv->appCredits);
-  auto closeButton = YUI::widgetFactory()->createPushButton(vbox,"Close");
+  auto closeButton = YUI::widgetFactory()->createPushButton(vbox,_("Close"));
   while(true)
   {
     YEvent* event = creditDialog->waitForEvent();
@@ -277,15 +287,15 @@ void YMGAAboutDialog::Tabbed()
     
     if(priv->appAuthors.length())
     {
-      dumbTab->addItem(new YItem("Authors"));
+      dumbTab->addItem(new YItem(_("Authors")));
     }
     if(priv->appDescription.length())
     {
-      dumbTab->addItem(new YItem("Description"));
+      dumbTab->addItem(new YItem(_("Description")));
     }
     if(priv->appInformation.length())
     {
-      dumbTab->addItem(new YItem("Information"));
+      dumbTab->addItem(new YItem(_("Information")));
     }
     
     auto bottomvbox = YUI::widgetFactory()->createVBox(vbox);
@@ -296,7 +306,7 @@ void YMGAAboutDialog::Tabbed()
       this->genAuthorsTab(rpoint);
     }
     
-    auto cancelButton = YUI::widgetFactory()->createPushButton(vbox,"Close");
+    auto cancelButton = YUI::widgetFactory()->createPushButton(vbox,_("Close"));
     
     while(true)
     {
@@ -309,15 +319,15 @@ void YMGAAboutDialog::Tabbed()
           break; // leave event loop
         if ( event->eventType() == YEvent::MenuEvent )
         {
-          if( event->item()->label().replace(event->item()->label().find("&"),1,"").compare("Authors")==0 )
+          if( event->item()->label().replace(event->item()->label().find("&"),1,"").compare(_("Authors"))==0 )
           {
             this->genAuthorsTab(rpoint);
           }
-          else if( event->item()->label().replace(event->item()->label().find("&"),1,"").compare("Description")==0 )
+          else if( event->item()->label().replace(event->item()->label().find("&"),1,"").compare(_("Description"))==0 )
           {
             this->genContributorsTab(rpoint);
           }
-          else if( event->item()->label().replace(event->item()->label().find("&"),1,"").compare("Information")==0 )
+          else if( event->item()->label().replace(event->item()->label().find("&"),1,"").compare(_("Information"))==0 )
           {
             this->genInformationTab(rpoint);
           }
@@ -382,16 +392,16 @@ void YMGAAboutDialog::Classic()
   auto bottomhbox = YUI::widgetFactory()->createHBox(vbox);
   if(priv->appInformation.length())
   {
-    infoButton = YUI::widgetFactory()->createPushButton(bottomhbox, "Info");
+    infoButton = YUI::widgetFactory()->createPushButton(bottomhbox, _("Information"));
   }
   
   // credits button, if credits are defined
   if(!priv->appCredits.empty())
   {
-    creditsButton = YUI::widgetFactory()->createPushButton(bottomhbox, "Credits");
+    creditsButton = YUI::widgetFactory()->createPushButton(bottomhbox, _("Credits"));
   }
   
-  auto cancelButton = YUI::widgetFactory()->createPushButton(bottomhbox, "Close");
+  auto cancelButton = YUI::widgetFactory()->createPushButton(bottomhbox, _("Close"));
   while(true)
   {
     YEvent* event = priv->mainDialog->waitForEvent();

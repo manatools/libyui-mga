@@ -55,6 +55,7 @@ public:
   
   /**
     * creates an About Dialog providing the information passed as arguments
+    * Remember to remove this instance after.
     * @param appname the application name
     * @param appver the application version
     * @param applicense the application license, short-length (e.g. GPLv2, GPLv3, LGPL, LGPLv2+, etc)

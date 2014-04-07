@@ -64,8 +64,6 @@ int main( int argc, char **argv )
         return 0;
     }
 
-    YUI::widgetFactory(); // be sure base yui symble are known
-
     YExternalWidgets * pMGAExternalWidgets = YExternalWidgets::externalWidgets(MageiaPlugin);
     YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
     std::auto_ptr<YMGAAboutDialog> dialog(pMGAFactory->createAboutDialog(

@@ -46,15 +46,18 @@ int main( int argc, char **argv )
    
     YExternalWidgets * pMGAExternalWidgets = YExternalWidgets::externalWidgets(MageiaPlugin);
     YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
+    const bool useRichText = true;
     std::auto_ptr<YMGAMessageBox> dialog(pMGAFactory->createInfoBox("Info test dialog", 
                                                                     "This is an info text into an info test dialog<br>"
                                                                     "This is the second line into an info test dialog",
+                                                                    useRichText,
                                                                     "Ok"));
 
     dialog->show();
     
     dialog.reset(pMGAFactory->createWarningBox("Warning test dialog", 
-                                          "And this is an info text into a warning test dialog", 
+                                          "And this is an info text into a warning test dialog",
+                                          !useRichText,
                                           "Ok"));
    
     dialog->show();
@@ -69,7 +72,8 @@ int main( int argc, char **argv )
     if (btn == YMGAMessageBox::B_ONE)
     {
       dialog.reset(pMGAFactory->createMessageBox("MessageBox dialog", 
-                                          "Last is a normal dialog containing this info text", 
+                                          "Last is a normal dialog containing this info text",
+                                          useRichText,
                                           "Enjoy"));
    
     dialog->show();

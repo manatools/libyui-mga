@@ -72,29 +72,29 @@ YMGAMessageBox* YMGAWidgetFactory::createDialogBox ( YMGAMessageBox::DLG_BUTTON 
   return msgBox;
 }
 
-YMGAMessageBox* YMGAWidgetFactory::createMessageBox ( const std::string& title, const std::string& text, const std::string& btn_label )
+YMGAMessageBox* YMGAWidgetFactory::createMessageBox ( const std::string& title, const std::string& text, bool useRichText, const std::string& btn_label )
 {
   YMGAMessageBox *msgBox = new YMGAMessageBox(YMGAMessageBox::B_ONE, YMGAMessageBox::D_NORMAL);
   msgBox->setTitle(title);
-  msgBox->setText(text);
+  msgBox->setText(text, useRichText);
   msgBox->setButtonLabel(btn_label, YMGAMessageBox::B_ONE);
   return msgBox;
 }
 
-YMGAMessageBox* YMGAWidgetFactory::createInfoBox ( const std::string& title, const std::string& text, const std::string& btn_label )
+YMGAMessageBox* YMGAWidgetFactory::createInfoBox ( const std::string& title, const std::string& text, bool useRichText, const std::string& btn_label )
 {
   YMGAMessageBox *msgBox = new YMGAMessageBox(YMGAMessageBox::B_ONE, YMGAMessageBox::D_INFO);
   msgBox->setTitle(title);
-  msgBox->setText(text);
+  msgBox->setText(text, useRichText);
   msgBox->setButtonLabel(btn_label, YMGAMessageBox::B_ONE);
   return msgBox;
 }
 
-YMGAMessageBox* YMGAWidgetFactory::createWarningBox ( const std::string& title, const std::string& text, const std::string& btn_label )
+YMGAMessageBox* YMGAWidgetFactory::createWarningBox ( const std::string& title, const std::string& text, bool useRichText, const std::string& btn_label )
 {
   YMGAMessageBox *msgBox = new YMGAMessageBox(YMGAMessageBox::B_ONE, YMGAMessageBox::D_WARNING);
   msgBox->setTitle(title);
-  msgBox->setText(text);
+  msgBox->setText(text, useRichText);
   msgBox->setButtonLabel(btn_label, YMGAMessageBox::B_ONE);
   return msgBox;
 }

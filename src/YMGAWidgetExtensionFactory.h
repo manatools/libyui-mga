@@ -103,30 +103,33 @@ public:
      * Remember to remove this instance after.
      * @param title dialog title 
      * @param text  dialog content text
+     * @param useRichText set text using rich text if true
      * @param btn_label button label (such as Ok, for instance)
      * @return YMGAMessageBox dialog instance
      **/
-    YMGAMessageBox* createMessageBox ( const std::string& title, const std::string& text, const std::string& btn_label );
+    YMGAMessageBox* createMessageBox ( const std::string& title, const std::string& text, bool useRichText, const std::string& btn_label );
     
     /**
      * creates an Info messagebox dialog, use the instance to set dialog information and call show() to use it. 
      * Remember to remove this instance after.
      * @param title dialog title 
      * @param text  dialog content text
+     * @param useRichText set text using rich text if true
      * @param btn_label button label (such as Ok, for instance)
      * @return YMGAMessageBox dialog instance
      **/
-    YMGAMessageBox* createInfoBox ( const std::string& title, const std::string& text, const std::string& btn_label );
+    YMGAMessageBox* createInfoBox ( const std::string& title, const std::string& text, bool useRichText, const std::string& btn_label );
     
     /**
      * creates an Warning messagebox dialog, use the instance to set dialog information and call show() to use it. 
      * Remember to remove this instance after.
      * @param title dialog title 
      * @param text  dialog content text
+     * @param useRichText set text using rich text if true
      * @param btn_label button label (such as Ok, for instance)
      * @return YMGAMessageBox dialog instance
      **/
-    YMGAMessageBox* createWarningBox ( const std::string& title, const std::string& text, const std::string& btn_label );
+    YMGAMessageBox* createWarningBox ( const std::string& title, const std::string& text, bool useRichText, const std::string& btn_label );
     
     
     /**

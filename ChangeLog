@@ -1,7 +1,14 @@
 -------------------------------------------------------------------
+Wed Apr  9 21:19:10 CEST 2014 - anaselli@linux.it
+
+- added the richtext mode to factory message dialog box create 
+  methods 
+- 1.0.4
+
+-------------------------------------------------------------------
 Mon Mar 24 23:19:55 CET 2014 - anaselli@linux.it
 
--added a generic message box (with one or two buttons)
+- added a generic message box (with one or two buttons)
 - 1.0.3
 
 -------------------------------------------------------------------

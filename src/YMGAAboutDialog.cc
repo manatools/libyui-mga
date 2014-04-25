@@ -106,7 +106,7 @@ YMGAAboutDialog::YMGAAboutDialog(const std::string& name,
   boost::algorithm::trim(priv->appIcon);
   
   setlocale(LC_ALL,"");
-  bindtextdomain("libyui-mga","/usr/share/locale");
+  bindtextdomain("libyui-mga-aboutdialog","/usr/share/locale");
   textdomain("libyui-mga-aboutdialog");
   //printf(_("Hello World\n"));
 }

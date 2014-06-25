@@ -297,6 +297,7 @@ void YMGAAboutDialog::Tabbed()
     }
     
     auto cancelButton = YUI::widgetFactory()->createPushButton(vbox,"Close");
+    cancelButton->setDefaultButton();
     
     while(true)
     {
@@ -392,6 +393,8 @@ void YMGAAboutDialog::Classic()
   }
   
   auto cancelButton = YUI::widgetFactory()->createPushButton(bottomhbox, "Close");
+  cancelButton->setDefaultButton();
+
   while(true)
   {
     YEvent* event = priv->mainDialog->waitForEvent();

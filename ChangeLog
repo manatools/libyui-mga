@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Oct 19 23:36:01 CEST 2015 - anaselli@linux.it
+- aligned so version to libyui
+- 1.0.6
+
+-------------------------------------------------------------------
 Wed Jun 25 23:34:18 CEST 2014 - anaselli@linux.it
 
 - set close button as default into AboutDialog

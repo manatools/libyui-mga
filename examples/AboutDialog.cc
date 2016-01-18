@@ -1,5 +1,5 @@
 /*
-  Copyright 2014 by Matteo Pasotti
+  Copyright 2014-2016 by Matteo Pasotti
 
   Permission is hereby granted, free of charge, to any person obtaining
   a copy of this software and associated documentation files (the

@@ -1,6 +1,7 @@
 /*
-  Copyright 2014 by Matteo Pasotti
- 
+  Copyright 2014-2016 by Matteo Pasotti
+            2016         Angelo Naselli
+
   This library is free software; you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License as
   published by the Free Software Foundation; either version 2.1 of the
@@ -43,8 +44,9 @@ public:
                  );
   virtual ~YMGAAboutDialog();
 
+  void setMinSize(YLayoutSize_t columns, YLayoutSize_t lines);
+
   void show(DLG_MODE type = TABBED);
-        
 
 private:
   YMGAAboutDialogPrivate *priv;

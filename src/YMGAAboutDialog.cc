@@ -1,6 +1,7 @@
 /*
-  Copyright 2014 by Matteo Pasotti
- 
+  Copyright 2014-2016 by Matteo Pasotti
+            2016         Angelo Naselli
+
   This library is free software; you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License as
   published by the Free Software Foundation; either version 2.1 of the
@@ -38,6 +39,7 @@
 #include <yui/YRichText.h>
 #include <yui/YDumbTab.h>
 #include <yui/YReplacePoint.h>
+#include <yui/YAlignment.h>
 
 #include <boost/algorithm/string/trim.hpp>
 
@@ -59,6 +61,8 @@ public:
   std::string appIcon;
   std::string appCredits;
   std::string appInformation;
+  YLayoutSize_t columns;
+  YLayoutSize_t lines;
 
   YDialog* mainDialog;
 };
@@ -98,6 +102,8 @@ YMGAAboutDialog::YMGAAboutDialog(const std::string& name,
   priv->appIcon = icon;
   priv->appCredits = credits;
   priv->appInformation = information;
+  priv->columns = 50;
+  priv->lines = 8;
   boost::algorithm::trim(priv->appIcon);
 }
 
@@ -114,7 +120,8 @@ YMGAAboutDialog::~YMGAAboutDialog()
 void YMGAAboutDialog::showInformation()
 {
   auto infoDialog = YUI::widgetFactory()->createPopupDialog();
-  auto vbox = YUI::widgetFactory()->createVBox(infoDialog);
+  auto minsize = YUI::widgetFactory()->createMinSize(infoDialog, priv->columns, priv->lines);
+  auto vbox = YUI::widgetFactory()->createVBox(minsize);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
   YUI::widgetFactory()->createSpacing(tophbox,YD_HORIZ,false,10.0);
   YUI::widgetFactory()->createLabel(tophbox,"Information");
@@ -180,7 +187,9 @@ void YMGAAboutDialog::genAuthorsTab(YReplacePoint* rpoint)
 {
   rpoint->deleteChildren();
   auto hbox = YUI::widgetFactory()->createHBox(rpoint);
-  YUI::widgetFactory()->createRichText(hbox,priv->appAuthors);
+  auto minsize = YUI::widgetFactory()->createMinSize(hbox, priv->columns, priv->lines);
+
+  YUI::widgetFactory()->createRichText(minsize,priv->appAuthors);
   rpoint->showChild();
   priv->mainDialog->recalcLayout();
 }
@@ -195,7 +204,8 @@ void YMGAAboutDialog::genContributorsTab(YReplacePoint* rpoint)
 {
   rpoint->deleteChildren();
   auto hbox = YUI::widgetFactory()->createHBox(rpoint);
-  YUI::widgetFactory()->createRichText(hbox,priv->appDescription);
+  auto minsize = YUI::widgetFactory()->createMinSize(hbox, priv->columns, priv->lines);
+  YUI::widgetFactory()->createRichText(minsize,priv->appDescription);
   rpoint->showChild();
   priv->mainDialog->recalcLayout();
 }
@@ -210,9 +220,21 @@ void YMGAAboutDialog::genInformationTab(YReplacePoint* rpoint)
 {
   rpoint->deleteChildren();
   auto hbox = YUI::widgetFactory()->createHBox(rpoint);
-  YUI::widgetFactory()->createRichText(hbox,priv->appInformation);
+  auto minsize = YUI::widgetFactory()->createMinSize(hbox, priv->columns, priv->lines);
+  YUI::widgetFactory()->createRichText(minsize,priv->appInformation);
   rpoint->showChild();
   priv->mainDialog->recalcLayout();
+}
+
+/**
+ * Set the dialog mimimum size if Classic dialog is shown, minimum text size otherwise.
+ * @param columns Columns for dialog minimum size
+ * @param lines   Lines for dialog minimum size
+ */
+void YMGAAboutDialog::setMinSize ( YLayoutSize_t columns, YLayoutSize_t lines )
+{
+  priv->columns = columns;
+  priv->lines = lines;
 }
 
 /**
@@ -348,7 +370,8 @@ void YMGAAboutDialog::Classic()
   if(priv->appIcon.length())
     YUI::app()->setApplicationIcon(priv->appIcon);
   priv->mainDialog = YUI::widgetFactory()->createPopupDialog();
-  auto vbox = YUI::widgetFactory()->createVBox(priv->mainDialog);
+  auto minsize = YUI::widgetFactory()->createMinSize(priv->mainDialog, priv->columns, priv->lines);
+  auto vbox = YUI::widgetFactory()->createVBox(minsize);
   auto tophbox = YUI::widgetFactory()->createHBox(vbox);
   
   // logo, if defined, if available

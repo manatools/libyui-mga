@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Jan 18 22:16:39 CET 2016 - anaselli@linux.it
+- added setMinSize to set A mimimum size to About Dialog
+- 1.0.7
+
+-------------------------------------------------------------------
 Mon Oct 19 23:36:01 CEST 2015 - anaselli@linux.it
 - aligned so version to libyui
 - 1.0.6

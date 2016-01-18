@@ -103,7 +103,7 @@ YMGAAboutDialog::YMGAAboutDialog(const std::string& name,
   priv->appCredits = credits;
   priv->appInformation = information;
   priv->columns = 50;
-  priv->lines = 8;
+  priv->lines = 6;
   boost::algorithm::trim(priv->appIcon);
 }
 

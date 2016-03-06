@@ -66,7 +66,7 @@ int main( int argc, char **argv )
 
     YExternalWidgets * pMGAExternalWidgets = YExternalWidgets::externalWidgets(MageiaPlugin);
     YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
-    std::auto_ptr<YMGAAboutDialog> dialog(pMGAFactory->createAboutDialog(
+    std::unique_ptr<YMGAAboutDialog> dialog(pMGAFactory->createAboutDialog(
                                                                           appName,
                                                                           version,
                                                                           "GPLv2",

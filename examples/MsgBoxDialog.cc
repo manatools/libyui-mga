@@ -47,7 +47,7 @@ int main( int argc, char **argv )
     YExternalWidgets * pMGAExternalWidgets = YExternalWidgets::externalWidgets(MageiaPlugin);
     YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
     const bool useRichText = true;
-    std::auto_ptr<YMGAMessageBox> dialog(pMGAFactory->createInfoBox("Info test dialog", 
+    std::unique_ptr<YMGAMessageBox> dialog(pMGAFactory->createInfoBox("Info test dialog", 
                                                                     "This is an info text into an info test dialog<br>"
                                                                     "This is the second line into an info test dialog",
                                                                     useRichText,

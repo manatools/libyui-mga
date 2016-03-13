@@ -175,6 +175,13 @@ YItemIterator YMGA_CBTable::nextItem( YItemIterator currentIterator)
   return ++currentIterator;
 }
 
+void YMGA_CBTable::deleteAllItems()
+{
+  priv->item = NULL;
+  YSelectionWidget::deleteAllItems();
+}
+
+
 YItem* YMGA_CBTable::YItemIteratorToYItem ( YItemIterator it )
 {
   return *it;

@@ -323,6 +323,12 @@ public:
     YItemIterator nextItem( YItemIterator currentIterator);
 
     /**
+     * Delete all items.
+     *
+     **/
+    virtual void deleteAllItems();
+
+    /**
      * useful cast for bindings.
      * it does not any assunption on iter, so it is up to the user to
      * check if it is valid, it just returns *it.

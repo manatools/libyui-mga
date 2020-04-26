@@ -34,6 +34,7 @@
 #include <yui/YEvent.h>
 
 
+#include "YMGAMenuBar.h" // YMGAMenuBar
 
 #include "YMGA_CBTable.h" // YCBTableMode
 #include "YMGAMsgBox.h"   // DLG_BUTTON, DLG_MODE
@@ -88,6 +89,13 @@ public:
     virtual YMGA_CBTable * createCBTable ( YWidget * parent, YTableHeader * header_disown, YCBTableMode mode = YCBTableCheckBoxOnFirstColumn ) = 0;
 
     
+    /**
+     * creates a menu bar
+     * @param parent parent widget
+     * @return YMGAMenuBar widget instance
+     **/
+    virtual YMGAMenuBar * createMenuBar ( YWidget * parent ) = 0;
+
     /**
      * creates a dialog box dialog, use the instance to set dialog information and call show() to use it. 
      * Remember to remove this instance after.

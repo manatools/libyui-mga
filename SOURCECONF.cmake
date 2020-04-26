@@ -1,4 +1,5 @@
 SET( ${TARGETLIB}_SOURCES
+    YMGAMenuBar.cc
     YMGA_CBTable.cc
     YMGAAboutDialog.cc
     YMGAMsgBox.cc
@@ -7,7 +8,7 @@ SET( ${TARGETLIB}_SOURCES
 
 SET( ${TARGETLIB}_HEADERS
     ##### Here go the headers
-    YMGA_CBTable.h
+    YMGAMenuBar.h
     YMGAAboutDialog.h
     YMGAMsgBox.h
     YMGAWidgetExtensionFactory.h

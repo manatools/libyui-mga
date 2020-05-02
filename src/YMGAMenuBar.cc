@@ -40,9 +40,9 @@ YMGAMenuBar::YMGAMenuBar ( YWidget* parent )
   :YSelectionWidget ( parent,
                       "",     // label
                       true ) // enforceSingleSelection
-  , priv ( new YMGAMenuBarPrivate (  ) )
+ // , priv ( new YMGAMenuBarPrivate (  ) )
 {
-  YUI_CHECK_NEW ( priv );
+  //YUI_CHECK_NEW ( priv );
 
   setDefaultStretchable ( YD_HORIZ, true );
   setDefaultStretchable ( YD_VERT,  true );

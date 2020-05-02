@@ -57,7 +57,7 @@ class YMGAMenuBar : public YSelectionWidget
 
   private:
 
-    ImplPtr<YMGAMenuBarPrivate> priv;
+    //ImplPtr<YMGAMenuBarPrivate> priv;
 };
 
 #endif //YMGAMenuBar_h

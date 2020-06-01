@@ -8,6 +8,7 @@ SET( ${TARGETLIB}_SOURCES
 
 SET( ${TARGETLIB}_HEADERS
     ##### Here go the headers
+    YMGAMenuItem.h
     YMGAMenuBar.h
     YMGAAboutDialog.h
     YMGAMsgBox.h

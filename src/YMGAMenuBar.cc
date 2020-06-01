@@ -28,13 +28,8 @@
 
 #include "YUISymbols.h"
 #include "YMGAMenuBar.h"
+#include "YMGAMenuItem.h"
 
-struct YMGAMenuBarPrivate
-{
-  YMGAMenuBarPrivate ( )
-  {
-  }
-};
 
 YMGAMenuBar::YMGAMenuBar ( YWidget* parent )
   :YSelectionWidget ( parent,
@@ -51,4 +46,13 @@ YMGAMenuBar::YMGAMenuBar ( YWidget* parent )
 
 YMGAMenuBar::~YMGAMenuBar()
 {
+}
+
+void YMGAMenuBar::enableItem(YItem* menu_item, bool enable)
+{
+  YMGAMenuItem * item = dynamic_cast<YMGAMenuItem *>(menu_item);
+  YUI_CHECK_NEW ( item );
+
+  item->enable(enable);
+
 }

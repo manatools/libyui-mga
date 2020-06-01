@@ -30,8 +30,6 @@
 #include <yui/YMenuItem.h>
 #include <yui/YEvent.h>
 
-class YMGAMenuBarPrivate;
-
 
 class YMGAMenuBar : public YSelectionWidget
 {
@@ -55,9 +53,12 @@ class YMGAMenuBar : public YSelectionWidget
      **/
     virtual const char * widgetClass() const { return "YMGAMenuBar"; }
 
-  private:
+    /**
+    * Enable YMGAMenuItem (menu name or menu entry) to enable/disable it into menubar or menu
+    *
+    **/
+    virtual void enableItem(YItem * menu_item, bool enable=true);
 
-    //ImplPtr<YMGAMenuBarPrivate> priv;
 };
 
 #endif //YMGAMenuBar_h

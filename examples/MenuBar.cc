@@ -29,13 +29,20 @@
 #include <yui/YExternalWidgets.h>
 #include <yui/YMenuButton.h>
 #include <yui/YLabel.h>
-#include <yui/YMenuItem.h>
+#include <yui/mga/YMGAMenuItem.h>
 #include <yui/YExternalWidgets.h>
 #include <mga/YMGAMenuBar.h>
 #include <mga/YMGAWidgetExtensionFactory.h>
+#define YUILogComponent "YMenuBar"
+#include <yui/YUILog.h>
+
 
 int main( int argc, char **argv )
 {
+    // If you need logging uncommment next two lines
+    YUILog::setLogFileName( "/tmp/libyui-mga-examples.log" );
+    YUILog::enableDebugLogging();
+
     YDialog    * dialog = YUI::widgetFactory()->createPopupDialog();
     YLayoutBox * vbox   = YUI::widgetFactory()->createVBox( dialog );
     const std::string MageiaPlugin = "mga";
@@ -45,41 +52,76 @@ int main( int argc, char **argv )
     YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
 
     YMGAMenuBar *menu = pMGAFactory->createMenuBar(vbox);
-    YMenuItem *top = new YMenuItem("&Menu");
-    new YMenuItem(top, "&submenu1");
-    new YMenuItem(top, "submenu&2");
-    new YMenuItem(top, "submenu&3");
-    new YMenuItem(top, "submenu&4");
-    menu->addItem(top);
-    
-    top = new YMenuItem("Menu &1");
-    new YMenuItem( new YMenuItem(top, "m1"), "sm1" );
-    new YMenuItem(top, "m2");
-    new YMenuItem(top, "m3");
+    YMGAMenuItem *top = new YMGAMenuItem("&Menu");
+    YMGAMenuItem *m1 = new YMGAMenuItem(top, "&Enable submenu4");
+    m1->enable(false);
+    YMGAMenuItem *enM1Item = new YMGAMenuItem(top, "Enable/disable Menu 1");
+    new YMGAMenuItem(top, "submenu&3");
+    YMGAMenuItem *m4 = new YMGAMenuItem(top, "Enable &submen1");
     menu->addItem(top);
 
+    YMGAMenuItem *menu1Item = new YMGAMenuItem("Menu &1");
+    menu1Item->enable(false);
+    new YMGAMenuItem( new YMGAMenuItem(menu1Item, "m&1"), "sm1" );
+    new YMGAMenuItem(menu1Item, "m&2");
+    new YMGAMenuItem(menu1Item, "m&3");
+    menu->addItem(menu1Item);
 
+    YMGAMenuItem *mItem = new YMGAMenuItem("Menu &3");
+    YMGAMenuItem *tmi = new YMGAMenuItem(mItem, "m3 &1");
+    new YMGAMenuItem( tmi, "sm1" );
+    new YMGAMenuItem( tmi, "m3 sm2" );
+    new YMGAMenuItem(mItem, "m3 &2");
+    new YMGAMenuItem(mItem, "m3 &3");
+    new YMGAMenuItem(mItem, "m3 &4");
+    new YMGAMenuItem(mItem, "m3 &5");
+    new YMGAMenuItem(mItem, "m3 &6");
+    new YMGAMenuItem(mItem, "m3 &7");
+    new YMGAMenuItem(mItem, "m3 &8");
+    new YMGAMenuItem(mItem, "m3 &9");
+    new YMGAMenuItem(mItem, "m3 &10");
+    new YMGAMenuItem(mItem, "m3 &11");
+    new YMGAMenuItem(mItem, "m3 &12");
+    menu->addItem(mItem);
 
-    YLabel *label = YUI::widgetFactory()->createLabel( vbox, "Hello, World!" );
+    mItem = new YMGAMenuItem("Menu &4");
+    new YMGAMenuItem(mItem, "m4 &1");
+    new YMGAMenuItem(mItem, "m4 &2");
+    menu->addItem(mItem);
+    YLabel *label = YUI::widgetFactory()->createLabel( vbox, "Here you'll see chosen menu item  " );
     YPushButton* quitButton = YUI::widgetFactory()->createPushButton( vbox, "&Quit");
 
     while ( true )
     {
         YEvent * event = dialog->waitForEvent();
-	YEvent::EventType eventType = event->eventType();
-	if (eventType == YEvent::CancelEvent) 
-		break;
-	else if (eventType == YEvent::MenuEvent) 
-	{
+        YEvent::EventType eventType = event->eventType();
+        if (eventType == YEvent::CancelEvent)
+            break;
+        else if (eventType == YEvent::MenuEvent)
+        {
             YItem *item = event->item();
-	    label->setValue(item->label());
-	}
-	else if (eventType == YEvent::WidgetEvent) 
-	{
-//	    YWidgetEvent * ywe = dynamic_cast<YWidgetEvent *>(event)
+            YMGAMenuItem *menuItem = dynamic_cast<YMGAMenuItem *>(item);
+            label->setValue(item->label());
+	    if (item == enM1Item)
+	    {
+               menu->enableItem(menu1Item, !menu1Item->enabled());
+	    }
+            else if (item == m1)
+            {
+               menu->enableItem(m4, true);
+               menu->enableItem(m1, false);
+            }
+            else if (item == m4)
+            {
+               menu->enableItem(m1, true);
+               menu->enableItem(m4, false);
+            }
+        }
+        else if (eventType == YEvent::WidgetEvent)
+        {
             if (event->widget() == (YWidget*)quitButton)
-	       break;
-	}
+                break;
+        }
 
     }
 

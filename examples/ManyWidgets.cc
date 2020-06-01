@@ -75,8 +75,8 @@
 #include <yui/YTree.h>
 #include <yui/YBusyIndicator.h>
 
-#include <YMGA_CBTable.h>
-#include <YMGAWidgetExtensionFactory.h>
+#include <yui/mga/YMGA_CBTable.h>
+#include <yui/mga/YMGAWidgetExtensionFactory.h>
 
 using std::endl;
 

@@ -55,7 +55,7 @@ int main( int argc, char **argv )
     YMGAMenuItem *top = new YMGAMenuItem("&Menu");
     YMGAMenuItem *m1 = new YMGAMenuItem(top, "&Enable submenu4");
     m1->enable(false);
-    YMGAMenuItem *enM1Item = new YMGAMenuItem(top, "Enable/disable Menu 1");
+    YMGAMenuItem *enM1Item = new YMGAMenuItem(top, "Enabler/disable &Menu 1");
     new YMGAMenuItem(top, "submenu&3");
     YMGAMenuItem *m4 = new YMGAMenuItem(top, "Enable &submen1");
     menu->addItem(top);

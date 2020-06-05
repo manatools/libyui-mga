@@ -56,13 +56,13 @@ public:
      **/
     YMGAMenuItem( YMGAMenuItem *		parent,
                   const std::string & 	label )
-        : YMenuItem( parent, label ), _enabled(true)
+        : YMenuItem( parent, label ), _enabled(true), _hidden(false)
     {}
 
     YMGAMenuItem( YMGAMenuItem *		parent,
                   const std::string & 	label,
                   const std::string & 	iconName )
-        : YMenuItem( parent, label, iconName ), _enabled(true)
+        : YMenuItem( parent, label, iconName ), _enabled(true), _hidden(false)
     {}
 
 
@@ -87,6 +87,20 @@ public:
         _enabled=en;
     }
 
+    /**
+     * is Menu item hidden?
+     */
+    virtual bool hidden() {
+        return _hidden;
+    }
+
+    /**
+     * hide/show Menu Item
+     */
+    virtual void hide(bool invisibile=true) {
+        _hidden=invisibile;
+    }
+
 
     /**
      * Returns this item's parent item or 0 if it is a toplevel item.
@@ -101,6 +115,7 @@ private:
     YMGAMenuItem( const YMGAMenuItem &	item );
 
     bool _enabled;
+    bool _hidden;
 };
 
 

@@ -35,10 +35,7 @@ YMGAMenuBar::YMGAMenuBar ( YWidget* parent )
   :YSelectionWidget ( parent,
                       "",     // label
                       true ) // enforceSingleSelection
- // , priv ( new YMGAMenuBarPrivate (  ) )
 {
-  //YUI_CHECK_NEW ( priv );
-
   setDefaultStretchable ( YD_HORIZ, true );
   setDefaultStretchable ( YD_VERT,  true );
 }
@@ -54,5 +51,12 @@ void YMGAMenuBar::enableItem(YItem* menu_item, bool enable)
   YUI_CHECK_NEW ( item );
 
   item->enable(enable);
+}
 
+void YMGAMenuBar::hideItem(YItem* menu_item, bool invisible)
+{
+  YMGAMenuItem * item = dynamic_cast<YMGAMenuItem *>(menu_item);
+  YUI_CHECK_NEW ( item );
+
+  item->hide(invisible);
 }

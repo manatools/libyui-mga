@@ -55,7 +55,8 @@ int main( int argc, char **argv )
     YMGAMenuItem *top = new YMGAMenuItem("&Menu");
     YMGAMenuItem *m1 = new YMGAMenuItem(top, "&Enable submenu4");
     m1->enable(false);
-    YMGAMenuItem *enM1Item = new YMGAMenuItem(top, "Enabler/disable &Menu 1");
+    YMGAMenuItem *enM1Item = new YMGAMenuItem(top, "&Enabler/disable Menu 1");
+    YMGAMenuItem *hideM2Item = new YMGAMenuItem(top, "&Hide/Show Menu 2");
     new YMGAMenuItem(top, "submenu&3");
     YMGAMenuItem *m4 = new YMGAMenuItem(top, "Enable &submen1");
     menu->addItem(top);
@@ -67,7 +68,14 @@ int main( int argc, char **argv )
     new YMGAMenuItem(menu1Item, "m&3");
     menu->addItem(menu1Item);
 
-    YMGAMenuItem *mItem = new YMGAMenuItem("Menu &3");
+    YMGAMenuItem *hiddenMenu = new YMGAMenuItem("Menu &2");
+    YMGAMenuItem *showNextMenuItem = new YMGAMenuItem(hiddenMenu, "&Show/Hide next item");
+    YMGAMenuItem *hiddenMenuItem = new YMGAMenuItem( hiddenMenu, "&Hidden menu" );
+    hiddenMenuItem->hide();
+    hiddenMenu->hide();
+    menu->addItem(hiddenMenu);
+
+    YMGAMenuItem* mItem = new YMGAMenuItem("Menu &3");
     YMGAMenuItem *tmi = new YMGAMenuItem(mItem, "m3 &1");
     new YMGAMenuItem( tmi, "sm1" );
     new YMGAMenuItem( tmi, "m3 sm2" );
@@ -116,6 +124,14 @@ int main( int argc, char **argv )
                menu->enableItem(m1, true);
                menu->enableItem(m4, false);
             }
+	    else if (item == showNextMenuItem)
+	    {
+               menu->hideItem(hiddenMenuItem, !hiddenMenuItem->hidden());
+	    }
+	    else if (item == hideM2Item)
+	    {
+               menu->hideItem(hiddenMenu, !hiddenMenu->hidden());
+	    }
         }
         else if (eventType == YEvent::WidgetEvent)
         {

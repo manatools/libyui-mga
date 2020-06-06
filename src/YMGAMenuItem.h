@@ -39,12 +39,12 @@ public:
      * Constructors for toplevel items.
      **/
     YMGAMenuItem( const std::string &	label )
-        : YMenuItem( label ), _enabled(true)
+        : YMenuItem( label ), _enabled(true), _hidden(false)
     {}
 
     YMGAMenuItem( const std::string & 	label,
                   const std::string & 	iconName )
-        : YMenuItem( label, iconName ), _enabled(true)
+        : YMenuItem( label, iconName ), _enabled(true), _hidden(false)
     {}
 
     /**

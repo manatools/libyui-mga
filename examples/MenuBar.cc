@@ -62,10 +62,10 @@ int main( int argc, char **argv )
     menu->addItem(top);
 
     YMGAMenuItem *menu1Item = new YMGAMenuItem("Menu &1");
-    menu1Item->enable(false);
     new YMGAMenuItem( new YMGAMenuItem(menu1Item, "m&1"), "sm1" );
     new YMGAMenuItem(menu1Item, "m&2");
     new YMGAMenuItem(menu1Item, "m&3");
+    menu1Item->enable(false);
     menu->addItem(menu1Item);
 
     YMGAMenuItem *hiddenMenu = new YMGAMenuItem("Menu &2");

@@ -1,9 +1,12 @@
 * MenuBar
   - [ ] addItems()
   - [ ] item icon
-  - [ ] ncurses menu bar view improvement
+  - [x] ncurses menu bar view improvement
+      - [ ] ncurses last menu selection extend selection to the end
   - [x] enable/disable menu item/submenu
       - [ ] ncurses hotkeys conflicts
       - [x] ncurses menu bar item disabled view
-  - [ ] enable/disable menu (or add/remove a menu)
+  - [x] enable/disable menu (or add/remove a menu)
+      - [ ] GTK resize layout when showing an hidden menu
+      - [ ] Qt resize layout when showing an hidden menu
   - [ ] remove/add menu (does it make sense)?

@@ -108,7 +108,6 @@ int main( int argc, char **argv )
         else if (eventType == YEvent::MenuEvent)
         {
             YItem *item = event->item();
-            YMGAMenuItem *menuItem = dynamic_cast<YMGAMenuItem *>(item);
             label->setValue(item->label());
 	    if (item == enM1Item)
 	    {

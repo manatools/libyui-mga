@@ -10,6 +10,7 @@ SET( ${TARGETLIB}_HEADERS
     ##### Here go the headers
     YMGAMenuItem.h
     YMGAMenuBar.h
+    YMGA_CBTable.h
     YMGAAboutDialog.h
     YMGAMsgBox.h
     YMGAWidgetExtensionFactory.h
@@ -20,5 +21,6 @@ SET( EXAMPLES_LIST
   AboutDialog.cc
   MsgBoxDialog.cc
   ManyWidgets.cc
+  MenuBar.cc
 )
 

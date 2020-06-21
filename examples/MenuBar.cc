@@ -146,7 +146,21 @@ int main( int argc, char **argv )
         menuBar->deleteAllItems();
         menuBar->doneMultipleChanges();
         changeMenuButton->setEnabled(false);
+        YItemCollection itemCollection;
+        YMGAMenuItem* mItem = new YMGAMenuItem("Menu &1");
+        YMGAMenuItem *tmi = new YMGAMenuItem(mItem, "m1 &1");
+        new YMGAMenuItem( tmi, "m1 sm1" );
+        new YMGAMenuItem( tmi, "m1 sm2" );
+        new YMGAMenuItem(mItem, "m1 &2");
+        new YMGAMenuItem(mItem, "m1 &3");
+        itemCollection.push_back(mItem);
 
+        YMGAMenuItem* mItem1 = new YMGAMenuItem("Menu &2");
+        new YMGAMenuItem(mItem1, "m2 &1");
+        new YMGAMenuItem(mItem1, "m2 &2");
+        itemCollection.push_back(mItem1);
+
+        menuBar->addItems(itemCollection);
       }
     }
 

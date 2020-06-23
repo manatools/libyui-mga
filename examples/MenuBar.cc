@@ -111,28 +111,31 @@ int main( int argc, char **argv )
     else if (eventType == YEvent::MenuEvent)
     {
       YItem *item = event->item();
-      label->setValue(item->label());
-      if (item == enM1Item)
+      if (item)
       {
-        menuBar->enableItem(menu1Item, !menu1Item->enabled());
-      }
-      else if (item == m1)
-      {
-        menuBar->enableItem(m4, true);
-        menuBar->enableItem(m1, false);
-      }
-      else if (item == m4)
-      {
-        menuBar->enableItem(m1, true);
-        menuBar->enableItem(m4, false);
-      }
-      else if (item == showNextMenuItem)
-      {
-        menuBar->hideItem(hiddenMenuItem, !hiddenMenuItem->hidden());
-      }
-      else if (item == hideM2Item)
-      {
-        menuBar->hideItem(hiddenMenu, !hiddenMenu->hidden());
+        label->setValue(item->label());
+        if (item == enM1Item)
+        {
+          menuBar->enableItem(menu1Item, !menu1Item->enabled());
+        }
+        else if (item == m1)
+        {
+          menuBar->enableItem(m4, true);
+          menuBar->enableItem(m1, false);
+        }
+        else if (item == m4)
+        {
+          menuBar->enableItem(m1, true);
+          menuBar->enableItem(m4, false);
+        }
+        else if (item == showNextMenuItem)
+        {
+          menuBar->hideItem(hiddenMenuItem, !hiddenMenuItem->hidden());
+        }
+        else if (item == hideM2Item)
+        {
+          menuBar->hideItem(hiddenMenu, !hiddenMenu->hidden());
+        }
       }
     }
     else if (eventType == YEvent::WidgetEvent)
@@ -146,6 +149,12 @@ int main( int argc, char **argv )
         menuBar->deleteAllItems();
         menuBar->doneMultipleChanges();
         changeMenuButton->setEnabled(false);
+        enM1Item = NULL;
+        hiddenMenu = NULL;
+        hiddenMenuItem = NULL;
+        showNextMenuItem = NULL;
+        m1 = m4 = NULL;
+
         YItemCollection itemCollection;
         YMGAMenuItem* mItem = new YMGAMenuItem("Menu &1");
         YMGAMenuItem *tmi = new YMGAMenuItem(mItem, "m1 &1");

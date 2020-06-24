@@ -42,6 +42,12 @@ public:
         : YMenuItem( label ), _enabled(true), _hidden(false)
     {}
 
+    /**
+     * Constructor with label and icon. Note that Icon makes sense
+     * for menu actions not for menu and submenu names.
+     * iconName could be an icon name taken from fredesktop Standard Icon Names
+     * or icon pathname full or relative. Theme names if exist, win.
+     **/
     YMGAMenuItem( const std::string & 	label,
                   const std::string & 	iconName )
         : YMenuItem( label, iconName ), _enabled(true), _hidden(false)

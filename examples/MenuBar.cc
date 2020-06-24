@@ -101,6 +101,7 @@ int main( int argc, char **argv )
   YLayoutBox * hbox   = YUI::widgetFactory()->createHBox( vbox );
   YPushButton* changeMenuButton = YUI::widgetFactory()->createPushButton( hbox, "&Change Menu");
   YPushButton* quitButton = YUI::widgetFactory()->createPushButton( hbox, "&Quit");
+  YMGAMenuItem *quitMenu = NULL;
 
   while ( true )
   {
@@ -136,6 +137,8 @@ int main( int argc, char **argv )
         {
           menuBar->hideItem(hiddenMenu, !hiddenMenu->hidden());
         }
+        else if (item == quitMenu)
+          break;
       }
     }
     else if (eventType == YEvent::WidgetEvent)
@@ -158,28 +161,31 @@ int main( int argc, char **argv )
         hiddenMenuItem = NULL;
         showNextMenuItem = NULL;
         m1 = m4 = NULL;
+        menu1Item = hideM2Item = NULL;
 
         YItemCollection itemCollection;
         YMGAMenuItem* mItem = new YMGAMenuItem("&File");
-        YMGAMenuItem *tmi = new YMGAMenuItem(mItem, "&New");
-        new YMGAMenuItem( tmi, "New &1" );
-        new YMGAMenuItem( tmi, "New &2" );
+        YMGAMenuItem *tmi = new YMGAMenuItem(mItem, "&New", "appointment-new");
+        new YMGAMenuItem( tmi, "New &1" , "document-new");
+        new YMGAMenuItem( tmi, "New &2" , "contact-new");
         new YMenuSeparator(mItem);
-        new YMGAMenuItem(mItem, "&Open");
+        new YMGAMenuItem(mItem, "&Open", "document-open.png");
         new YMenuSeparator(mItem);
-        new YMGAMenuItem(mItem, "&Save");
-        new YMGAMenuItem(mItem, "&Save as");
+        new YMGAMenuItem(mItem, "&Save", "document-save.png");
+        new YMGAMenuItem(mItem, "&Save as", "document-save-as");
         new YMenuSeparator(mItem);
-        new YMGAMenuItem(mItem, "&Quit");
+        // You can set absolute or relative pathname instead
+//      new YMGAMenuItem(mItem, "&Quit", "my_path_to_quit.png");
+        quitMenu = new YMGAMenuItem(mItem, "&Quit", "application-exit");
         itemCollection.push_back(mItem);
 
         YMGAMenuItem* mItem1 = new YMGAMenuItem("&Edit");
-        new YMGAMenuItem(mItem1, "&Undo");
-        new YMGAMenuItem(mItem1, "&Redo");
+        new YMGAMenuItem(mItem1, "&Undo", "edit-undo.png");
+        new YMGAMenuItem(mItem1, "&Redo", "edit-redo.png");
         new YMenuSeparator(mItem1);
-        new YMGAMenuItem(mItem1, "Cu&t");
-        new YMGAMenuItem(mItem1, "&Copy");
-        new YMGAMenuItem(mItem1, "&Paste");
+        new YMGAMenuItem(mItem1, "Cu&t", "edit-cut.png");
+        new YMGAMenuItem(mItem1, "&Copy", "edit-copy.png");
+        new YMGAMenuItem(mItem1, "&Paste", "edit-paste.png");
         itemCollection.push_back(mItem1);
 
         menuBar->addItems(itemCollection);

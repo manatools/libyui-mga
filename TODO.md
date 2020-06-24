@@ -1,7 +1,7 @@
 * MenuBar
   - [x] addItems()
   - [x] menu separator 
-  - [ ] item icon
+  - [x] item icon
   - [x] ncurses menu bar view improvement
       - [ ] ncurses last menu selection extend selection to the end
   - [x] enable/disable menu item/submenu

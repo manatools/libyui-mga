@@ -30,7 +30,7 @@
 
 
 /**
- * Item class for menu items.
+ * New Menu Item class for menu items.
  **/
 class YMGAMenuItem: public YMenuItem
 {
@@ -101,7 +101,6 @@ public:
         _hidden=invisibile;
     }
 
-
     /**
      * Returns this item's parent item or 0 if it is a toplevel item.
      **/
@@ -118,5 +117,34 @@ private:
     bool _hidden;
 };
 
+/**
+ * YMenuSeparator class for menu separator.
+ **/
+class YMenuSeparator : public YMGAMenuItem
+{
+public:
+    /**
+     * Constructor. A menu separator must have a partent
+     * Note that hidden and enable properties are not managed for separator by now,
+     * considering this a bit out of libyui aim.
+     **/
+    YMenuSeparator(  YMGAMenuItem *		parent )
+        : YMGAMenuItem( parent, "" )
+    {}
+
+
+private:
+    YMenuSeparator( const std::string & 	label,
+                  const std::string & 	iconName );
+
+    YMenuSeparator( const std::string &	label );
+
+    YMenuSeparator( YMGAMenuItem *		parent,
+                  const std::string & 	label,
+                  const std::string & 	iconName );
+
+    // A Menu separator cannot have children
+    virtual void addChild( YItem *  ) {YUI_THROW( YUIException("Menu separotor cannot have children") );};
+};
 
 #endif // YMGAMenuItem_h

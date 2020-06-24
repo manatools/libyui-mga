@@ -165,7 +165,7 @@ int main( int argc, char **argv )
 
         YItemCollection itemCollection;
         YMGAMenuItem* mItem = new YMGAMenuItem("&File");
-        YMGAMenuItem *tmi = new YMGAMenuItem(mItem, "&New", "appointment-new");
+        YMGAMenuItem *tmi = new YMGAMenuItem(mItem, "&New");
         new YMGAMenuItem( tmi, "New &1" , "document-new");
         new YMGAMenuItem( tmi, "New &2" , "contact-new");
         new YMenuSeparator(mItem);

@@ -35,7 +35,7 @@
 
 
 #include "YMGAMenuBar.h" // YMGAMenuBar
-
+#include "YMGAMenuItem.h"
 #include "YMGA_CBTable.h" // YCBTableMode
 #include "YMGAMsgBox.h"   // DLG_BUTTON, DLG_MODE
 
@@ -182,7 +182,19 @@ public:
      *
      **/
     static YTimeoutEvent* getYTimeoutEvent ( YEvent *event );
+
+    /**
+     * useful cast for bindings from YItem* to YMGAMenuItem*
+     * it just performs a dynamic_cast
+     */
+    static YMGAMenuItem* toYMGAMenuItem( YItem* item );
     
+    /**
+     * useful cast for bindings from YItem* to YMenuSeparator*
+     * it just performs a dynamic_cast
+     */
+    static YMenuSeparator* toYMenuSeparator( YItem* item );
+
 protected:
 
   friend class YExternalWidgets;

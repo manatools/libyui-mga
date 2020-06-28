@@ -135,12 +135,12 @@ YTimeoutEvent* YMGAWidgetFactory::getYTimeoutEvent(YEvent *event)
     return dynamic_cast<YTimeoutEvent*>(event);
 }
 
-YMGAMenuItem* toYMGAMenuItem( YItem* item )
+YMGAMenuItem* YMGAWidgetFactory::toYMGAMenuItem( YItem* item )
 {
   return dynamic_cast<YMGAMenuItem*>(item);
 }
 
-YMenuSeparator* toYMenuSeparator( YItem* item )
+YMenuSeparator* YMGAWidgetFactory::toYMenuSeparator( YItem* item )
 {
     return dynamic_cast<YMenuSeparator*>(item);
 }

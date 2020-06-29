@@ -1,4 +1,11 @@
-- menubar implementation
+Mon Jun 29 19:19:01 CEST 2020 - anaselli@linux.it
+- Added menu item icons (from theme if exist or by given path otherwise)
+- Added menu separators
+- Possibility to delete and rebuild all menus
+- Possibility to show/hide menu and menu items
+- Possibility to enable/disable menu and menu items
+- Added menubar implementation
+- 1.1.0
 
 Sun Jan 28 17:04:06 CET 2018 - anaselli@linux.it
 - tagged release

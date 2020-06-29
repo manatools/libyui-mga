@@ -4,10 +4,10 @@
   - [x] item icon
   - [x] ncurses menu bar view improvement
       - [ ] ncurses last menu selection extend selection to the end
-  - [x] enable/disable menu item/submenu
+  - [x] enable/disable menus, menu items and submenus
       - [ ] ncurses hotkeys conflicts
       - [x] ncurses menu bar item disabled view
-  - [x] enable/disable menu (or add/remove a menu)
+  - [x] hide/show menus, menu items and submenus
       - [ ] GTK resize layout when showing an hidden menu
       - [ ] Qt resize layout when showing an hidden menu
   - [x] removed all menu items (deleteAllItems)

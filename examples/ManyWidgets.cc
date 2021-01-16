@@ -1,6 +1,5 @@
 /*
-  Copyright (c) 2000 - 2012 Novell, Inc.
-  Copyright (C) 2013 Angelo Naselli <anaselli at linux dot it>
+  Copyright (C) 2013-2021 Angelo Naselli <anaselli at linux dot it>
 
   Permission is hereby granted, free of charge, to any person obtaining
   a copy of this software and associated documentation files (the
@@ -75,8 +74,8 @@
 #include <yui/YTree.h>
 #include <yui/YBusyIndicator.h>
 
-#include <yui/mga/YMGA_CBTable.h>
-#include <yui/mga/YMGAWidgetExtensionFactory.h>
+#include "YMGA_CBTable.h"
+#include "YMGAWidgetExtensionFactory.h"
 
 using std::endl;
 
@@ -460,24 +459,55 @@ int main( int argc, char **argv )
     frame		= YUI::widgetFactory()->createHVCenter( frame );
     frame		= YUI::widgetFactory()->createVBox( frame );
 
-    auto head		= new YTableHeader;
-    head->addColumn( "Check", YAlignBegin );
-    head->addColumn( "Right", YAlignEnd );
-    head->addColumn( "Center", YAlignCenter );
-    head->addColumn( "Left", YAlignBegin );
-    
-    table		= pMGAFactory->createCBTable( atRight(frame), head, YCBTableMode::YCBTableCheckBoxOnFirstColumn);
+    auto head		= new YCBTableHeader;
+    bool checkbox = true;
+    head->addColumn( "Check 1",  checkbox, YAlignBegin );
+    head->addColumn( "Right",   !checkbox, YAlignEnd );
+    head->addColumn( "Center",  !checkbox, YAlignCenter );
+    head->addColumn( "Left",    !checkbox, YAlignBegin );
+    head->addColumn( "Check 2",  checkbox, YAlignBegin );
+
+    table		= pMGAFactory->createCBTable( atRight(frame), head);
     table->setNotify( true );
 
     YItemCollection items;
-    items.push_back( new YCBTableItem( "a", "b", "c", "extra" ) );
-    items.push_back( new YCBTableItem( "aa", "bb", "cc" ) );
-    items.push_back( new YCBTableItem( "aaa", "bbb", "ccc" ) );
-    items.push_back( new YCBTableItem( "aaaa", "bbbb", "cccc" ) );
-    items.push_back( new YCBTableItem( "aaaaa", "bbbbb", "ccccc" ) );
-    items.push_back( new YCBTableItem( "aaaaaa", "bbbbbb", "cccccc" ) );
-    YCBTableItem *myItem = static_cast<YCBTableItem*>(items[2]);
-    myItem->check(true);
+    YCBTableItem * cbItem =new YCBTableItem( );
+    cbItem->addCell( new YCBTableCell(false) );
+    cbItem->addCell( new YCBTableCell("a") );
+    cbItem->addCell( new YCBTableCell("b") );
+    cbItem->addCell( new YCBTableCell("c") );
+    cbItem->addCell( new YCBTableCell(true) );
+    items.push_back( cbItem );
+    items.push_back( new YCBTableItem(new YCBTableCell(true),
+                                      new YCBTableCell("aa"),
+                                      new YCBTableCell("bb"),
+                                      new YCBTableCell("cc"),
+                                      new YCBTableCell(false)
+                                     ) );
+    items.push_back( new YCBTableItem(new YCBTableCell(false),
+                                      new YCBTableCell("aaa"),
+                                      new YCBTableCell("bbb"),
+                                      new YCBTableCell("ccc"),
+                                      new YCBTableCell(false)
+                                     ) );
+    items.push_back( new YCBTableItem(new YCBTableCell(false),
+                                      new YCBTableCell("aaaa"),
+                                      new YCBTableCell("bbbb"),
+                                      new YCBTableCell("cccc"),
+                                      new YCBTableCell(false)
+                                     ) );
+    items.push_back( new YCBTableItem(new YCBTableCell(true),
+                                      new YCBTableCell("aaaaa"),
+                                      new YCBTableCell("bbbbb"),
+                                      new YCBTableCell("ccccc"),
+                                      new YCBTableCell(false)
+                                     ) );
+    items.push_back( new YCBTableItem(new YCBTableCell(false),
+                                      new YCBTableCell("aaaaaa"),
+                                      new YCBTableCell("bbbbbb"),
+                                      new YCBTableCell("cccccc"),
+                                      new YCBTableCell(false)
+                                     ) );
     table->addItems( items ); // This is more efficient than repeatedly calling cbox->addItem
   }
 
@@ -519,13 +549,24 @@ int main( int argc, char **argv )
       }
       else if ( event->widget() == table )
       {
-         for(int i=0; i<table->itemsCount();i++) 
-         {
-           YCBTableItem *pItem = dynamic_cast<YCBTableItem *>(table->item(i));
-           yuiMilestone() << " item " << i << (pItem->selected() ? " selected   - " : " unselected - " )
-                     << (pItem->checked() ?  " checked " :  " unchecked" )<< std::endl;
-         }
-         yuiMilestone() << std::endl;
+        YWidgetEvent* wEvent = dynamic_cast<YWidgetEvent* >(event);
+        if ( wEvent && wEvent->reason() == YEvent::ValueChanged )
+        {
+          YCBTableItem *changedItem = table->changedItem();
+          if (changedItem)
+          {
+            std::stringstream ss;
+
+            const YCBTableCell * cell = changedItem->cellChanged();
+            ss << table->header(0) << " " << changedItem->cell(0)->label();
+            if (cell)
+            {
+              int col = cell->column();
+              ss << ": changed column " << col << " " << table->header(col) << " to " << (cell->checked() ? "true" : "false");
+            }
+            yuiMilestone() << ss.str() << std::endl;
+          }
+        }
       }
     }
   }

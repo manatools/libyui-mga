@@ -19,6 +19,7 @@ SET( ${TARGETLIB}_HEADERS
 SET( EXAMPLES_LIST
   ##### Here go the examples
   AboutDialog.cc
+  YCBTable.cc
   MsgBoxDialog.cc
   ManyWidgets.cc
   MenuBar.cc

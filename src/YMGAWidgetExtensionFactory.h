@@ -82,11 +82,10 @@ public:
     /**
      * creates a check boxed table 
      * @param parent parent widget
-     * @param header_disown YTable header
-     * @param mode check box position (YCBTableCheckBoxOnFirstColumn, YCBTableCheckBoxOnLastColumn)
+     * @param header_disown YTable header must be YCBTableHeader kept YTableHeader for swig
      * @return YMGA_CBTable widget instance
      **/
-    virtual YMGA_CBTable * createCBTable ( YWidget * parent, YTableHeader * header_disown, YCBTableMode mode = YCBTableCheckBoxOnFirstColumn ) = 0;
+    virtual YMGA_CBTable * createCBTable ( YWidget * parent, YTableHeader * header_disown ) = 0;
 
     
     /**

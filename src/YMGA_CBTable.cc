@@ -1,5 +1,5 @@
 /*
-  Copyright 2013 by Angelo Naselli <anaselli at linux dot it>
+  Copyright 2013-2021 by Angelo Naselli <anaselli at linux dot it>
 
   This library is free software; you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License as
@@ -23,6 +23,8 @@
 
 /-*/
 
+#include <vector>
+#include <string>
 
 #define YUILogComponent "mga-ui"
 #include "YUILog.h"
@@ -30,38 +32,33 @@
 #include "YUISymbols.h"
 #include "YMGA_CBTable.h"
 
+using std::vector;
+using std::string;
+
+/// define_class YMGA_CBTable
+
 struct YMGA_CBTablePrivate
 {
-  YMGA_CBTablePrivate ( YTableHeader * header )
-    : header ( header )
-    , keepSorting ( false )
-    , immediateMode ( false )
-    , mode ( YCBTableCheckBoxOnFirstColumn )
+  YMGA_CBTablePrivate (  ) : header( 0 )
+    , column ( -1 )
     , item ( 0 )
   {
   }
 
-  YTableHeader* header;
-  bool          keepSorting;
-  bool          immediateMode;
-  YCBTableMode  mode;
+  YCBTableHeader * header;
+  int column;
   YCBTableItem* item;
 };
 
-
-
-
-
-YMGA_CBTable::YMGA_CBTable ( YWidget* parent, YTableHeader * header, YCBTableMode mode )
-  :YSelectionWidget ( parent,
-                      "",     // label
-                      true ) // enforceSingleSelection
-  , priv ( new YMGA_CBTablePrivate ( header ) )
+YMGA_CBTable::YMGA_CBTable ( YWidget* parent, YCBTableHeader * header)
+  : YTable( parent,
+            header,
+            false ) // enforceSingleSelection
+  , priv ( new YMGA_CBTablePrivate ( ) )
 {
-  YUI_CHECK_PTR ( header );
   YUI_CHECK_NEW ( priv );
 
-  priv->mode = mode;
+  priv->header = header;
 
   setDefaultStretchable ( YD_HORIZ, true );
   setDefaultStretchable ( YD_VERT,  true );
@@ -70,6 +67,11 @@ YMGA_CBTable::YMGA_CBTable ( YWidget* parent, YTableHeader * header, YCBTableMod
 
 YMGA_CBTable::~YMGA_CBTable()
 {
+}
+
+bool YMGA_CBTable::isCheckBoxColumn(int column) const
+{
+  return priv->header->cbColumn(column);
 }
 
 YCBTableItem* YMGA_CBTable::changedItem()
@@ -83,93 +85,6 @@ void YMGA_CBTable::setChangedItem ( YCBTableItem* pItem )
 }
 
 
-YCBTableMode YMGA_CBTable::tableMode()
-{
-  return priv->mode;
-}
-
-
-void YMGA_CBTable::addItem ( YItem* item )
-{
-  YUI_CHECK_PTR ( item );
-                    
-  YSelectionWidget::addItem ( item );
-}
-
-void YMGA_CBTable::setTableHeader ( YTableHeader * newHeader )
-{
-  YUI_CHECK_PTR ( newHeader );
-
-  if ( priv->header->columns() != newHeader->columns() )
-    deleteAllItems();
-
-  delete priv->header;
-  priv->header = newHeader;
-}
-
-
-int YMGA_CBTable::columns() const
-{
-  return priv->header->columns();
-}
-
-
-bool YMGA_CBTable::hasColumn ( int column ) const
-{
-  return priv->header->hasColumn ( column );
-}
-
-
-std::string YMGA_CBTable::header ( int column ) const
-{
-  return priv->header->header ( column );
-}
-
-
-YAlignmentType YMGA_CBTable::alignment ( int column ) const
-{
-  return priv->header->alignment ( column );
-}
-
-
-bool YMGA_CBTable::immediateMode() const
-{
-  return priv->immediateMode;
-}
-
-
-void YMGA_CBTable::setImmediateMode ( bool immediateMode )
-{
-  priv->immediateMode = immediateMode;
-
-  if ( immediateMode )
-    setNotify ( true );
-}
-
-
-bool YMGA_CBTable::keepSorting() const
-{
-  return priv->keepSorting;
-}
-
-
-void YMGA_CBTable::setKeepSorting ( bool keepSorting )
-{
-  priv->keepSorting = keepSorting;
-}
-
-
-bool YMGA_CBTable::hasMultiSelection() const
-{
-  return ! YSelectionWidget::enforceSingleSelection();
-}
-
-
-YItem * YMGA_CBTable::item ( int index ) const
-{
-  return YSelectionWidget::itemAt ( index );
-}
-
 YItemIterator YMGA_CBTable::nextItem( YItemIterator currentIterator)
 {
   return ++currentIterator;
@@ -178,7 +93,7 @@ YItemIterator YMGA_CBTable::nextItem( YItemIterator currentIterator)
 void YMGA_CBTable::deleteAllItems()
 {
   priv->item = NULL;
-  YSelectionWidget::deleteAllItems();
+  YTable::deleteAllItems();
 }
 
 
@@ -192,86 +107,127 @@ YCBTableItem* YMGA_CBTable::toCBYTableItem ( YItem* item )
   return dynamic_cast<YCBTableItem*>(item);
 }
 
-const YPropertySet &YMGA_CBTable::propertySet()
+/// define_class YCBTableHeader
+
+struct YCBTableHeaderPrivate
 {
-  static YPropertySet propSet;
+    YCBTableHeaderPrivate()
+    {}
 
-  if ( propSet.isEmpty() )
-  {
-    /*
-     * @property itemID             Value           The currently selected item
-     * @property itemID             CurrentItem     The currently selected item
-     * @property itemList           Items           All items
-     * @property itemList           SelectedItems   All currently selected items
-     * @property std::string        Cell            One cell (one column of one item)
-     * @property integer            Cell            (ChangeWidget only) One cell as integer
-     * @property `icon(...)         Cell            Icon for one one cell
-     * @property std::string        Item            Alias for Cell
-     * @property std::string        Item            QueryWidget only: Return one complete item
-     * @property std::string        IconPath        Base path for icons
-     * @property bool               MultiSelection  Flag: User can select multiple items (read-only)
-     */
-    propSet.add ( YProperty ( YUIProperty_Value,              YOtherProperty ) );
-    propSet.add ( YProperty ( YUIProperty_CurrentItem,        YOtherProperty ) );
-    propSet.add ( YProperty ( YUIProperty_SelectedItems,      YOtherProperty ) );
-    propSet.add ( YProperty ( YUIProperty_Items,              YOtherProperty ) );
-    propSet.add ( YProperty ( YUIProperty_Cell,               YOtherProperty ) );
-    propSet.add ( YProperty ( YUIProperty_Item,               YOtherProperty ) );
-    propSet.add ( YProperty ( YUIProperty_IconPath,           YStringProperty ) );
-    propSet.add ( YProperty ( YUIProperty_MultiSelection,     YBoolProperty,   true ) ); // read-only
-    propSet.add ( YWidget::propertySet() );
-  }
+    vector<bool> cb_column;
+};
 
-  return propSet;
+YCBTableHeader::YCBTableHeader()
+    : priv( new YCBTableHeaderPrivate )
+{
+    YUI_CHECK_NEW( priv );
 }
 
-
-bool YMGA_CBTable::setProperty ( const std::string & propertyName, const YPropertyValue & val )
+YCBTableHeader::~YCBTableHeader()
 {
-  propertySet().check ( propertyName, val.type() ); // throws exceptions if not found or type mismatch
+    // NOP
+}
 
-  if ( propertyName == YUIProperty_Value )
-    return false; // Needs special handling
-  else if ( propertyName == YUIProperty_CurrentItem )
-    return false; // Needs special handling
-  else if ( propertyName == YUIProperty_SelectedItems )
-    return false; // Needs special handling
-  else if ( propertyName == YUIProperty_Items )
-    return false; // Needs special handling
-  else if ( propertyName == YUIProperty_Cell )
-    return false; // Needs special handling
-  else if ( propertyName == YUIProperty_Item )
-    return false; // Needs special handling
-  else if ( propertyName == YUIProperty_IconPath )
-    setIconBasePath ( val.stringVal() );
+void YCBTableHeader::addColumn(const std::string& header, bool checkBox, YAlignmentType alignment)
+{
+  YTableHeader::addColumn(header, alignment);
+  priv->cb_column.push_back( checkBox );
+}
+
+bool YCBTableHeader::cbColumn(int column) const
+{
+  if ( column >= 0 && column < (int) priv->cb_column.size() )
+    return priv->cb_column[ column ];
   else
+    return false;
+}
+
+/// define_class YCBTableItem
+
+YCBTableItem::YCBTableItem() :
+  YTableItem(),
+  _changedColumn(-1)
+{
+
+}
+
+YCBTableItem::YCBTableItem( YCBTableCell * cell0_disown,
+                            YCBTableCell * cell1_disown,
+                            YCBTableCell * cell2_disown,
+                            YCBTableCell * cell3_disown,
+                            YCBTableCell * cell4_disown,
+                            YCBTableCell * cell5_disown,
+                            YCBTableCell * cell6_disown,
+                            YCBTableCell * cell7_disown,
+                            YCBTableCell * cell8_disown,
+                            YCBTableCell * cell9_disown )
+  : YTableItem()
+  , _changedColumn(-1)
+{
+  vector<YCBTableCell *> vect{ cell1_disown,
+                               cell2_disown,
+                               cell3_disown,
+                               cell4_disown,
+                               cell5_disown,
+                               cell6_disown,
+                               cell7_disown,
+                               cell8_disown,
+                               cell9_disown };
+
+  // if first cell is null addCell will correctly crash
+  // so at least that must not be null
+  addCell(cell0_disown);
+
+  for (YCBTableCell * cell : vect)
   {
-    return YWidget::setProperty ( propertyName, val );
+    if (cell)
+      addCell(cell);
+  }
+}
+
+void YCBTableItem::addCell(YCBTableCell* cell_disown)
+{
+  YTableItem::addCell(cell_disown);
+}
+
+bool YCBTableItem::checked(int index)
+{
+  bool isChecked = false;
+
+  if (hasCell( index ) )
+  {
+    YTableCell *cell = YTableItem::cell(index);
+    YCBTableCell *pCell = dynamic_cast<YCBTableCell *>(cell);
+    if (pCell)
+      isChecked = pCell->checked();
   }
 
-  return true; // success -- no special processing necessary
+  return isChecked;
 }
 
 
-YPropertyValue YMGA_CBTable::getProperty ( const std::string & propertyName )
+void YCBTableItem::addCell(bool checked)
 {
-  propertySet().check ( propertyName ); // throws exceptions if not found
+  YCBTableCell * cell = new YCBTableCell( checked );
+  YUI_CHECK_NEW( cell );
 
-  if ( propertyName == YUIProperty_Value )
-    return YPropertyValue ( YOtherProperty );
-  else if ( propertyName == YUIProperty_CurrentItem )
-    return YPropertyValue ( YOtherProperty );
-  else if ( propertyName == YUIProperty_SelectedItems )
-    return YPropertyValue ( YOtherProperty );
-  else if ( propertyName == YUIProperty_Items )
-    return YPropertyValue ( YOtherProperty );
-  else if ( propertyName == YUIProperty_Cell )
-    return YPropertyValue ( YOtherProperty );
-  else if ( propertyName == YUIProperty_Item )
-    return YPropertyValue ( YOtherProperty );
-  else if ( propertyName == YUIProperty_IconPath )
-    return YPropertyValue ( iconBasePath() );
-
-  return YWidget::getProperty ( propertyName );
+  addCell( cell );
 }
 
+void YCBTableItem::addCell(const std::string& label, const std::string& iconName, const std::string& sortKey)
+{
+  YCBTableCell * cell = new YCBTableCell( label, iconName, sortKey);
+  YUI_CHECK_NEW( cell );
+
+  addCell( cell );
+}
+
+const YCBTableCell * YCBTableItem::cellChanged()
+{
+  return dynamic_cast<const YCBTableCell*>(cell(_changedColumn));
+}
+
+void YCBTableItem::setChangedColumn(int column)
+{
+  _changedColumn = hasCell(column) ? column : -1;
+}

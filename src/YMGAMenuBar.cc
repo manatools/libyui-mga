@@ -24,9 +24,9 @@
 /-*/
 
 #define YUILogComponent "mga-ui"
-#include "YUILog.h"
+#include <yui/YUILog.h>
 
-#include "YUISymbols.h"
+#include <yui/YUISymbols.h>
 #include "YMGAMenuBar.h"
 #include "YMGAMenuItem.h"
 

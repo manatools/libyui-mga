@@ -74,8 +74,8 @@
 #include <yui/YTree.h>
 #include <yui/YBusyIndicator.h>
 
-#include "YMGA_CBTable.h"
-#include "YMGAWidgetExtensionFactory.h"
+#include <yui/mga/YMGA_CBTable.h>
+#include <yui/mga/YMGAWidgetExtensionFactory.h>
 
 using std::endl;
 
@@ -257,6 +257,7 @@ int main( int argc, char **argv )
   YMGAWidgetFactory* pMGAFactory = (YMGAWidgetFactory*)(pMGAExternalWidgets->externalWidgetFactory());
   // layout dialog:
   YDialog    * dialog	= YUI::widgetFactory()->createMainDialog();
+  //dialog->requestMultiPassLayout();
   YLayoutBox * vbox	= YUI::widgetFactory()->createVBox( dialog );
 
   // 1st row

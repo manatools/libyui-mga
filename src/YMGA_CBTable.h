@@ -221,7 +221,7 @@ protected:
     
 };
   
-class YMGA_CBTablePrivate;
+struct YMGA_CBTablePrivate;
 
 /**
  * See document of YTable

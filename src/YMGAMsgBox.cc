@@ -23,7 +23,7 @@
 /-*/
 
 #define YUILogComponent "mga-ui"
-#include "YUILog.h"
+#include <yui/YUILog.h>
 
 #include <yui/YUI.h>
 #include <yui/YTypes.h>
@@ -35,7 +35,7 @@
 #include <yui/YPushButton.h>
 #include <yui/YEvent.h>
 #include <yui/YRichText.h>
-#include <YButtonBox.h>
+#include <yui/YButtonBox.h>
 
 #include <boost/algorithm/string/trim.hpp>
 #include <vector>

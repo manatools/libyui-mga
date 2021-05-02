@@ -1,5 +1,6 @@
 /*
   Copyright 2014-2016 by Matteo Pasotti
+  Copyright 2021 by Angelo Naselli
 
   Permission is hereby granted, free of charge, to any person obtaining
   a copy of this software and associated documentation files (the
@@ -36,8 +37,8 @@
 #include <yui/YEvent.h>
 #include <yui/YExternalWidgets.h>
 #include <yui/YCommandLine.h>
-#include "YMGAAboutDialog.h"
-#include "YMGAWidgetExtensionFactory.h"
+#include <yui/mga/YMGAAboutDialog.h>
+#include <yui/mga/YMGAWidgetExtensionFactory.h>
 
 
 int main( int argc, char **argv )

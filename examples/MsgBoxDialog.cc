@@ -36,8 +36,8 @@
 #include <yui/YLayoutBox.h>
 #include <yui/YEvent.h>
 #include <yui/YExternalWidgets.h>
-#include "YMGAMsgBox.h"
-#include "YMGAWidgetExtensionFactory.h"
+#include <yui/mga/YMGAMsgBox.h>
+#include <yui/mga/YMGAWidgetExtensionFactory.h>
 
 
 int main( int argc, char **argv )

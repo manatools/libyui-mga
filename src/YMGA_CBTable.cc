@@ -27,9 +27,9 @@
 #include <string>
 
 #define YUILogComponent "mga-ui"
-#include "YUILog.h"
+#include <yui/YUILog.h>
 
-#include "YUISymbols.h"
+#include <yui/YUISymbols.h>
 #include "YMGA_CBTable.h"
 
 using std::vector;

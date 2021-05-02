@@ -25,10 +25,10 @@
 
 #include "YMGAWidgetExtensionFactory.h"
 
-#include "YAlignment.h"
-#include "YPushButton.h"
-#include "YUI.h"
-#include "YApplication.h"
+#include <yui/YAlignment.h>
+#include <yui/YPushButton.h>
+#include <yui/YUI.h>
+#include <yui/YApplication.h>
 
 #include "YMGAAboutDialog.h"
 #include "YMGA_CBTable.h"

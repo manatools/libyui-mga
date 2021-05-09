@@ -62,7 +62,10 @@ add_library( ${TARGETLIB} SHARED ${SOURCES} ${HEADERS} )
 # for use in the C++ code. This file is NOT installed upon "make install".
 #TODO mga version include if needed
 # configure_file( Libyui_config.h.in Libyui_config.h )
-target_include_directories( ${TARGETLIB} PUBLIC ${CMAKE_CURRENT_BINARY_DIR} )
+target_include_directories( ${TARGETLIB}
+  PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
+  PUBLIC ${YUI_INCLUDE_DIRS}
+)
 
 # Add more compile options to this target in addition to those
 # added in the toplevel CMakeLists.txt.

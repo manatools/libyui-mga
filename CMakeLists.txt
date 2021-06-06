@@ -1,4 +1,4 @@
-# CMakeLists.txt for libyui
+# CMakeLists.txt for libyui-mga
 #
 # Usage:
 #
@@ -22,11 +22,12 @@ project( libyui-mga )
 #
 #   cmake -DBUILD_DOC=on -DBUILD_EXAMPLES=off ..
 
-option( BUILD_SRC         "Build in src/ subdirectory"                on )
-option( BUILD_EXAMPLES    "Build C++ -based libyui examples"          on  )
-option( BUILD_DOC         "Build class documentation"                 off )
-option( BUILD_PKGCONFIG   "Build pkg-config support files"            on  )
-option( WERROR            "Treat all compiler warnings as errors"     on  )
+option( BUILD_SRC                "Build in src/ subdirectory"                on  )
+option( BUILD_EXAMPLES           "Build C++ -based libyui examples"          on  )
+option( BUILD_DOC                "Build class documentation"                 off )
+option( BUILD_PKGCONFIG          "Build pkg-config support files"            on  )
+option( BUILD_WITH_LIBYUI_SOURCE "Build libyui-mga with libyui source"       off )
+option( WERROR                   "Treat all compiler warnings as errors"     on  )
 
 
 #----------------------------------------------------------------------

@@ -1,21 +1,27 @@
-# CMakeLists.txt for libyui/src
+# CMakeLists.txt for libyui-mga/src
+
+if ( BUILD_WITH_LIBYUI_SOURCE )
+  include( ../../VERSION.cmake )
+endif()
 
 include( ../VERSION.cmake )
 include( GNUInstallDirs )       # set CMAKE_INSTALL_INCLUDEDIR, ..._LIBDIR
 
-FIND_PACKAGE(PkgConfig REQUIRED)
+if ( NOT BUILD_WITH_LIBYUI_SOURCE )
+  FIND_PACKAGE(PkgConfig REQUIRED)
 
-PKG_CHECK_MODULES(YUI REQUIRED libyui)
-pkg_get_variable(YUI_SO_VERSION libyui soversion)
-pkg_get_variable(YUI_SO_MAJOR libyui soversion_major)
-#pkg_get_variable(YUI_SO_MINOR libyui soversion_minor)
-#pkg_get_variable(YUI_SO_PATCH libyui soversion_patch)
+  PKG_CHECK_MODULES(YUI REQUIRED libyui)
+  pkg_get_variable(YUI_SO_VERSION libyui soversion)
+  pkg_get_variable(YUI_SO_MAJOR libyui soversion_major)
+  #pkg_get_variable(YUI_SO_MINOR libyui soversion_minor)
+  #pkg_get_variable(YUI_SO_PATCH libyui soversion_patch)
 
-message (STATUS "Using ${YUI_LIBRARY_DIRS}/libyui.so.${YUI_SO_VERSION}")
+  message (STATUS "Using ${YUI_LIBRARY_DIRS}/libyui.so.${YUI_SO_VERSION}")
 
-##### This is needed to be set for the libyui core
-SET( SONAME_MAJOR ${YUI_SO_MAJOR} )
-SET( SONAME ${YUI_SO_VERSION} )
+  ##### This is needed to be set for the libyui core
+  SET( SONAME_MAJOR ${YUI_SO_MAJOR} )
+  SET( SONAME ${YUI_SO_VERSION} )
+endif()
 
 set( TARGETLIB          libyui-mga )
 set( TARGETLIB_BASE     yui-mga    )
@@ -57,15 +63,21 @@ add_library( ${TARGETLIB} SHARED ${SOURCES} ${HEADERS} )
 #
 # Include directories and compile options
 #
+if ( BUILD_WITH_LIBYUI_SOURCE )
+  set( LOCAL_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/include )
 
-# Generate Libyui_config.h where some CMake variables are expanded
-# for use in the C++ code. This file is NOT installed upon "make install".
-#TODO mga version include if needed
-# configure_file( Libyui_config.h.in Libyui_config.h )
-target_include_directories( ${TARGETLIB}
-  PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
-  PUBLIC ${YUI_INCLUDE_DIRS}
-)
+  # Symlink ../../libyui/src to build/src/include/yui
+  # so the headers there can be included as <yui/YFoo.h>
+  file( MAKE_DIRECTORY ${LOCAL_INCLUDE_DIR} )
+  file( CREATE_LINK ${CMAKE_CURRENT_SOURCE_DIR}/../../libyui/src ${LOCAL_INCLUDE_DIR}/yui SYMBOLIC )
+
+  target_include_directories( ${TARGETLIB} BEFORE PUBLIC ${LOCAL_INCLUDE_DIR} )
+else ()
+  target_include_directories( ${TARGETLIB}
+    PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
+    PUBLIC ${YUI_INCLUDE_DIRS}
+  )
+endif()
 
 # Add more compile options to this target in addition to those
 # added in the toplevel CMakeLists.txt.
@@ -87,9 +99,17 @@ target_include_directories( ${TARGETLIB}
 # https://cmake.org/cmake/help/latest/command/link_directories.html suggests to use target_link_libraries
 # and anyway LINK_DIRECTORIES command will apply only to targets created after it is called, so must be set
 # before add_library in the case.
-target_link_directories( ${TARGETLIB}
-  PUBLIC ${YUI_LIBRARY_DIRS}
-)
+if ( BUILD_WITH_LIBYUI_SOURCE )
+  # Find yui during a combined build
+  target_link_directories( ${TARGETLIB}
+    BEFORE PUBLIC ../../libyui/build/src
+  )
+else()
+  target_link_directories( ${TARGETLIB}
+    PUBLIC ${YUI_LIBRARY_DIRS}
+  )
+endif()
+
 
 # Libraries that are needed to build this shared lib
 #

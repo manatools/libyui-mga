@@ -1,18 +1,26 @@
 # CMakeLists.txt for libyui-mga/examples
+if ( BUILD_WITH_LIBYUI_SOURCE )
+  include( ../../VERSION.cmake )
+endif()
 
 include( ../VERSION.cmake )
 include( GNUInstallDirs )       # set CMAKE_INSTALL_INCLUDEDIR, ..._LIBDIR
 
-# Use the package PkgConfig to detect GTK+ headers/library files
-FIND_PACKAGE(PkgConfig REQUIRED)
+if ( BUILD_WITH_LIBYUI_SOURCE )
+  set( YUI_LIBRARY_DIRS ../../libyui/build/src )
+  set( YUI_LIBRARIES yui )
+else()
+  # Use the package PkgConfig to detect GTK+ headers/library files
+  FIND_PACKAGE(PkgConfig REQUIRED)
 
-PKG_CHECK_MODULES(YUI REQUIRED libyui)
-pkg_get_variable(YUI_SO_VERSION libyui soversion)
-pkg_get_variable(YUI_SO_MAJOR libyui soversion_major)
+  PKG_CHECK_MODULES(YUI REQUIRED libyui)
+  pkg_get_variable(YUI_SO_VERSION libyui soversion)
+  pkg_get_variable(YUI_SO_MAJOR libyui soversion_major)
 
-##### This is needed to be set for the libyui core
-SET( SONAME_MAJOR ${YUI_SO_MAJOR} )
-SET( SONAME ${YUI_SO_VERSION} )
+  ##### This is needed to be set for the libyui core
+  SET( SONAME_MAJOR ${YUI_SO_MAJOR} )
+  SET( SONAME ${YUI_SO_VERSION} )
+endif()
 
 set( PKG_NAME                   libyui-mga${SONAME_MAJOR} )
 set( EXAMPLES_INSTALL_DIR       ${DESTDIR}${CMAKE_INSTALL_PREFIX}/share/doc/packages/${PKG_NAME}/examples )
@@ -21,9 +29,18 @@ set( LIBYUIMGA yui-mga )
 
 set( LOCAL_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/include )
 
+
+if ( BUILD_WITH_LIBYUI_SOURCE )
+  # Symlink ../../libyui/src to build/src/include/yui
+  # so the headers there can be included as <yui/YFoo.h>
+  file( MAKE_DIRECTORY ${LOCAL_INCLUDE_DIR} )
+  file( CREATE_LINK ${CMAKE_CURRENT_SOURCE_DIR}/../../libyui/src ${LOCAL_INCLUDE_DIR}/yui SYMBOLIC )
+else()
+  file( MAKE_DIRECTORY ${LOCAL_INCLUDE_DIR}/yui )
+endif()
+
 # Symlink libyui-mga/src to build/src/include/yui
-# so the headers there can be included as <yui/YFoo.h>
-file( MAKE_DIRECTORY ${LOCAL_INCLUDE_DIR}/yui )
+# so the headers there can be included as <yui/mga/YFoo.h>
 file( CREATE_LINK ${CMAKE_CURRENT_SOURCE_DIR}/../src ${LOCAL_INCLUDE_DIR}/yui/mga SYMBOLIC )
 
 
@@ -32,10 +49,12 @@ file( CREATE_LINK ${CMAKE_CURRENT_SOURCE_DIR}/../src ${LOCAL_INCLUDE_DIR}/yui/mg
 #
 function( add_example EXAMPLE )
   add_executable( ${EXAMPLE} ${EXAMPLE}.cc )
+
   target_link_directories( ${EXAMPLE}
     BEFORE PUBLIC ${CMAKE_BINARY_DIR}/src/
-    PUBLIC ${YUI_LIBRARY_DIRS}
+    BEFORE PUBLIC ${YUI_LIBRARY_DIRS}
   )
+
   target_link_libraries( ${EXAMPLE} ${LIBYUIMGA} ${YUI_LIBRARIES} )
 
   # Prefer the headers in ../src over those in /usr/include

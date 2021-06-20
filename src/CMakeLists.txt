@@ -7,7 +7,10 @@ endif()
 include( ../VERSION.cmake )
 include( GNUInstallDirs )       # set CMAKE_INSTALL_INCLUDEDIR, ..._LIBDIR
 
-if ( NOT BUILD_WITH_LIBYUI_SOURCE )
+if ( BUILD_WITH_LIBYUI_SOURCE )
+  set( YUI_LIBRARY_DIRS ../../libyui/build/src )
+  set( YUI_LIBRARIES yui )
+else()
   FIND_PACKAGE(PkgConfig REQUIRED)
 
   PKG_CHECK_MODULES(YUI REQUIRED libyui)
@@ -102,7 +105,7 @@ endif()
 if ( BUILD_WITH_LIBYUI_SOURCE )
   # Find yui during a combined build
   target_link_directories( ${TARGETLIB}
-    BEFORE PUBLIC ../../libyui/build/src
+    BEFORE PUBLIC ${YUI_LIBRARY_DIRS}
   )
 else()
   target_link_directories( ${TARGETLIB}

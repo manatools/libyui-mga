@@ -51,7 +51,7 @@ function( add_example EXAMPLE )
   add_executable( ${EXAMPLE} ${EXAMPLE}.cc )
 
   target_link_directories( ${EXAMPLE}
-    BEFORE PUBLIC ${CMAKE_BINARY_DIR}/src/
+    BEFORE PUBLIC ${CMAKE_BINARY_DIR}/src
     BEFORE PUBLIC ${YUI_LIBRARY_DIRS}
   )
 
@@ -62,7 +62,6 @@ function( add_example EXAMPLE )
     BEFORE PUBLIC ${LOCAL_INCLUDE_DIR}
     PUBLIC ${YUI_INCLUDE_DIRS}
   )
-
 
   install( FILES ${EXAMPLE}.cc DESTINATION ${EXAMPLES_INSTALL_DIR} )
 endfunction()

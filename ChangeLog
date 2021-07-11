@@ -2,6 +2,8 @@
 Sun Jul 11 15:47:01 CEST 2021 - anaselli@linux.it
 - build against new libyui tree (either standalone or into libyui 
   source tree.
+- New YMGA_CBtable allows to have checkbox into any column
+- Libyui has menubar now so YMGA_Menubar is discouraged
 - 1.2.0
 
 -------------------------------------------------------------------

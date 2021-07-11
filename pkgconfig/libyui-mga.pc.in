@@ -11,7 +11,7 @@ datarootdir=${exec_prefix}/share
 datadir=${datarootdir}/libyui
 libdir=@CMAKE_INSTALL_FULL_LIBDIR@
 includedir=${exec_prefix}/include
-plugindir=@CMAKE_INSTALL_FULL_LIBDIR@yui
+plugindir=@CMAKE_INSTALL_FULL_LIBDIR@/yui
 
 Name: libyui-mga
 Version: @VERSION@
